@@ -3,7 +3,7 @@
 
 PlayScene::PlayScene() {
 	//LoadResources
-	map = new GameMap((char*)"Resources/map31TileSet.png", (char*)"Resources/map31.txt", 32, 32);
+	map = new GameMap((char*)"Resources/TilesDebug.png", (char*)"Resources/OutputDebug.txt", 32, 32);
 	int width = Graphic::GetInstance()->GetBackBufferWidth();
 	int height = Graphic::GetInstance()->GetBackBufferHeight();
 
@@ -85,7 +85,7 @@ void PlayScene::CheckCollision(double dt) {
 				if (player->GetVelocity().y < 0)
 					player->OnCollision(staticObjects[i], side, groundTime);
 
-				isOnGround = true; DebugOut(L"Y");
+				isOnGround = true;
 			}
 		}		
 	}

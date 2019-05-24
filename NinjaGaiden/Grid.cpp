@@ -1,6 +1,6 @@
 #include "Grid.h"
 #include"Unit.h"
-
+#include"Debug.h"
 Grid::Grid()
 {
 	//
@@ -29,8 +29,8 @@ Grid::Grid()
 
 Grid::Grid(BoxCollider r, int rows, int columns) {
 	//--Debug
-	this->rows = 1;
-	this->columns = 46;
+	this->rows = 4;
+	this->columns = 32;
 	rows = this->rows;
 	columns = this->columns;
 	//
@@ -114,21 +114,16 @@ void Grid::AddToCell(Unit * other)
 	int j = (int)(other->entity->GetPosition().x / Grid::cellWidth);
 	int i = (int)(other->entity->GetPosition().y / Grid::cellHeight);
 
-
-
 	if (i < 0 || j < 0) //
 	{
-		//
+		DebugOut(L"%dOut of grid", j);
 		return;
 	}
-
-
 
 	// Add to the front of list for the cell it's in.
 	other->p_prev = NULL;
 	
 	other->p_next = gridcells[i][j];
-//	OutputDebugStringA(gridcells[i][j]->entity->GetPosition().y)
 	gridcells[i][j] = other;
 
 	if (other->p_next != NULL)
@@ -162,7 +157,6 @@ void Grid::HandleCell(Unit * unit)
 			}
 			other = other->p_next;
 		}
-
 		unit = unit->p_next;
 	}
 }
@@ -183,7 +177,6 @@ void Grid::HandleCell(int x, int y)
 		{
 			HandleUnit(unit, gridcells[x - 1][y + 1]);
 		}
-
 		unit = unit->p_next;
 	}
 }
@@ -348,12 +341,14 @@ void Grid::RenderActive()
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
 				{
-					tmpcells_tonext->entity->Render();
+					if (tmpcells_tonext->entity->IsActive())
+						tmpcells_tonext->entity->Render();
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
 				while (tmpcells_toprev != NULL)
 				{
-					tmpcells_toprev->entity->Render();
+					if (tmpcells_toprev->entity->IsActive())
+						tmpcells_toprev->entity->Render();
 					tmpcells_toprev = tmpcells_toprev->p_prev;
 				}
 			}
@@ -372,7 +367,8 @@ void Grid::UpdateActivatingCells(double dt)
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
 				{
-					tmpcells_tonext->Move(tmpcells_tonext->entity->GetPosition().x, tmpcells_tonext->entity->GetPosition().y, dt);
+					if (tmpcells_tonext->entity->IsActive())
+						tmpcells_tonext->Move(tmpcells_tonext->entity->GetPosition().x, tmpcells_tonext->entity->GetPosition().y, dt);
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
 			}
@@ -393,11 +389,10 @@ void Grid::UpdateActive(double dt)
 				{
 					if (tmpcells_tonext->entity->GetType() == Entity::PlayerType)
 						tmpcells_tonext = tmpcells_tonext;
-					if (gridcells[i][j]->entity->IsActive()) 
-					tmpcells_tonext->entity->Update(dt);
+					if (gridcells[i][j]->entity->IsActive())
+						tmpcells_tonext->entity->Update(dt);
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
-
 			}
 			
 		}
