@@ -30,7 +30,8 @@ public: BoxCollider GetCellRect(int i, int j, int cellHeight,int cellWidth);
 public:
 	
 	Unit(Grid* grid, Entity* entity);
-	
 	void Move(double x, double y, double dt);
-
+	Entity* GetEntity();
+	Unit*GetNextUnit();
+	Unit*GetPrevUnit();
 };

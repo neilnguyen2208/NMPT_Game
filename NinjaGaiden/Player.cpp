@@ -7,6 +7,7 @@
 #include "PlayerJumpingState.h"
 #include "PlayerClimbState.h"
 #include "PlayerUseItemState.h"
+#include"PlayerBeatenState.h"
 #include "Debug.h"
 
 
@@ -21,7 +22,7 @@ Player::Player() : Entity() {
 	instance = this;
 
 	Textures *textures = Textures::GetInstance();
-	textures->Add(TEX_PLAYER, "Resources/Sprites/ryuspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(254, 163, 176));
 
 	playerData = new PlayerData();
 	playerData->player = this;
@@ -34,6 +35,7 @@ Player::Player() : Entity() {
 	jumpState = new PlayerJumpingState(playerData);
 	climbState = new PlayerClimbState(playerData);
 	useItemState = new PlayerUseItemState(playerData);
+	beatenState = new PlayerBeatenState(playerData);
 
 	SetState(PlayerState::Idle);
 	SetTag(Entity::EntityTag::Player);
@@ -42,7 +44,7 @@ Player::Player() : Entity() {
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_PLAYER)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;
-	height = desc.Height / 9;
+	height = desc.Height / 10;
 
 	isActive = true;
 }
@@ -79,6 +81,17 @@ void Player::Update(double dt) {
 		velocity.y = 0;
 
 	side = NotKnow;
+
+	if (isHurting)
+	{
+		HurtingTime += dt;
+	}
+	if (HurtingTime >= 1.0)
+	{
+		HurtingTime = 0;
+		isHurting =false;
+	}
+
 }
 
 void Player::Render() {
@@ -110,12 +123,15 @@ void Player::SetState(PlayerState::State name, int dummy) {
 	case PlayerState::UseItem:
 		playerData->state = useItemState;
 		break;
-	case PlayerState::Jump:
+	case PlayerState::Jumping:
 		playerData->state = jumpState;
 		break;
 	case PlayerState::Falling:
 		playerData->state = jumpState;
 		falling = true;
+		break;
+	case PlayerState::Beaten:
+		playerData->state = beatenState;
 		break;
 	}
 	currentState = playerData->state->GetState();
@@ -132,7 +148,7 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 	playerData->state->OnCollision(impactor, side);
 	if (side == Bottom && velocity.y < 0) {
 		velocity.y *= collisionTime;
-		DebugOut(L"Set lai velocity la: %f", velocity.y);
+	//	DebugOut(L"Set lai velocity la: %f", velocity.y);
 	}
 	else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
 		velocity.x *= collisionTime;
@@ -208,4 +224,3 @@ void Player::HandleInput() {
 	if (this->playerData->state)
 		playerData->state->HandleInput();
 }
-

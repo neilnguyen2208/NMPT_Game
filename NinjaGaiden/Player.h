@@ -16,6 +16,7 @@ public:
 	BoxCollider GetRect();
 	BoxCollider GetBigBound();
 	PlayerState::State GetState();
+	//PlayerData*GetPlayerData();
 	virtual int GetBigWidth();
 	virtual int GetBigHeight();
 	virtual float GetWidth();
@@ -29,6 +30,8 @@ public:
 
 	void HandleInput();
 	bool onAir;
+	bool isHurting;
+	double HurtingTime = 0;
 
 protected:
 	static Player *instance;
@@ -41,7 +44,8 @@ protected:
 		*jumpState,
 		*crouchSlashState,
 		*climbState,
-		*useItemState;
+		*useItemState,
+		*beatenState;
 	PlayerState::State currentState;
 	BoxCollider collider;
 	float collisionTime;

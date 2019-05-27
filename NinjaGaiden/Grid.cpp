@@ -1,6 +1,8 @@
 #include "Grid.h"
 #include"Unit.h"
 #include"Debug.h"
+
+#pragma region Kocare
 Grid::Grid()
 {
 	//
@@ -23,8 +25,6 @@ Grid::Grid()
 		}
 	}
 
-	//intit several things
-//	player->SetMoveDirection(Entity::LeftToRight);
 }
 
 Grid::Grid(BoxCollider r, int rows, int columns) {
@@ -56,12 +56,77 @@ Grid::Grid(BoxCollider r, int rows, int columns) {
 		{
 			isActiveCells[i][j] = false;
 		}
-	}
-	
+	}	
 }
 
 Grid::~Grid() {
 }
+
+vector<Entity*> Grid::GetStaticObjects()
+{
+	return staticObject;
+}
+
+Camera* Grid::GetCamera()
+{
+	return this->camera;
+}
+
+void Grid::SetCamera(Camera*camera)
+{
+	this->camera = camera;
+}
+
+void Grid::SetCellsActivate(Camera*camera) //Dat cac cell o trang thai activate (theo id)
+{
+	//i,y,rows   j,x,columns     i truoc, j sau
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			isActiveCells[i][j] = false;
+		}
+	}
+
+	BoxCollider r1 = camera->GetRect();
+	for (int i = r1.bottom / cellHeight; i < r1.top / cellHeight; i++) //
+		for (int j = r1.left / cellWidth; j < r1.right / cellWidth; j++)
+		{
+			isActiveCells[i][j] = true;
+		}
+}
+
+bool** Grid::GetActivatedCells()
+{
+	return isActiveCells;
+}
+
+float Grid::GetCellHeight()
+{
+	return cellHeight;
+}
+
+float Grid::GetCellWidth()
+{
+	return cellWidth;
+}
+
+Entity::EntityDirection Grid::GetDirection()
+{
+	return player->GetMoveDirection();
+}
+
+void Grid::SetPlayer(Player*player)
+{
+	this->player = player;
+}
+
+Unit* Grid::GetGridCells(int i, int j)
+{
+	return this->gridcells[i][j];
+}
+
+#pragma endregion
 
 void Grid::Move(Unit * unit, double x, double y, double dt)
 {
@@ -104,11 +169,6 @@ void Grid::Move(Unit * unit, double x, double y, double dt)
 
 }
 
-vector<Entity*> Grid::GetStaticObjects()
-{
-	return staticObject;
-}
-
 void Grid::AddToCell(Unit * other)
 {
 	int j = (int)(other->entity->GetPosition().x / Grid::cellWidth);
@@ -116,6 +176,7 @@ void Grid::AddToCell(Unit * other)
 
 	if (i < 0 || j < 0) //
 	{
+		other->entity->SetActive(false);
 		DebugOut(L"%dOut of grid", j);
 		return;
 	}
@@ -132,119 +193,84 @@ void Grid::AddToCell(Unit * other)
 	}
 }
 
-void Grid::HandleMelee()
+void Grid::HandleGridCollision(double dt)
 {
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < columns; j++)
-		{
-			HandleCell(gridcells[i][j]);
-		}
-	}
-}
+	int iPlayer = player->GetPosition().y / cellHeight;
+	int jPlayer = player->GetPosition().x / cellWidth;
 
-void Grid::HandleCell(Unit * unit)
-{
-	while (unit != NULL)
-	{
-		Unit* other = unit->p_next;
-		while (other != NULL)
-		{
-			if (unit->entity->GetPosition().x == other->entity->GetPosition().x &&
-				unit->entity->GetPosition().y == other->entity->GetPosition().y)
-			{
-				HandleAttack(unit, other);
-			}
-			other = other->p_next;
-		}
-		unit = unit->p_next;
-	}
-}
+	if (iPlayer < 0 || jPlayer < 0) return;
 
-void Grid::HandleCell(int x, int y)
-{
-	Unit* unit = gridcells[x][y];
-	while (unit != NULL)
-	{
-		// Handle other units in this cell.
-		HandleUnit(unit, unit->p_next);
+	HandleGridSubFunction(iPlayer, jPlayer, dt);
 
-		// Also try the neighboring cells.
-		if (x > 0 && y > 0) HandleUnit(unit, gridcells[x - 1][y - 1]);
-		if (x > 0) HandleUnit(unit, gridcells[x - 1][y]);
-		if (y > 0) HandleUnit(unit, gridcells[x][y - 1]);
-		if (x > 0 && y < rows - 1)
-		{
-			HandleUnit(unit, gridcells[x - 1][y + 1]);
-		}
-		unit = unit->p_next;
-	}
-}
-
-void Grid::HandleUnit(Unit* unit, Unit* other)
-{
-	while (other != NULL)
-	{
-		if (distance(unit, other) < ATTACK_DISTANCE)
-		{
-			HandleAttack(unit, other);
-		}
-
-		other = other->p_next;
-	}
-}
-
-void Grid::HandleAttack(Unit * unit, Unit * other)
-{
-}
-
-double Grid::distance(Unit* unit, Unit* other)
-{
-	return sqrt((unit->entity->GetPosition().x - other->entity->GetPosition().x) * (unit->entity->GetPosition().x - other->entity->GetPosition().x) + (unit->entity->GetPosition().y - other->entity->GetPosition().y) * (unit->entity->GetPosition().y - other->entity->GetPosition().y));
-}
-
-Camera* Grid::GetCamera()
-{
-	return this->camera;
-}
-
-void Grid::SetCamera(Camera*camera)
-{
-	this->camera = camera;
-}
-
-void Grid::SetCellsActivate(Camera*camera) //Dat cac cell o trang thai activate (theo id)
-{
-	//i,y,rows   j,x,columns     i truoc, j sau
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < columns; j++)
-		{			
-			isActiveCells[i][j] = false;
-		}
-	}
+	// Also try the neighboring cells.
+	if (jPlayer > 0 && iPlayer > 0 && iPlayer < rows - 1 && jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer, dt);
+	if (jPlayer > 0 && jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer - 1, dt);
+	if (iPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer - 1, jPlayer, dt);
+	if (jPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer - 1, dt);
 	
-	BoxCollider r1 = camera->GetRect();
-	for (int i = r1.bottom / cellHeight; i < r1.top / cellHeight; i++) //
-		for (int j = r1.left / cellWidth; j < r1.right / cellWidth; j++)
+}
+
+void Grid::HandleGridSubFunction(int i, int j, double dt)
+{
+	auto side = Entity::NotKnow;
+	HurtingTime = 0;
+
+	Unit*tmpcells_tonext = gridcells[i][j];
+
+	while (tmpcells_tonext != NULL)
+	{
+		if (tmpcells_tonext->entity->IsActive() == true && tmpcells_tonext->entity->GetTag() != Entity::Player)
 		{
-			isActiveCells[i][j] = true;
+			////check enemy in attack radius
+			//BoxCollider AttackRadius;
+			//AttackRadius.top = player->GetPosition().y + 20;
+			//AttackRadius.bottom = player->GetPosition().y - 20;
+			//AttackRadius.left = player->GetPosition().x - 42;
+			//AttackRadius.right = player->GetPosition().x + 42;
+			//if (!IsOverlap(AttackRadius, tmpcells_tonext->entity->GetRect()))
+			//{
+			//	tmpcells_tonext = tmpcells_tonext->p_next;
+			//	continue;
+			//}
+			////collision attack or use item
+			//if (player->GetState() == PlayerState::Slash || player->GetState() == PlayerState::CrouchSlash)
+			//{	
+			//	Entity* Katana = new Entity;
+			//	if (player->GetMoveDirection() == Entity::RightToLeft)
+			//	{
+			//		Katana->SetPosition(player->GetPosition().x + 20, player->GetPosition().y + 4);
+			//		Katana->SetWidth(20);
+			//		Katana->SetHeight(7);
+			//	}
+			//	float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Katana, side, dt);
+			//	if (collisionTime != 2) // collide happen
+			//	{
+			//		tmpcells_tonext->entity->SetActive(false); 
+			//		tmpcells_tonext = tmpcells_tonext->p_next;
+			//		continue;
+			//	}
+			//}
+
+			//collision beaten
+			if (tmpcells_tonext->entity->IsActive()) {
+				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, player, side, dt);
+				if (collisionTime == 2)
+				{
+					tmpcells_tonext = tmpcells_tonext->p_next;
+					continue;
+				}
+				player->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);			
+			}
 		}
+		tmpcells_tonext = tmpcells_tonext->p_next;
+	}
 }
 
-bool** Grid::GetActivatedCells()
-{
-	return isActiveCells;
-}
 
-float Grid::GetCellHeight()
-{
-	return cellHeight;
-}
-
-float Grid::GetCellWidth()
-{
-	return cellWidth;
+bool Grid::IsOverlap(BoxCollider r1, BoxCollider r2) {
+	if (r1.bottom > r2.top || r1.top < r2.bottom || r1.left > r2.right || r1.right < r2.left)
+		return false;
+	return true;
 }
 
 void Grid::CheckActivatedObjects()
@@ -319,16 +345,6 @@ void Grid::CheckActivatedObjects()
 		}
 }
 
-Entity::EntityDirection Grid::GetDirection()
-{
-	return player->GetMoveDirection();
-}
-
-void Grid::SetPlayer(Player*player)
-{
-	this->player = player;
-}
-
 //Render - Update
 void Grid::RenderActive()
 {
@@ -362,20 +378,28 @@ void Grid::UpdateActivatingCells(double dt)
 	{
 		for (int j = 0; j < columns; j++)
 		{		
-			if (gridcells[i][j] != NULL&&gridcells[i][j]->entity->IsActive()==true)
+			if (gridcells[i][j] != NULL&&isActiveCells[i][j]==true)
 			{
-				Unit*tmpcells_tonext = gridcells[i][j];
+				Unit*tmpcells_tonext = gridcells[i][j];	
+				Unit*tmpcells_toprev = gridcells[i][j]->p_prev;
 				while (tmpcells_tonext != NULL)
 				{
 					if (tmpcells_tonext->entity->IsActive())
 						tmpcells_tonext->Move(tmpcells_tonext->entity->GetPosition().x, tmpcells_tonext->entity->GetPosition().y, dt);
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
+				while (tmpcells_toprev != NULL)
+				{
+					if (tmpcells_toprev->entity->IsActive())
+						tmpcells_toprev->Move(tmpcells_toprev->entity->GetPosition().x, tmpcells_toprev->entity->GetPosition().y, dt);
+					tmpcells_toprev = tmpcells_toprev->p_prev;
+				}				
 			}
 		}
 	}
 }
 
+///
 void Grid::UpdateActive(double dt)
 {
 	for (int i = 0; i < rows; i++)
@@ -384,28 +408,25 @@ void Grid::UpdateActive(double dt)
 			if (gridcells[i][j] == NULL) continue;
 			if (isActiveCells[i][j])
 			{
+				Unit*tmpcells_toprev = gridcells[i][j]->p_prev;
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
 				{
-					if (tmpcells_tonext->entity->GetType() == Entity::PlayerType)
-						tmpcells_tonext = tmpcells_tonext;
+					/*if (tmpcells_tonext->entity->GetType() == Entity::PlayerType)
+						tmpcells_tonext = tmpcells_tonext;*/
 					if (gridcells[i][j]->entity->IsActive())
 						tmpcells_tonext->entity->Update(dt);
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
+				while (tmpcells_toprev != NULL)
+				{
+					/*if (tmpcells_toprev->entity->GetType() == Entity::PlayerType)
+						tmpcells_toprev = tmpcells_toprev;*/
+					if (gridcells[i][j]->entity->IsActive())
+						tmpcells_toprev->entity->Update(dt);
+					tmpcells_toprev = tmpcells_toprev->p_prev;
+				}
 			}
 			
 		}
-}
-
-Unit* Grid::GetGridCells(int i, int j)
-{
-	return this->gridcells[i][j];
-}
-
-Entity* Grid::GetEntity(int i, int j)
-{
-	if (gridcells[i][j] == NULL)
-		return NULL;
-	return this->gridcells[i][j]->entity;
 }

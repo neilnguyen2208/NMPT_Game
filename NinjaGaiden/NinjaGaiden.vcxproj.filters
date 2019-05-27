@@ -213,6 +213,9 @@
     <ClInclude Include="Unit.h">
       <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerBeatenState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -364,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="Unit.cpp">
       <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBeatenState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

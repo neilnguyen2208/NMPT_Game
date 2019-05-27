@@ -1,11 +1,11 @@
 #include "PlayerIdleState.h"
 #include "Textures.h"
-
+#include"Debug.h"
 PlayerIdleState::PlayerIdleState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 1, 1, 1, 9, 4);
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 1, 1, 1, 10, 4);
 }
 
 PlayerIdleState::~PlayerIdleState() {
@@ -22,7 +22,7 @@ void PlayerIdleState::HandleInput() {
 		playerData->player->SetState(Slash);
 	else
 		if (keyboard->GetKeyDown(DIK_F))
-			playerData->player->SetState(Jump);
+			playerData->player->SetState(Jumping);
 		else
 			if (keyboard->GetKey(DIK_LEFTARROW) && !keyboard->GetKey(DIK_RIGHTARROW)) {
 				playerData->player->SetState(Running, 0);
@@ -39,6 +39,20 @@ void PlayerIdleState::HandleInput() {
 }
 
 void PlayerIdleState::OnCollision(Entity * impactor, Entity::SideCollision side) {
+	if (impactor->GetType() == Entity::EnemyType)
+	{
+		if (playerData->player->isHurting)
+		{
+			DebugOut(L"%f\n", playerData->player->HurtingTime);
+			return;
+		}
+		else
+		{
+			playerData->player->SetState(Beaten);
+			DebugOut(L"Ryu have been beated!");
+			return;
+		}
+	}
 }
 
 PlayerState::State PlayerIdleState::GetState() {

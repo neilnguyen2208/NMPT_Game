@@ -26,3 +26,18 @@ BoxCollider Unit::GetCellRect(int i, int j, int cellHeight,int cellWidth)
 	rect.right = (j + 1)*cellWidth - 1;
 	return rect;
 }
+
+Entity* Unit::GetEntity()
+{
+	return this->entity;
+}
+
+Unit* Unit::GetNextUnit()
+{
+	return this->p_next;
+}
+
+Unit* Unit::GetPrevUnit()
+{
+	return this->p_prev;
+}
