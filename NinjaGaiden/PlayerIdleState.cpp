@@ -38,7 +38,7 @@ void PlayerIdleState::HandleInput() {
 }
 
 void PlayerIdleState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	if (impactor->GetType() == Entity::EnemyType)
+	if (impactor->GetType() == Entity::EnemyType && playerData->player->timeHurtingAnimation == 0)
 	{
 		playerData->player->SetState(Beaten);
 		return;

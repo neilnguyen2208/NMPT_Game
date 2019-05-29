@@ -8,6 +8,7 @@
 #include "Thrower.h"
 #include "Eagle.h"
 #include "Soldier.h"
+#include "Item.h"
 #include <iostream>
 #include <fstream>
 #include"Unit.h"

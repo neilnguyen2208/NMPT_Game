@@ -146,7 +146,21 @@ void GameMap::SetMapPath(char * mapPath) {
 			unit = new Unit(grid, soldier);
 		}
 				break;
+		//case 6: {
+		//	Item *item = new Item();
+		//	BoxCollider box;
+		//	box.top = posy;
+		//	box.left = posx;
+		//	box.bottom = posy - hei;
+		//	box.right = posx + wid;
+		//	item->SetSpawnBox(box);
+		//	item->SetTag(Entity::SpiritPoints5);
+		//	//enemyGroup->AddObject(soldier);
+		//	unit = new Unit(grid, item);
+		//}
+		//		break;
 		}
+
 	}
 }
 
