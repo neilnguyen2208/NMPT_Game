@@ -7,6 +7,8 @@
 #include "GameConfig.h"
 #include "MyHelper.h"
 #include "Enemy.h"
+#include "PlayerData.h"
+#include "PlayerState.h"
 
 class Unit;
 
@@ -22,12 +24,7 @@ class Grid {
 
 	Player*player;//lay huong di nhan vat
 	Unit*** gridcells; //Unit* gridCells[rows][columns]
-	void HandleMelee();
-	void HandleCell(Unit* unit);
-	void HandleCell(int x, int y); //unit = gridcells[x][y]
-	void HandleAttack(Unit* unit, Unit* other);
-	void HandleUnit(Unit* unit, Unit* other);
-	double distance(Unit* unit, Unit* other);	
+	
 	Camera*camera;
 
 public:
@@ -61,9 +58,12 @@ public:
 	void RenderActive();
 	void UpdateActivatingCells(double dt);//update the isActiveCell after a frame
 	void UpdateActive(double dt);
-	//void UpdatePosition(double dt);
+	
+	void HandleGridCollision(double dt); //unit = gridcells[i][j]
+	void HandleGridSubFunction(int i, int j, double dt);
+	bool IsOverlap(BoxCollider r1, BoxCollider r2);
+	double HurtingTime;
 
 	Unit* GetGridCells(int, int);
-	Entity* GetEntity(int, int);
-	//vector<Unit*> 
+	
 };

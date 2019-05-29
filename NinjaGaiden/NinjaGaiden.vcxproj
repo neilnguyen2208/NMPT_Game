@@ -160,6 +160,7 @@
     <ClInclude Include="MyHelper.h" />
     <ClInclude Include="ObjectGroup.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBeatenState.h" />
     <ClInclude Include="PlayerClimbState.h" />
     <ClInclude Include="PlayerCrouchSlashState.h" />
     <ClInclude Include="PlayerCrouchState.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="MyHelper.cpp" />
     <ClCompile Include="ObjectGroup.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBeatenState.cpp" />
     <ClCompile Include="PlayerClimbState.cpp" />
     <ClCompile Include="PlayerCrouchSlashState.cpp" />
     <ClCompile Include="PlayerCrouchState.cpp" />

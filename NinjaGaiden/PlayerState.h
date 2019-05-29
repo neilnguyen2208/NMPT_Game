@@ -14,10 +14,11 @@ public:
 		Slash,
 		Crouch,
 		CrouchSlash,
-		Jump,
+		Jumping,
 		Falling,
 		Climb,
 		UseItem,
+		Beaten
 	};
 	~PlayerState();
 	virtual void Update(double dt);

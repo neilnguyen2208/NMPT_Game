@@ -46,8 +46,7 @@ void PlayScene::Update(double dt) {
 	CheckCollision(dt);
 
 	grid->UpdateActive(dt); //Update nhung unit nao dang active
-	grid->UpdateActivatingCells(dt); //ham nay them vao de cap nhat cac cell duoc activated, chua kiem tra duoc do chua co va cham voi ground
-	
+	grid->UpdateActivatingCells(dt); //ham nay them vao de cap nhat cac cell duoc activated, chua kiem tra duoc do chua co va cham voi ground	
 	grid->CheckActivatedObjects();
 		
 	D3DXVECTOR3 playerPos = player->GetPosition();
@@ -71,7 +70,7 @@ void PlayScene::CheckCollision(double dt) {
 
 	//player with ground
 	for (size_t i = 0; i < staticObjects.size(); i++) {
-		
+
 		auto impactorRect = staticObjects[i]->GetRect();
 		float groundTime = CollisionDetector::SweptAABB(exPlayer, player->GetVelocity(), impactorRect, D3DXVECTOR2(0, 0), side, dt);
 
@@ -87,7 +86,7 @@ void PlayScene::CheckCollision(double dt) {
 
 				isOnGround = true;
 			}
-		}		
+		}
 	}
 
 	if (!isOnGround && !player->onAir) {
@@ -96,27 +95,64 @@ void PlayScene::CheckCollision(double dt) {
 
 	//gridcells activate with ground
 	for (size_t i = 0; i < rows; i++)
+	{
 		for (size_t j = 0; j < columns; j++) {
-			
-			if (grid->GetEntity(i, j) == NULL||grid->GetEntity(i, j)->IsActive()==false||grid->GetEntity(i,j)->GetTag()==Entity::Player)
+
+			if (grid->GetGridCells(i, j) == NULL)
 				continue;
-			bool onGround = false;
-			for (size_t k = 0; k < staticObjects.size(); k++) {
-				
-				float collisionTime = CollisionDetector::SweptAABB(grid->GetEntity(i,j), staticObjects[k], side, dt);
 
-				if (collisionTime == 2)
-					continue;
+			Unit*tmpcells_tonext = grid->GetGridCells(i, j);
+			Unit*tmpcells_toprev = grid->GetGridCells(i, j)->GetPrevUnit();
 
-				grid->GetEntity(i,j)->OnCollision(staticObjects[k], side, collisionTime);
-				if (side == Entity::Bottom)
-					onGround = true;
+			while (tmpcells_tonext != NULL)
+			{
+				if (tmpcells_tonext->GetEntity()->IsActive() == true && tmpcells_tonext->GetEntity()->GetTag() != Entity::Player)
+				{
+					bool onGround = false;
+					for (size_t k = 0; k < staticObjects.size(); k++) {
+
+						float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->GetEntity(), staticObjects[k], side, dt);
+
+						if (collisionTime == 2)
+							continue;
+
+						tmpcells_tonext->GetEntity()->OnCollision(staticObjects[k], side, collisionTime);
+						if (side == Entity::Bottom)
+							onGround = true;
+					}
+					if (!onGround/*&&grid->GetGridCells(i,j)->GetEntity()->GetTag()!=Entity::Eagle*/) {
+						tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
+					}
+				}
+				tmpcells_tonext = tmpcells_tonext->GetNextUnit();
 			}
-			if (!onGround&&grid->GetEntity(i,j)->GetTag()/*!=Entity::Eagle*/) {
-				grid->GetEntity(i, j)->AddVy(-CAT_GRAVITY);
+
+			while (tmpcells_toprev != NULL)
+			{
+				if (tmpcells_toprev->GetEntity()->IsActive() == true && tmpcells_toprev->GetEntity()->GetTag() != Entity::Player)
+				{
+					bool onGround = false;
+					for (size_t k = 0; k < staticObjects.size(); k++) {
+
+						float collisionTime = CollisionDetector::SweptAABB(tmpcells_toprev->GetEntity(), staticObjects[k], side, dt);
+
+						if (collisionTime == 2)
+							continue;
+
+						tmpcells_toprev->GetEntity()->OnCollision(staticObjects[k], side, collisionTime);
+						if (side == Entity::Bottom)
+							onGround = true;
+					}
+					if (!onGround/*&&grid->GetGridCells(i,j)->GetEntity()->GetTag()!=Entity::Eagle*/) {
+						tmpcells_toprev->GetEntity()->AddVy(-CAT_GRAVITY);
+					}
+				}
+				tmpcells_toprev = tmpcells_toprev->GetPrevUnit();
 			}
 		}
-
+	}
+	
+	grid->HandleGridCollision(dt);
 }
 
 void PlayScene::CheckCamera() {

@@ -7,6 +7,7 @@
 #include "PlayerJumpingState.h"
 #include "PlayerClimbState.h"
 #include "PlayerUseItemState.h"
+#include"PlayerBeatenState.h"
 #include "Debug.h"
 
 
@@ -21,7 +22,7 @@ Player::Player() : Entity() {
 	instance = this;
 
 	Textures *textures = Textures::GetInstance();
-	textures->Add(TEX_PLAYER, "Resources/Sprites/ryuspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(255, 163, 177));
 
 	playerData = new PlayerData();
 	playerData->player = this;
@@ -34,6 +35,7 @@ Player::Player() : Entity() {
 	jumpState = new PlayerJumpingState(playerData);
 	climbState = new PlayerClimbState(playerData);
 	useItemState = new PlayerUseItemState(playerData);
+	beatenState = new PlayerBeatenState(playerData);
 
 	SetState(PlayerState::Idle);
 	SetTag(Entity::EntityTag::Player);
@@ -42,9 +44,10 @@ Player::Player() : Entity() {
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_PLAYER)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;
-	height = desc.Height / 9;
+	height = desc.Height / 10;
 
 	isActive = true;
+	isRenderLastFrame = true;
 }
 
 Player::~Player() {
@@ -61,28 +64,52 @@ void Player::Update(double dt) {
 
 	BoxCollider exPlayer = BoxCollider(GetPosition(), GetWidth(), GetBigHeight());
 
-	//--DEBUG--
-	if (vely != velocity)
-		vely = vely;
-	//--DEBUG--
-	if (exPlayer.bottom < 39) {
-		vely = vely;
-	}
-	//-Debug
-	auto xside = NotKnow;
-	auto impactorRect = BoxCollider(40, 0, 0, 544);
-	float groundTime = CollisionDetector::SweptAABB(exPlayer, GetVelocity(), impactorRect, D3DXVECTOR2(0, 0), xside, dt);
-
+	if (!isHurting)
+	{ 
 	if ((side == Left && velocity.x < 0) || (side == Right && velocity.x > 0))
 		velocity.x = 0;
 	if ((side == Bottom && velocity.y < 0))
 		velocity.y = 0;
-
+	}
 	side = NotKnow;
+
+	if (isHurting)
+	{
+		HurtingTime += dt;
+		AddVy(-10);
+		isRenderLastFrame = false;
+	}
+	if (HurtingTime >= PLAYER_MAX_HURTING_TIME)
+	{
+		playerData->player->SetState(PlayerState::Idle);
+		isHurting =false;
+		onAir = false;
+		HurtingTime = 0;
+		isHurtingAnimation = true;
+	}
+
 }
 
 void Player::Render() {
-	playerData->state->Render();
+	if (isHurtingAnimation &&  timeHurtingAnimation <= PLAYER_HURTING_TIME_ANIMATION)
+	{
+		if (!isRenderLastFrame)
+		{
+			isRenderLastFrame = true;
+		}
+		else
+		{
+			playerData->state->Render();
+			isRenderLastFrame = false;
+		}
+		timeHurtingAnimation++;
+	}
+	else
+	{
+		playerData->state->Render();
+		timeHurtingAnimation = 0;
+		isHurtingAnimation = false;
+	}
 }
 
 void Player::SetState(PlayerState::State name, int dummy) {
@@ -110,34 +137,36 @@ void Player::SetState(PlayerState::State name, int dummy) {
 	case PlayerState::UseItem:
 		playerData->state = useItemState;
 		break;
-	case PlayerState::Jump:
+	case PlayerState::Jumping:
 		playerData->state = jumpState;
 		break;
 	case PlayerState::Falling:
 		playerData->state = jumpState;
 		falling = true;
 		break;
+	case PlayerState::Beaten:
+		playerData->state = beatenState;
+		break;
 	}
 	currentState = playerData->state->GetState();
 
 	playerData->state->ResetState(dummy);
-	//if (falling && velocity.y > 0) {
-	//	SetVy(0);
-	//}
 }
 
 void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
 	if (impactor->GetTag() == CamRect)
-		return;
-	playerData->state->OnCollision(impactor, side);
-	if (side == Bottom && velocity.y < 0) {
-		velocity.y *= collisionTime;
-		DebugOut(L"Set lai velocity la: %f", velocity.y);
-	}
-	else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
-		velocity.x *= collisionTime;
-	this->collisionTime = collisionTime;
-	this->side = side;
+			return;
+		playerData->state->OnCollision(impactor, side);
+		if (!isHurting)
+		{ 
+			if (side == Bottom && velocity.y < 0) {
+				velocity.y *= collisionTime;
+			}
+			else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
+				velocity.x *= collisionTime;
+		}
+		this->collisionTime = collisionTime;
+		this->side = side;
 }
 
 BoxCollider Player::GetRect() {
@@ -208,4 +237,3 @@ void Player::HandleInput() {
 	if (this->playerData->state)
 		playerData->state->HandleInput();
 }
-

@@ -120,8 +120,5 @@ protected:
 	//size cua entity
 	float width, height;
 
-	//Update Position
-	
-
 	EntityDirection direction;
 };

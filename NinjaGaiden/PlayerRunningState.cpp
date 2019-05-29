@@ -1,10 +1,10 @@
 #include "PlayerRunningState.h"
-
+#include"Debug.h"
 PlayerRunningState::PlayerRunningState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 5, 5, 3, 9, 4, PLAYER_RUNNING_FRAME * (1.0/60));
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 5, 5, 3, 10, 4, PLAYER_RUNNING_FRAME * (1.0/60));
 }
 
 PlayerRunningState::~PlayerRunningState() {
@@ -24,7 +24,7 @@ void PlayerRunningState::HandleInput() {
 	}
 	else
 		if (keyboard->GetKeyDown(DIK_F)) {
-			playerData->player->SetState(Jump);
+			playerData->player->SetState(Jumping);
 		}
 		else
 			if (keyboard->GetKey(DIK_LEFTARROW) && !keyboard->GetKey(DIK_RIGHTARROW))
@@ -44,12 +44,11 @@ void PlayerRunningState::HandleInput() {
 }
 
 void PlayerRunningState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	if (impactor->GetTag() == Entity::Ground && side == Entity::Bottom) return;
-	playerData->player->AddVy(-GRAVITY);
-	if (playerData->player->GetVelocity().y < 0)
-		int x = 0;
-	if (playerData->player->GetVelocity().y <= PLAYER_MAX_FALLING_VELOCITY) {
-		playerData->player->SetVy(PLAYER_MAX_FALLING_VELOCITY);
+	
+	if (impactor->GetType() == Entity::EnemyType)
+	{
+		playerData->player->SetState(Beaten);
+		return;
 	}
 }
 

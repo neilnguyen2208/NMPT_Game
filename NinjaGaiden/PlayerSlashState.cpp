@@ -5,7 +5,7 @@ PlayerSlashState::PlayerSlashState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 2, 2, 3, 9, 4, 0.08f);
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 2, 2, 3, 10, 4, 0.08f);
 }
 
 PlayerSlashState::~PlayerSlashState() {
@@ -33,7 +33,7 @@ void PlayerSlashState::HandleInput() {
 	auto keyboard = KeyBoard::GetInstance();
 	auto player = playerData->player;
 	if (keyboard->GetKeyDown(DIK_F) && !player->onAir)
-		player->SetState(Jump);
+		player->SetState(Jumping);
 	else
 		if (player->onAir) {
 
@@ -80,6 +80,7 @@ void PlayerSlashState::OnCollision(Entity * impactor, Entity::SideCollision side
 		playerData->player->onAir = false;
 		OutputDebugString(L"slash to ground");
 	}
+
 }
 
 PlayerState::State PlayerSlashState::GetState() {

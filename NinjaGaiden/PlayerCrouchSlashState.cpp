@@ -5,7 +5,7 @@ PlayerCrouchSlashState::PlayerCrouchSlashState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 7, 7, 3, 9, 4, 0.1f);
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 7, 7, 3, 10, 4, 0.1f);
 
 }
 
@@ -30,7 +30,7 @@ void PlayerCrouchSlashState::Render() {
 void PlayerCrouchSlashState::HandleInput() {
 	auto keyboard = KeyBoard::GetInstance();
 	if (keyboard->GetKeyDown(DIK_F))
-		playerData->player->SetState(Jump);
+		playerData->player->SetState(Jumping);
 	else
 		playerData->player->SetVelocity(D3DXVECTOR2(0, 0));
 }

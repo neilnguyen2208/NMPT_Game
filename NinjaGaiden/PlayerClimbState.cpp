@@ -5,7 +5,7 @@ PlayerClimbState::PlayerClimbState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 4, 4, 1, 9, 4, 0.1f);
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 4, 4, 1, 10, 4, 0.1f);
 }
 
 PlayerClimbState::~PlayerClimbState() {
