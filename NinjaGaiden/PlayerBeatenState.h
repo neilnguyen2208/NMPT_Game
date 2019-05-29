@@ -13,7 +13,6 @@ public:
 	virtual void OnCollision(Entity *impactor, Entity::SideCollision side);
 	virtual State GetState();
 	virtual void ResetState(int dummy);
-	virtual void Update(double dt);
 
 private:
 	D3DXVECTOR2 acceleration;

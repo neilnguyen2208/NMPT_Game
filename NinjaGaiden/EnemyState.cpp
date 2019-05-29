@@ -26,3 +26,8 @@ void EnemyState::OnCollision(Entity * impactor, Entity::SideCollision side) {
 void EnemyState::ResetState() {
 	m_Animation->ResetAnimation();
 }
+
+EnemyState::State EnemyState::GetState()
+{
+	return Follow;
+}

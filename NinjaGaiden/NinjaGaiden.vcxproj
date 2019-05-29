@@ -142,6 +142,7 @@
     <ClInclude Include="Eagle.h" />
     <ClInclude Include="EagleFollowState.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBeatenState.h" />
     <ClInclude Include="EnemyData.h" />
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="Entity.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Eagle.cpp" />
     <ClCompile Include="EagleFollowState.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBeatenState.cpp" />
     <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />

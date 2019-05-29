@@ -10,6 +10,7 @@
 #define TEX_SOLDIER 9
 #define TEX_HOLDER 10
 #define TEX_ITEM 11
+#define TEX_EXPLODE 12
 
 #define PLAYER_SLASH_FRAME 7
 #define PLAYER_RUNNING_FRAME 4

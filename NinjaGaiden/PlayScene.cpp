@@ -19,6 +19,7 @@ PlayScene::PlayScene() {
 	//initiate player for map
 	player = new Player();
 	player->SetPosition(32, 40 + player->GetBigHeight() / 2.0f);
+//	DebugOut(L"%f", player->GetPosition().y);
 	unit = map->GetUnit();
 	unit = new Unit(grid, player);//them player(mot unit) vao grid, cac unit khac duoc them vao tu class gameMap
 	

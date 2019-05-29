@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "EnemyBeatenState.h"
 
 Enemy::Enemy() : Entity() {
 	type = Entity::EnemyType;
@@ -6,6 +7,7 @@ Enemy::Enemy() : Entity() {
 	enemyData->enemy = this;
 	direction = Entity::LeftToRight;
 	isActive = false;
+	enemyBeatenState = new EnemyBeatenState(enemyData);
 }
 
 Enemy::~Enemy() {
@@ -120,6 +122,10 @@ void Enemy::OnCollision(Entity * impactor, SideCollision side, float collisionTi
 				SetVx(-velocity.x);
 			SetVy(0);
 		}
+	}
+	if (impactor->GetType() == Entity::RyuWeaponType)
+	{
+		enemyData->enemy->SetState(EnemyState::Beaten);
 	}
 }
 

@@ -216,6 +216,9 @@
     <ClInclude Include="PlayerBeatenState.h">
       <Filter>Header Files\Components\Player</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyBeatenState.h">
+      <Filter>Source Files\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="PlayerBeatenState.cpp">
       <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBeatenState.cpp">
+      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

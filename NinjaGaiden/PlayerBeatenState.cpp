@@ -37,7 +37,7 @@ void PlayerBeatenState::OnCollision(Entity * impactor, Entity::SideCollision sid
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		OutputDebugString(L"Beaten to ground\n");
+	//	OutputDebugString(L"Beaten to ground\n");
 	}
 	playerData->player->AddVy(-0.75*GRAVITY);
 
@@ -48,10 +48,6 @@ void PlayerBeatenState::OnCollision(Entity * impactor, Entity::SideCollision sid
 
 PlayerState::State PlayerBeatenState::GetState() {
 	return Beaten;
-}
-
-void PlayerBeatenState::Update(double dt)
-{
 }
 
 void PlayerBeatenState::ResetState(int dummy) {

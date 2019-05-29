@@ -203,11 +203,20 @@ void Grid::HandleGridCollision(double dt)
 	HandleGridSubFunction(iPlayer, jPlayer, dt);
 
 	// Also try the neighboring cells.
-	if (jPlayer > 0 && iPlayer > 0 && iPlayer < rows - 1 && jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer, dt);
-	if (jPlayer > 0 && jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer - 1, dt);
-	if (iPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer - 1, jPlayer, dt);
-	if (jPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer - 1, dt);
-	
+	if (player->GetMoveDirection() == Entity::RightToLeft)
+	{
+		if (jPlayer > 0 && iPlayer > 0) HandleGridSubFunction(iPlayer - 1, jPlayer - 1, dt); //
+		if (jPlayer > 0) HandleGridSubFunction(iPlayer, jPlayer - 1, dt); //
+		if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer, dt); //
+		if (jPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer - 1, dt); //
+	}
+	if (player->GetMoveDirection() == Entity::LeftToRight)
+	{
+		if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer + 1, dt);//
+		if (jPlayer < columns - 1 && iPlayer >0) HandleGridSubFunction(iPlayer - 1, jPlayer + 1, dt);//
+		if (jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer + 1, dt);//
+		if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer+1, jPlayer, dt);//
+	}
 }
 
 void Grid::HandleGridSubFunction(int i, int j, double dt)
@@ -216,42 +225,61 @@ void Grid::HandleGridSubFunction(int i, int j, double dt)
 	HurtingTime = 0;
 
 	Unit*tmpcells_tonext = gridcells[i][j];
-
 	while (tmpcells_tonext != NULL)
 	{
 		if (tmpcells_tonext->entity->IsActive() == true && tmpcells_tonext->entity->GetTag() != Entity::Player)
 		{
-			////check enemy in attack radius
-			//BoxCollider AttackRadius;
-			//AttackRadius.top = player->GetPosition().y + 20;
-			//AttackRadius.bottom = player->GetPosition().y - 20;
-			//AttackRadius.left = player->GetPosition().x - 42;
-			//AttackRadius.right = player->GetPosition().x + 42;
-			//if (!IsOverlap(AttackRadius, tmpcells_tonext->entity->GetRect()))
-			//{
-			//	tmpcells_tonext = tmpcells_tonext->p_next;
-			//	continue;
-			//}
-			////collision attack or use item
-			//if (player->GetState() == PlayerState::Slash || player->GetState() == PlayerState::CrouchSlash)
-			//{	
-			//	Entity* Katana = new Entity;
-			//	if (player->GetMoveDirection() == Entity::RightToLeft)
-			//	{
-			//		Katana->SetPosition(player->GetPosition().x + 20, player->GetPosition().y + 4);
-			//		Katana->SetWidth(20);
-			//		Katana->SetHeight(7);
-			//	}
-			//	float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Katana, side, dt);
-			//	if (collisionTime != 2) // collide happen
-			//	{
-			//		tmpcells_tonext->entity->SetActive(false); 
-			//		tmpcells_tonext = tmpcells_tonext->p_next;
-			//		continue;
-			//	}
-			//}
+			//check enemy in attack radius
+			BoxCollider AttackRadius;
+			AttackRadius.top = player->GetPosition().y + 20;
+			AttackRadius.bottom = player->GetPosition().y - 20;
+			AttackRadius.left = player->GetPosition().x - 42;
+			AttackRadius.right = player->GetPosition().x + 42;
 
-			//collision beaten
+			if (!IsOverlap(AttackRadius, tmpcells_tonext->entity->GetRect()))
+			{
+				tmpcells_tonext = tmpcells_tonext->p_next;
+				continue;
+			}
+
+			//collision ryu attack
+			if (player->GetState() == PlayerState::Slash || player->GetState() == PlayerState::CrouchSlash)
+			{
+				Entity* Katana = new Entity;
+				Katana->SetType(Entity::RyuWeaponType);
+				Katana->SetTag(Entity::Katana);
+				if (player->GetMoveDirection() == Entity::LeftToRight&&player->GetState() == PlayerState::Slash)
+					Katana->SetPosition(player->GetPosition().x + 21, player->GetPosition().y + 5.5);
+				else
+					if (player->GetMoveDirection() == Entity::RightToLeft&&player->GetState() == PlayerState::Slash)
+						Katana->SetPosition(player->GetPosition().x - 21, player->GetPosition().y - 5.5);
+					else
+						if (player->GetMoveDirection() == Entity::LeftToRight&&player->GetState() == PlayerState::CrouchSlash)
+							Katana->SetPosition(player->GetPosition().x + 21, player->GetPosition().y + 0);
+						else
+							if (player->GetMoveDirection() == Entity::RightToLeft&&player->GetState() == PlayerState::CrouchSlash)
+								Katana->SetPosition(player->GetPosition().x - 21, player->GetPosition().y - 0);
+							
+				Katana->SetWidth(19);
+				Katana->SetHeight(7);
+				Katana->SetVx(0);
+				Katana->SetVy(0);
+
+				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Katana, side, dt);
+				if (collisionTime != 2) // collide happen
+				{
+					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+					{
+						tmpcells_tonext->entity->OnCollision(Katana, side, dt);
+						if (tmpcells_tonext == NULL)
+							continue;
+					}
+					tmpcells_tonext = tmpcells_tonext->p_next;
+					continue;
+				}
+			}
+
+			//collision ryu beaten
 			if (tmpcells_tonext->entity->IsActive()) {
 				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, player, side, dt);
 				if (collisionTime == 2)

@@ -40,6 +40,10 @@ void Sparta::SetColliderRight(int right) {
 void Sparta::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = spartaFollowState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}
 	enemyData->state->ResetState();
 }
 

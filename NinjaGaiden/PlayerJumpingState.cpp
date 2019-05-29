@@ -63,7 +63,7 @@ void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision si
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		OutputDebugString(L"Jumping to ground\n");
+		//OutputDebugString(L"Jumping to ground\n");
 	}
 }
 

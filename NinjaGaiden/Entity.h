@@ -46,6 +46,7 @@ public:
 		WindmillStar,
 		Flames,
 		CamRect,
+		Katana,
 		None
 	};
 	enum EntityType {
@@ -53,6 +54,7 @@ public:
 		PlayerType,
 		EnemyType,
 		ItemType,
+		RyuWeaponType,
 		NoneType
 	};
 	enum EntityDirection {

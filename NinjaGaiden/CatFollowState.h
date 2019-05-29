@@ -9,4 +9,5 @@ public:
 	~CatFollowState();
 	virtual void ResetState();
 	virtual void Update(double dt);
+
 };

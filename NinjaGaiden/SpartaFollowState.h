@@ -9,4 +9,5 @@ public:
 	~SpartaFollowState();
 	virtual void ResetState();
 	virtual void Update(double dt);
+
 };
