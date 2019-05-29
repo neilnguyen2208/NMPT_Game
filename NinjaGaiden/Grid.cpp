@@ -271,8 +271,10 @@ void Grid::HandleGridSubFunction(int i, int j, double dt)
 					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType)
 					{
 						tmpcells_tonext->entity->OnCollision(Katana, side, dt);
-						if (tmpcells_tonext == NULL)
-							continue;
+						/*if (tmpcells_tonext->entity->GetTag() == Entity::Player)
+						{
+							tmpcells_tonext->entity->SetActive(true);
+						}*/
 					}
 					tmpcells_tonext = tmpcells_tonext->p_next;
 					continue;
