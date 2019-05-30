@@ -47,6 +47,7 @@ Player::Player() : Entity() {
 	height = desc.Height / 10;
 
 	isActive = true;
+	isRenderLastFrame = true;
 }
 
 Player::~Player() {
@@ -82,20 +83,54 @@ void Player::Update(double dt) {
 
 	side = NotKnow;
 
+	if (!isHurting)
+	{
+		if ((side == Left && velocity.x < 0) || (side == Right && velocity.x > 0))
+			velocity.x = 0;
+		if ((side == Bottom && velocity.y < 0))
+			velocity.y = 0;
+	}
+	side = NotKnow;
+
 	if (isHurting)
 	{
 		HurtingTime += dt;
+		AddVy(-10);
+		isRenderLastFrame = false;
 	}
-	if (HurtingTime >= 1.0)
+	if (HurtingTime >= PLAYER_MAX_HURTING_TIME)
 	{
+		playerData->player->SetState(PlayerState::Idle);
+		isHurting = false;
+		onAir = false;
 		HurtingTime = 0;
-		isHurting =false;
+		isHurtingAnimation = true;
 	}
+
 
 }
 
 void Player::Render() {
-	playerData->state->Render();
+	if (isHurtingAnimation &&  timeHurtingAnimation <= PLAYER_HURTING_TIME_ANIMATION)
+	{
+		if (!isRenderLastFrame)
+		{
+			isRenderLastFrame = true;
+		}
+		else
+		{
+			playerData->state->Render();
+			isRenderLastFrame = false;
+		}
+		timeHurtingAnimation++;
+	}
+	else
+	{
+		playerData->state->Render();
+		timeHurtingAnimation = 0;
+		isHurtingAnimation = false;
+	}
+
 }
 
 void Player::SetState(PlayerState::State name, int dummy) {
@@ -146,12 +181,14 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 	if (impactor->GetTag() == CamRect)
 		return;
 	playerData->state->OnCollision(impactor, side);
-	if (side == Bottom && velocity.y < 0) {
-		velocity.y *= collisionTime;
-	//	DebugOut(L"Set lai velocity la: %f", velocity.y);
+	if (!isHurting)
+	{
+		if (side == Bottom && velocity.y < 0) {
+			velocity.y *= collisionTime;
+		}
+		else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
+			velocity.x *= collisionTime;
 	}
-	else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
-		velocity.x *= collisionTime;
 	this->collisionTime = collisionTime;
 	this->side = side;
 }

@@ -29,9 +29,13 @@ public:
 	virtual BoxCollider GetCollider();
 
 	void HandleInput();
+
 	bool onAir;
 	bool isHurting;
+	bool isRenderLastFrame;
 	double HurtingTime = 0;
+	bool isHurtingAnimation = false;
+	int timeHurtingAnimation = 0;
 
 protected:
 	static Player *instance;

@@ -44,20 +44,10 @@ void PlayerRunningState::HandleInput() {
 }
 
 void PlayerRunningState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	
-	if (impactor->GetType() == Entity::EnemyType)
+	if (impactor->GetType() == Entity::EnemyType && playerData->player->timeHurtingAnimation == 0)
 	{
-		if (playerData->player->isHurting)
-		{
-		//	DebugOut(L"%f\n", playerData->player->HurtingTime);
-			return;
-		}
-		else
-		{
-			playerData->player->SetState(Beaten);
-		//	DebugOut(L"Ryu have been beated!");
-			return;
-		}
+		playerData->player->SetState(Beaten);
+		return;
 	}
 }
 
