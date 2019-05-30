@@ -43,13 +43,13 @@ void PlayerIdleState::OnCollision(Entity * impactor, Entity::SideCollision side)
 	{
 		if (playerData->player->isHurting)
 		{
-			DebugOut(L"%f\n", playerData->player->HurtingTime);
+			//DebugOut(L"%f\n", playerData->player->HurtingTime);
 			return;
 		}
 		else
 		{
 			playerData->player->SetState(Beaten);
-			DebugOut(L"Ryu have been beated!");
+			//DebugOut(L"Ryu have been beated!");
 			return;
 		}
 	}

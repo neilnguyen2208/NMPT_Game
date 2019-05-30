@@ -54,6 +54,10 @@ void Eagle::SetColliderRight(int right) {
 void Eagle::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = eagleFollowState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}	
 	enemyData->state->ResetState();
 }
 

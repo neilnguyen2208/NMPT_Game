@@ -23,27 +23,7 @@ void PlayerBeatenState::HandleInput()
 }
 
 void PlayerBeatenState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	if (impactor->GetTag() == Entity::Ground&&side==Entity::Bottom)
-	{
-		auto keyboard = KeyBoard::GetInstance();
-		if (keyboard->GetKey(DIK_LEFTARROW) && !(keyboard->GetKey(DIK_RIGHTARROW)))
-			playerData->player->SetState(Running);
-		else
-			if (keyboard->GetKey(DIK_RIGHTARROW) && !(keyboard->GetKey(DIK_LEFTARROW)))
-				playerData->player->SetState(Running);
-			else
-				if (keyboard->GetKey(DIK_DOWNARROW))
-					playerData->player->SetState(Crouch);
-				else
-					playerData->player->SetState(Idle);
-		playerData->player->onAir = false;
-	//	OutputDebugString(L"Beaten to ground\n");
-	}
-	playerData->player->AddVy(-0.75*GRAVITY);
 
-	if (playerData->player->GetVelocity().y <= 0.75*PLAYER_MAX_FALLING_VELOCITY) {
-		playerData->player->SetVy(0.75*PLAYER_MAX_FALLING_VELOCITY);
-	}
 }
 
 PlayerState::State PlayerBeatenState::GetState() {

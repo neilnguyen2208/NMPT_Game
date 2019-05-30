@@ -29,7 +29,7 @@ Grid::Grid()
 
 Grid::Grid(BoxCollider r, int rows, int columns) {
 	//--Debug
-	this->rows = 4;
+	this->rows = 2;
 	this->columns = 32;
 	rows = this->rows;
 	columns = this->columns;
@@ -269,20 +269,31 @@ void Grid::HandleGridSubFunction(int i, int j, double dt)
 				if (collisionTime != 2) // collide happen
 				{
 					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType)
-					{
-						tmpcells_tonext->entity->OnCollision(Katana, side, dt);
-						/*if (tmpcells_tonext->entity->GetTag() == Entity::Player)
+					{				
+						//tmpcells_tonext->entity->SetActive(false);
+						if (tmpcells_tonext->entity->GetTag() == Entity::EnemyDie)
+						{
+							tmpcells_tonext = tmpcells_tonext->p_next;
+							continue;
+						}
+						tmpcells_tonext->entity->OnCollision(Katana, side, dt); ;
+						/*if (tmpcells_tonext->p_next->entity->GetTag() == Entity::Player)
+						{
+							tmpcells_tonext->p_next->entity->SetActive(true);
+						}
+						if (tmpcells_tonext->entity->GetTag() == Entity::Player)
 						{
 							tmpcells_tonext->entity->SetActive(true);
 						}*/
 					}
+					
 					tmpcells_tonext = tmpcells_tonext->p_next;
 					continue;
 				}
 			}
 
 			//collision ryu beaten
-			if (tmpcells_tonext->entity->IsActive()) {
+			if (tmpcells_tonext->entity->IsActive()&& tmpcells_tonext->entity->GetTag()!=Entity::EnemyDie) {
 				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, player, side, dt);
 				if (collisionTime == 2)
 				{
@@ -382,7 +393,7 @@ void Grid::RenderActive()
 		for (int j = 0; j < columns; j++)
 		{
 			if (gridcells[i][j] == NULL) continue;
-			if (gridcells[i][j]->entity->IsActive()) {
+			if (isActiveCells[i][j]) {
 				Unit*tmpcells_toprev = gridcells[i][j]->p_prev;
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
@@ -429,7 +440,6 @@ void Grid::UpdateActivatingCells(double dt)
 	}
 }
 
-///
 void Grid::UpdateActive(double dt)
 {
 	for (int i = 0; i < rows; i++)
@@ -442,17 +452,13 @@ void Grid::UpdateActive(double dt)
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
 				{
-					/*if (tmpcells_tonext->entity->GetType() == Entity::PlayerType)
-						tmpcells_tonext = tmpcells_tonext;*/
-					if (gridcells[i][j]->entity->IsActive())
+					if (tmpcells_tonext->entity->IsActive())
 						tmpcells_tonext->entity->Update(dt);
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
 				while (tmpcells_toprev != NULL)
 				{
-					/*if (tmpcells_toprev->entity->GetType() == Entity::PlayerType)
-						tmpcells_toprev = tmpcells_toprev;*/
-					if (gridcells[i][j]->entity->IsActive())
+					if (tmpcells_toprev->entity->IsActive())
 						tmpcells_toprev->entity->Update(dt);
 					tmpcells_toprev = tmpcells_toprev->p_prev;
 				}

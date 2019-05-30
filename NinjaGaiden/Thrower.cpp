@@ -57,6 +57,11 @@ void Thrower::SetState(EnemyState::State state) {
 		enemyData->state = throwerFollowState;
 	else
 		enemyData->state = throwerAttackState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}
+	
 	enemyData->state->ResetState();
 }
 

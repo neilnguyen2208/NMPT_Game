@@ -51,6 +51,11 @@ void Cat::SetColliderRight(int right) {
 void Cat::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = catFollowState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}
+
 	enemyData->state->ResetState();
 }
 

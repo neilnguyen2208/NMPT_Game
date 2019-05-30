@@ -17,5 +17,6 @@ public:
 	virtual void ResetState();
 	virtual void OnCollision(Entity* impactor, Entity::SideCollision side);
 	virtual EnemyState::State GetState();
+	
 };
 

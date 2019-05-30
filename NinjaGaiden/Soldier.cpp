@@ -48,6 +48,11 @@ void Soldier::SetState(EnemyState::State state) {
 		enemyData->state = soldierFollowState;
 	if (state == EnemyState::Attack)
 		enemyData->state = soldierAttackState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}
+
 	enemyData->state->ResetState();
 }
 

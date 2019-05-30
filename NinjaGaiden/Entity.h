@@ -47,6 +47,7 @@ public:
 		Flames,
 		CamRect,
 		Katana,
+		EnemyDie,
 		None
 	};
 	enum EntityType {
@@ -55,6 +56,7 @@ public:
 		EnemyType,
 		ItemType,
 		RyuWeaponType,
+		EnemyDieType,
 		NoneType
 	};
 	enum EntityDirection {
