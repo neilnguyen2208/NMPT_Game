@@ -1,67 +1,67 @@
-#include "FlameWheel.h"
+#include "BlueShuriken.h"
 
-FlameWheel::FlameWheel()
+BlueShuriken::BlueShuriken()
 {
 	Textures *textures = Textures::GetInstance();
-	textures->Add(TEX_FLAME_WHEEL_SKILL, "Resources/Sprites/FlameWheel.png", D3DCOLOR_XRGB(254, 163, 176));
-	tag = Entity::FlameWheel;
+	textures->Add(TEX_BLUE_SHURIKEN_SKILL, "Resources/Sprites/BlueShuriken.png", D3DCOLOR_XRGB(254, 163, 176));
+	tag = Entity::BlueShuriken;
 	type = Entity::RyuWeaponType;
 	D3DSURFACE_DESC desc;
-	textures->Get(TEX_FLAME_WHEEL_SKILL)->GetLevelDesc(0, &desc);
+	textures->Get(TEX_BLUE_SHURIKEN_SKILL)->GetLevelDesc(0, &desc);
 	width = desc.Width / 2;
 	height = desc.Height;
 	
-	LPDIRECT3DTEXTURE9 tex = textures->Get(TEX_FLAME_WHEEL_SKILL);
+	LPDIRECT3DTEXTURE9 tex = textures->Get(TEX_BLUE_SHURIKEN_SKILL);	
 	m_Animation = new Animation();
-	m_Animation->AddFrames(tex, 1, 2, FLAME_WHEEL_SKILL_FRAME * (1 / 60.0f));
+	m_Animation->AddFrames(tex, 1, 2, BLUE_SHURIKEN_SKILL_FRAME * (1 / 60.0f));
 }
 
-void FlameWheel::SetActive(bool isactive)
+void BlueShuriken::SetActive(bool isactive)
 {
 	this->isActive = isactive;
 }
 
-bool FlameWheel::IsActive()
+bool BlueShuriken::IsActive()
 {
 	return isActive;
 }
 
-void FlameWheel::Update(double dt)
+void BlueShuriken::Update(double dt)
 {
 	if (isActive)
 		m_Animation->Update(dt);
 	Entity::Update(dt);
 }
 
-void FlameWheel::Render() {
+void BlueShuriken::Render() {
 	if (isActive)
 		m_Animation->Render();
 }
 
 
-void FlameWheel::SetColliderTop(int top) {
+void BlueShuriken::SetColliderTop(int top) {
 	collider.top = top;
 }
 
 
-void FlameWheel::SetColliderLeft(int left) {
+void BlueShuriken::SetColliderLeft(int left) {
 	collider.left = left;
 	collider.right = -collider.left;
 }
 
-void FlameWheel::SetColliderBottom(int bottom) {
+void BlueShuriken::SetColliderBottom(int bottom) {
 	collider.bottom = bottom;
 }
 
-void FlameWheel::SetColliderRight(int right) {
+void BlueShuriken::SetColliderRight(int right) {
 	collider.right = right;
 }
 
-BoxCollider FlameWheel::GetCollider() {
+BoxCollider BlueShuriken::GetCollider() {
 	return collider;
 }
 
-BoxCollider FlameWheel::GetRect() {
+BoxCollider BlueShuriken::GetRect() {
 	BoxCollider r;
 	r.top = position.y + collider.top;
 	r.bottom = position.y + collider.bottom;
@@ -77,7 +77,7 @@ BoxCollider FlameWheel::GetRect() {
 	return r;
 }
 
-void FlameWheel::SetSpawnBox(BoxCollider box, int direction) {
+void BlueShuriken::SetSpawnBox(BoxCollider box, int direction) {
 	spawnBox = box;
 	spawnPosition.x = (box.left + box.right) / 2.0f;
 	spawnPosition.y = (box.bottom + box.top) / 2.0f;
@@ -85,7 +85,7 @@ void FlameWheel::SetSpawnBox(BoxCollider box, int direction) {
 	MakeInactive();
 }
 
-void FlameWheel::SetMoveDirection(Entity::EntityDirection dir) {
+void BlueShuriken::SetMoveDirection(Entity::EntityDirection dir) {
 	if (dir == direction)
 		return;
 	direction = dir;
@@ -95,55 +95,55 @@ void FlameWheel::SetMoveDirection(Entity::EntityDirection dir) {
 	//	position.x -= offsetScaleX;
 }
 
-Entity::EntityDirection FlameWheel::GetMoveDirection()
+Entity::EntityDirection BlueShuriken::GetMoveDirection()
 {
 	return direction;
 }
 
-void FlameWheel::SetRect(BoxCollider box)
+void BlueShuriken::SetRect(BoxCollider box)
 {
 	collider = box;
 }
 
 
-float FlameWheel::GetWidth() {
+float BlueShuriken::GetWidth() {
 	return collider.right - collider.left;
 }
 
-float FlameWheel::GetBigWidth() {
+float BlueShuriken::GetBigWidth() {
 	return width;
 }
 
 
-float FlameWheel::GetHeight() {
+float BlueShuriken::GetHeight() {
 	return collider.top - collider.bottom;
 }
 
-float FlameWheel::GetBigHeight() {
+float BlueShuriken::GetBigHeight() {
 	return height;
 }
 
 
-BoxCollider FlameWheel::GetSpawnRect() {
+BoxCollider BlueShuriken::GetSpawnRect() {
 	return spawnBox;
 }
 
-void FlameWheel::MakeInactive()
+void BlueShuriken::MakeInactive()
 {
 	isActive = false;
 }
 
-void FlameWheel::Spawn() {
+void BlueShuriken::Spawn() {
 	isActive = true;
 	position.x = spawnBox.left + width / 2.0f;
 	position.y = spawnBox.bottom + height / 2.0f;
 }
 
-Entity::EntityDirection FlameWheel::GetSpawnDirection() {
+Entity::EntityDirection BlueShuriken::GetSpawnDirection() {
 	return spawnDirection;
 }
 
 
-FlameWheel::~FlameWheel()
+BlueShuriken::~BlueShuriken()
 {
 }

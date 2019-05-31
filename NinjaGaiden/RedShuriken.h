@@ -5,7 +5,7 @@
 #include"Player.h"
 //#include"RyuWeaponGroup.h"
 
-class BlueShuriken :public Entity
+class RedShuriken :public Entity
 {
 public:
 	virtual void Update(double dt);
@@ -34,8 +34,8 @@ public:
 	virtual void MakeInactive();
 	virtual void Spawn();
 	virtual Entity::EntityDirection GetSpawnDirection();
-	BlueShuriken();
-	~BlueShuriken();
+	RedShuriken();
+	~RedShuriken();
 
 private:
 

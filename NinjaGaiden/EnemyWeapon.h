@@ -2,12 +2,13 @@
 #include"Entity.h"
 #include"Animation.h"
 #include"Textures.h"
-#include"Player.h"
-//#include"RyuWeaponGroup.h"
 
-class FlameWheel :public Entity
+class EnemyWeapon :public Entity
 {
 public:
+
+	float offsetScaleX;
+
 	virtual void Update(double dt);
 	virtual void Render();
 
@@ -23,21 +24,23 @@ public:
 	virtual void SetColliderRight(int right);
 	virtual void SetMoveDirection(Entity::EntityDirection dir);
 	EntityDirection GetMoveDirection();
+
 	//Get collilder width
 	virtual float GetWidth();
 	virtual float GetBigWidth();
+
 	//Get collider height;
 	virtual float GetHeight();
 	virtual float GetBigHeight();
 	virtual BoxCollider GetCollider();
-//	virtual void OnCollision(Entity *impactor, SideCollision side, float collisionTime);
+
 	virtual void MakeInactive();
 	virtual void Spawn();
 	virtual Entity::EntityDirection GetSpawnDirection();
-	FlameWheel();
-	~FlameWheel();
+	EnemyWeapon();
+	~EnemyWeapon();
 
-private:
+protected:
 
 	D3DXVECTOR3 spawnPosition;
 	Entity::EntityDirection spawnDirection;
@@ -46,5 +49,6 @@ private:
 	float collisionTime;
 	SideCollision side;
 	Animation* m_Animation;
+
 };
 
