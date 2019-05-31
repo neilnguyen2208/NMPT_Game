@@ -68,6 +68,7 @@ void PlayerRunningState::ResetState(int dummy) {
 			if (keyboard->GetKey(DIK_RIGHTARROW) && !keyboard->GetKey(DIK_LEFTARROW))
 				playerData->player->SetVelocity(D3DXVECTOR2(PLAYER_RUN_VELOCITY, 0));
 	}
+	
 	PlayerState::ResetState(dummy);
 }
 

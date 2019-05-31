@@ -29,25 +29,54 @@ public:
 	};
 	enum EntityTag
 	{
-		Ground,
-		Player,
+		Ground, //Ground
+		Wall, //Wall
+
+		Player, //Player
+
+		// 3.1 Enemy
 		Sparta,
 		Cat,
 		Thrower,
 		Eagle,
 		Soldier,
+		// 3.1 Enemy weapon
+		ThrowerWeapon,
+		SoldierWeapon,
+
+		// 3.2 Enemy
+		Runner,
+		Canoner,
+		// 3.2 Enemy weapon
+		CanonerWeapon,
+
+		// 3.3
+		Boss,
+		BossWeapon,
+
+		//Directtly Process Item
 		SpiritPoints5,
 		SpiritPoints10,
 		Scores500,
 		Scores1000,
 		TimeFreeze,
-		Health,
-		ThrowingStar,
-		WindmillStar,
-		Flames,
-		CamRect,
+		HealthPotion,
+
+		//Skill Item
+		FlameSkillIem,
+		BlueShurikenItem,
+		RedShurikenItem,
+
+		//Skill and Katana Entity (WeaponType) use for Collide
+		FlameRound,
+		RedShuriken,
+		BlueShuriken,
 		Katana,
-		EnemyDie,
+
+		//CamRect
+		CamRect,
+		
+		//None
 		None
 	};
 	enum EntityType {
@@ -56,8 +85,13 @@ public:
 		EnemyType,
 		ItemType,
 		RyuWeaponType,
-		EnemyDieType,
+		EnemyWeaponType,
 		NoneType
+	};
+	enum EntityAliveState {
+		Alive,
+		Beaten, 
+		Die
 	};
 	enum EntityDirection {
 		LeftToRight,
@@ -71,6 +105,9 @@ public:
 	virtual void SetTag(EntityTag tag);
 	virtual EntityType GetType();
 	virtual void SetType(EntityType type);
+	virtual EntityAliveState GetAliveState();
+	virtual void SetAliveState(EntityAliveState alivestate);
+
 	virtual void SetStatic(bool flag);
 	virtual void SetPosition(float x, float y);
 	virtual void SetPosition(D3DXVECTOR2 pos);
@@ -112,6 +149,7 @@ protected:
 	int id;
 	EntityTag tag;
 	EntityType type;
+	EntityAliveState aliveState;
 	//duoc goi khi set position cua Entity, dung cho ke thua
 	virtual void OnSetPosition(D3DXVECTOR3 pos);
 

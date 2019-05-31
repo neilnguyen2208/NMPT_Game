@@ -61,6 +61,7 @@ BoxCollider Soldier::GetCollider() {
 }
 
 void Soldier::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }

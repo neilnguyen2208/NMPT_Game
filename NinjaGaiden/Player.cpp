@@ -40,6 +40,7 @@ Player::Player() : Entity() {
 	SetState(PlayerState::Idle);
 	SetTag(Entity::EntityTag::Player);
 	SetType(Entity::EntityType::PlayerType);
+	SetAliveState(Entity::EntityAliveState::Alive);
 
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_PLAYER)->GetLevelDesc(0, &desc);
@@ -48,6 +49,7 @@ Player::Player() : Entity() {
 
 	isActive = true;
 	isRenderLastFrame = true;
+	isHurting = false;
 }
 
 Player::~Player() {
@@ -64,24 +66,6 @@ void Player::Update(double dt) {
 
 	BoxCollider exPlayer = BoxCollider(GetPosition(), GetWidth(), GetBigHeight());
 
-	//--DEBUG--
-	if (vely != velocity)
-		vely = vely;
-	//--DEBUG--
-	if (exPlayer.bottom < 39) {
-		vely = vely;
-	}
-	//-Debug
-	auto xside = NotKnow;
-	auto impactorRect = BoxCollider(40, 0, 0, 544);
-	float groundTime = CollisionDetector::SweptAABB(exPlayer, GetVelocity(), impactorRect, D3DXVECTOR2(0, 0), xside, dt);
-
-	if ((side == Left && velocity.x < 0) || (side == Right && velocity.x > 0))
-		velocity.x = 0;
-	if ((side == Bottom && velocity.y < 0))
-		velocity.y = 0;
-
-	side = NotKnow;
 
 	if (!isHurting)
 	{
@@ -92,11 +76,13 @@ void Player::Update(double dt) {
 	}
 	side = NotKnow;
 
+
 	if (isHurting)
 	{
 		HurtingTime += dt;
 		AddVy(-10);
 		isRenderLastFrame = false;
+		aliveState = Entity::Beaten;
 	}
 	if (HurtingTime >= PLAYER_MAX_HURTING_TIME)
 	{
@@ -105,9 +91,8 @@ void Player::Update(double dt) {
 		onAir = false;
 		HurtingTime = 0;
 		isHurtingAnimation = true;
+		aliveState = Entity::Alive;
 	}
-
-
 }
 
 void Player::Render() {
@@ -172,9 +157,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 	currentState = playerData->state->GetState();
 
 	playerData->state->ResetState(dummy);
-	//if (falling && velocity.y > 0) {
-	//	SetVy(0);
-	//}
+
 }
 
 void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {

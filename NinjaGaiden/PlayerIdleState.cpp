@@ -55,5 +55,6 @@ void PlayerIdleState::ResetState(int dummy) {
 	player->SetColliderLeft(-9);
 	player->SetColliderTop(16);
 	player->SetColliderBottom(-16);
+
 	PlayerState::ResetState(dummy);
 }

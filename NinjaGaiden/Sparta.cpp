@@ -52,6 +52,7 @@ BoxCollider Sparta::GetCollider() {
 }
 
 void Sparta::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }

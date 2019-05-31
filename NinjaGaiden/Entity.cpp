@@ -44,6 +44,16 @@ void Entity::SetType(EntityType type) {
 	this->type = type;
 }
 
+Entity::EntityAliveState Entity::GetAliveState()
+{
+	return this->aliveState;
+}
+
+void Entity::SetAliveState(EntityAliveState alivestate)
+{
+	this->aliveState = alivestate;
+}
+
 void Entity::SetStatic(bool flag) {
 	isStatic = flag;
 	velocity = D3DXVECTOR2(0, 0);

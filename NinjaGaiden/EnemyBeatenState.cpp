@@ -9,7 +9,6 @@ EnemyBeatenState::EnemyBeatenState(EnemyData* data)
 	textures->Add(TEX_EXPLODE, "Resources/Sprites/EnemyBeatenSprite.png", D3DCOLOR_XRGB(254, 163, 176));
 	m_Animation = new Animation();
 	m_Animation->AddFramesA(textures->Get(TEX_EXPLODE), 1, 1, 3, 1, 3, 0.05f);
-	
 }
 
 
@@ -43,9 +42,19 @@ void EnemyBeatenState::Update(double dt)
 
 void EnemyBeatenState::ResetState()
 {
-	enemyData->enemy->SetTag(Entity::EnemyDie);
-	enemyData->enemy->SetVx(0);
-	enemyData->enemy->SetVy(0);
-	DebugOut(L"Enemy has been defeated");
+	if (enemyData->enemy->GetType() == Entity::EnemyType&&enemyData->enemy->GetTag() != Entity::Boss)
+	{
+		enemyData->enemy->SetAliveState(Entity::Die);
+		enemyData->enemy->SetVx(0);
+		enemyData->enemy->SetVy(0);
+		enemyData->enemy->SetColliderTop(0);
+		enemyData->enemy->SetColliderLeft(0);
+		enemyData->enemy->SetColliderLeft(0);
+		enemyData->enemy->SetColliderRight(0);
+	}
+	if (enemyData->enemy->GetType() == Entity::EnemyType&&enemyData->enemy->GetTag() == Entity::Boss)
+	{
+		enemyData->enemy->SetAliveState(Entity::Beaten);
+	}
 	EnemyState::ResetState();
 }

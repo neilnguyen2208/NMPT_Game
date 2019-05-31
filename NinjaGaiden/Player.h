@@ -37,6 +37,18 @@ public:
 	bool isHurtingAnimation = false;
 	int timeHurtingAnimation = 0;
 
+	int Mana; //Luu qua man nho, khong luu qua man lon
+	int HitPoint; // Luu qua man nho, khong luu qua man lon
+	int Point; // Luu qua man
+	int Life; // Luu qua man
+
+	//Cac item khac xu ky ngay khi nhat duoc
+	enum Skill {
+		RedShuriken,
+		FlameRound,
+		None
+	};
+
 protected:
 	static Player *instance;
 	PlayerData *playerData;
