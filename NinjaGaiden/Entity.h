@@ -67,7 +67,7 @@ public:
 		BlueShurikenItem,
 		RedShurikenItem,
 
-		//Skill and Katana Entity (WeaponType) use for Collide
+		//Skill and Katana Entity (RyuWeaponType) use for Collide
 		FlameRound,
 		RedShuriken,
 		BlueShuriken,

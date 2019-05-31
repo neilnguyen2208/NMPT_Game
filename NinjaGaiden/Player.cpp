@@ -6,7 +6,7 @@
 #include "PlayerCrouchSlashState.h"
 #include "PlayerJumpingState.h"
 #include "PlayerClimbState.h"
-#include "PlayerUseItemState.h"
+#include "PlayerUseSkillState.h"
 #include"PlayerBeatenState.h"
 #include "Debug.h"
 
@@ -34,7 +34,7 @@ Player::Player() : Entity() {
 	crouchSlashState = new PlayerCrouchSlashState(playerData);
 	jumpState = new PlayerJumpingState(playerData);
 	climbState = new PlayerClimbState(playerData);
-	useItemState = new PlayerUseItemState(playerData);
+	useSkillState = new PlayerUseSkillState(playerData);
 	beatenState = new PlayerBeatenState(playerData);
 
 	SetState(PlayerState::Idle);
@@ -50,6 +50,8 @@ Player::Player() : Entity() {
 	isActive = true;
 	isRenderLastFrame = true;
 	isHurting = false;
+	//
+	skill = Skill::BlueShuriken;
 }
 
 Player::~Player() {
@@ -140,8 +142,8 @@ void Player::SetState(PlayerState::State name, int dummy) {
 	case PlayerState::Climb:
 		playerData->state = climbState;
 		break;
-	case PlayerState::UseItem:
-		playerData->state = useItemState;
+	case PlayerState::UseSkill:
+		playerData->state = useSkillState;
 		break;
 	case PlayerState::Jumping:
 		playerData->state = jumpState;
@@ -243,4 +245,14 @@ BoxCollider Player::GetCollider() {
 void Player::HandleInput() {
 	if (this->playerData->state)
 		playerData->state->HandleInput();
+}
+
+void Player::SetSkill(Skill skill)
+{
+	this->skill = skill;
+}
+
+Player::Skill Player::GetSkill()
+{
+	return skill;
 }

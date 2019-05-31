@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BlueShuriken.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cat.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="EnemyData.h" />
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FlameWheel.h" />
     <ClInclude Include="GameConfig.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameMap.h" />
@@ -171,8 +173,10 @@
     <ClInclude Include="PlayerRunningState.h" />
     <ClInclude Include="PlayerSlashState.h" />
     <ClInclude Include="PlayerState.h" />
-    <ClInclude Include="PlayerUseItemState.h" />
+    <ClInclude Include="PlayerUseSkillState.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="RedShuriken.h" />
+    <ClInclude Include="RyuWeaponGroup.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Soldier.h" />
@@ -190,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BlueShuriken.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="CatFollowState.cpp" />
@@ -201,6 +206,7 @@
     <ClCompile Include="EnemyBeatenState.cpp" />
     <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FlameWheel.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameTime.cpp" />
@@ -225,8 +231,10 @@
     <ClCompile Include="PlayerRunningState.cpp" />
     <ClCompile Include="PlayerSlashState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
-    <ClCompile Include="PlayerUseItemState.cpp" />
+    <ClCompile Include="PlayerUseSkillState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="RedShuriken.cpp" />
+    <ClCompile Include="RyuWeaponGroup.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene31.cpp" />
     <ClCompile Include="SceneManager.cpp" />

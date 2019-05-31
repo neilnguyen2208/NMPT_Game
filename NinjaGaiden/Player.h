@@ -15,8 +15,7 @@ public:
 	void OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime);
 	BoxCollider GetRect();
 	BoxCollider GetBigBound();
-	PlayerState::State GetState();
-	//PlayerData*GetPlayerData();
+	PlayerState::State GetState();	
 	virtual int GetBigWidth();
 	virtual int GetBigHeight();
 	virtual float GetWidth();
@@ -44,10 +43,14 @@ public:
 
 	//Cac item khac xu ky ngay khi nhat duoc
 	enum Skill {
+		BlueShuriken,
 		RedShuriken,
 		FlameRound,
-		None
+		NoneSkill
 	};
+
+	virtual void SetSkill(Skill skill);
+	virtual Skill GetSkill();
 
 protected:
 	static Player *instance;
@@ -60,10 +63,11 @@ protected:
 		*jumpState,
 		*crouchSlashState,
 		*climbState,
-		*useItemState,
+		*useSkillState,
 		*beatenState;
 	PlayerState::State currentState;
 	BoxCollider collider;
 	float collisionTime;
 	SideCollision side;
+	Skill skill;
 };

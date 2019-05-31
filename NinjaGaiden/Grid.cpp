@@ -201,43 +201,46 @@ void Grid::HandleGridCollision(double dt)
 
 	if (iPlayer < 0 || jPlayer < 0) return;
 
+	if (player->GetSkill() == Player::NoneSkill)
+	{
 	HandleGridSubFunction(iPlayer, jPlayer, dt);
 
 	// Also try the neighboring cells.
-	if (player->GetMoveDirection() == Entity::RightToLeft)
-	{
-		if (jPlayer > 0 && iPlayer > 0) HandleGridSubFunction(iPlayer - 1, jPlayer - 1, dt); //
-		if (jPlayer > 0) HandleGridSubFunction(iPlayer, jPlayer - 1, dt); //
-		if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer, dt); //
-		if (jPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer - 1, dt); //
-	}
-	if (player->GetMoveDirection() == Entity::LeftToRight)
-	{
-		if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer + 1, dt);//
-		if (jPlayer < columns - 1 && iPlayer >0) HandleGridSubFunction(iPlayer - 1, jPlayer + 1, dt);//
-		if (jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer + 1, dt);//
-		if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer+1, jPlayer, dt);//
+	
+		if (player->GetMoveDirection() == Entity::RightToLeft)
+		{
+			if (jPlayer > 0 && iPlayer > 0) HandleGridSubFunction(iPlayer - 1, jPlayer - 1, dt); //
+			if (jPlayer > 0) HandleGridSubFunction(iPlayer, jPlayer - 1, dt); //
+			if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer, dt); //
+			if (jPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer - 1, dt); //
+		}
+		if (player->GetMoveDirection() == Entity::LeftToRight)
+		{
+			if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer + 1, dt);//
+			if (jPlayer < columns - 1 && iPlayer >0) HandleGridSubFunction(iPlayer - 1, jPlayer + 1, dt);//
+			if (jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer + 1, dt);//
+			if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer, dt);//
+		}
 	}
 }
 
 void Grid::HandleGridSubFunction(int i, int j, double dt)
 {
-	auto side = Entity::NotKnow;
+	auto side = Entity::NotKnow;          
 
 	Unit*tmpcells_tonext = gridcells[i][j];
 	
-
 	//Process collide to next
 	while (tmpcells_tonext != NULL)
 	{
 		if (tmpcells_tonext->entity->IsActive() == true && tmpcells_tonext->entity->GetTag() != Entity::Player)
-		{
-			//check enemy in attack radius
+		{	
+			//check enemy in normal attack radius
 			BoxCollider AttackRadius;
 			AttackRadius.top = player->GetPosition().y + 20;
 			AttackRadius.bottom = player->GetPosition().y - 20;
-			AttackRadius.left = player->GetPosition().x - 42; //42
-			AttackRadius.right = player->GetPosition().x + 42;
+			AttackRadius.left = player->GetPosition().x - 200; //42
+			AttackRadius.right = player->GetPosition().x + 200;
 
 			if (!IsOverlap(AttackRadius, tmpcells_tonext->entity->GetRect()))
 			{
@@ -251,6 +254,10 @@ void Grid::HandleGridSubFunction(int i, int j, double dt)
 				Entity* Katana = new Entity;
 				Katana->SetType(Entity::RyuWeaponType);
 				Katana->SetTag(Entity::Katana);
+				Katana->SetWidth(200); //19
+				Katana->SetHeight(7); //7
+				Katana->SetVx(0);
+				Katana->SetVy(0);
 				if (player->GetMoveDirection() == Entity::LeftToRight&&player->GetState() == PlayerState::Slash)
 					Katana->SetPosition(player->GetPosition().x + 21, player->GetPosition().y + 5.5);
 				else
@@ -263,11 +270,6 @@ void Grid::HandleGridSubFunction(int i, int j, double dt)
 							if (player->GetMoveDirection() == Entity::RightToLeft&&player->GetState() == PlayerState::CrouchSlash)
 								Katana->SetPosition(player->GetPosition().x - 21, player->GetPosition().y - 0);
 							
-				Katana->SetWidth(19); //19
-				Katana->SetHeight(7); //7
-				Katana->SetVx(0);
-				Katana->SetVy(0);
-
 				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Katana, side, dt);
 				if (collisionTime != 2) // collide happen
 				{
@@ -362,7 +364,6 @@ void Grid::CheckActivatedObjects()
 								tmpcells_toprev->entity->SetActive(true);
 							tmpcells_toprev = tmpcells_toprev->p_prev;
 						}
-
 					}
 					else
 						if (j == jmax)

@@ -17,7 +17,7 @@ public:
 		Jumping,
 		Falling,
 		Climb,
-		UseItem,
+		UseSkill,
 		Beaten
 	};
 	~PlayerState();
