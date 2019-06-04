@@ -50,6 +50,11 @@ void PlayerJumpingState::HandleInput() {
 }
 
 void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision side) {	
+	if (impactor->GetType() == Entity::EnemyType && playerData->player->timeHurtingAnimation == 0)
+	{
+		playerData->player->SetState(Beaten);
+		return;
+	}
 	if (impactor->GetTag() == Entity::Ground && side == Entity::Bottom) {
 		auto keyboard = KeyBoard::GetInstance();
 		if (keyboard->GetKey(DIK_LEFTARROW) && !(keyboard->GetKey(DIK_RIGHTARROW)))
@@ -63,7 +68,7 @@ void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision si
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		OutputDebugString(L"Jumping to ground\n");
+		//OutputDebugString(L"Jumping to ground\n");
 	}
 }
 

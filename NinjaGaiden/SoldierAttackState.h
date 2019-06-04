@@ -9,4 +9,5 @@ public:
 	~SoldierAttackState();
 	virtual void ResetState();
 	virtual void Update(double dt);
+
 };

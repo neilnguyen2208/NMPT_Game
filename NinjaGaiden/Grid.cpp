@@ -29,7 +29,7 @@ Grid::Grid()
 
 Grid::Grid(BoxCollider r, int rows, int columns) {
 	//--Debug
-	this->rows = 4;
+	this->rows = 2;
 	this->columns = 32;
 	rows = this->rows;
 	columns = this->columns;
@@ -126,7 +126,7 @@ Unit* Grid::GetGridCells(int i, int j)
 	return this->gridcells[i][j];
 }
 
-#pragma endregion
+
 
 void Grid::Move(Unit * unit, double x, double y, double dt)
 {
@@ -176,6 +176,7 @@ void Grid::AddToCell(Unit * other)
 
 	if (i < 0 || j < 0) //
 	{
+	//	other->entity->SetAliveState(Entity::Die);
 		other->entity->SetActive(false);
 		DebugOut(L"%dOut of grid", j);
 		return;
@@ -192,7 +193,7 @@ void Grid::AddToCell(Unit * other)
 		other->p_next->p_prev = other;
 	}
 }
-
+#pragma endregion
 void Grid::HandleGridCollision(double dt)
 {
 	int iPlayer = player->GetPosition().y / cellHeight;
@@ -200,71 +201,112 @@ void Grid::HandleGridCollision(double dt)
 
 	if (iPlayer < 0 || jPlayer < 0) return;
 
+	//if (player->GetSkill() == Player::NoneSkill)
+	//{
 	HandleGridSubFunction(iPlayer, jPlayer, dt);
 
 	// Also try the neighboring cells.
-	if (jPlayer > 0 && iPlayer > 0 && iPlayer < rows - 1 && jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer, dt);
-	if (jPlayer > 0 && jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer - 1, dt);
-	if (iPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer - 1, jPlayer, dt);
-	if (jPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer - 1, dt);
 	
+		if (player->GetMoveDirection() == Entity::RightToLeft)
+		{
+			if (jPlayer > 0 && iPlayer > 0) HandleGridSubFunction(iPlayer - 1, jPlayer - 1, dt); //
+			if (jPlayer > 0) HandleGridSubFunction(iPlayer, jPlayer - 1, dt); //
+			if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer, dt); //
+			if (jPlayer > 0 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer - 1, dt); //
+		}
+		if (player->GetMoveDirection() == Entity::LeftToRight)
+		{
+			if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer + 1, dt);//
+			if (jPlayer < columns - 1 && iPlayer >0) HandleGridSubFunction(iPlayer - 1, jPlayer + 1, dt);//
+			if (jPlayer < columns - 1) HandleGridSubFunction(iPlayer, jPlayer + 1, dt);//
+			if (iPlayer < rows - 1) HandleGridSubFunction(iPlayer + 1, jPlayer, dt);//
+		}
+	//}
 }
 
 void Grid::HandleGridSubFunction(int i, int j, double dt)
 {
-	auto side = Entity::NotKnow;
-	HurtingTime = 0;
+	auto side = Entity::NotKnow;          
 
 	Unit*tmpcells_tonext = gridcells[i][j];
-
+	
+	//Process collide to next
 	while (tmpcells_tonext != NULL)
 	{
 		if (tmpcells_tonext->entity->IsActive() == true && tmpcells_tonext->entity->GetTag() != Entity::Player)
-		{
-			////check enemy in attack radius
-			//BoxCollider AttackRadius;
-			//AttackRadius.top = player->GetPosition().y + 20;
-			//AttackRadius.bottom = player->GetPosition().y - 20;
-			//AttackRadius.left = player->GetPosition().x - 42;
-			//AttackRadius.right = player->GetPosition().x + 42;
-			//if (!IsOverlap(AttackRadius, tmpcells_tonext->entity->GetRect()))
-			//{
-			//	tmpcells_tonext = tmpcells_tonext->p_next;
-			//	continue;
-			//}
-			////collision attack or use item
-			//if (player->GetState() == PlayerState::Slash || player->GetState() == PlayerState::CrouchSlash)
-			//{	
-			//	Entity* Katana = new Entity;
-			//	if (player->GetMoveDirection() == Entity::RightToLeft)
-			//	{
-			//		Katana->SetPosition(player->GetPosition().x + 20, player->GetPosition().y + 4);
-			//		Katana->SetWidth(20);
-			//		Katana->SetHeight(7);
-			//	}
-			//	float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Katana, side, dt);
-			//	if (collisionTime != 2) // collide happen
-			//	{
-			//		tmpcells_tonext->entity->SetActive(false); 
-			//		tmpcells_tonext = tmpcells_tonext->p_next;
-			//		continue;
-			//	}
-			//}
+		{	
+			//check enemy in normal attack radius
+			BoxCollider AttackRadius;
+			AttackRadius.top = player->GetPosition().y + 20;
+			AttackRadius.bottom = player->GetPosition().y - 20;
+			AttackRadius.left = player->GetPosition().x - 42; //42
+			AttackRadius.right = player->GetPosition().x + 42;
 
-			//collision beaten
-			if (tmpcells_tonext->entity->IsActive()) {
+			if (!IsOverlap(AttackRadius, tmpcells_tonext->entity->GetRect()))
+			{
+				tmpcells_tonext = tmpcells_tonext->p_next;
+				continue;
+			}
+
+			//collision ryu attack
+			if( (player->GetState() == PlayerState::Slash || player->GetState() == PlayerState::CrouchSlash))
+			{
+				Entity* Katana = new Entity;
+				Katana->SetType(Entity::RyuWeaponType);
+				Katana->SetTag(Entity::Katana);
+				Katana->SetWidth(19); //19
+				Katana->SetHeight(7); //7
+				Katana->SetVx(0);
+				Katana->SetVy(0);
+				if (player->GetMoveDirection() == Entity::LeftToRight&&player->GetState() == PlayerState::Slash)
+					Katana->SetPosition(player->GetPosition().x + 21, player->GetPosition().y + 5.5);
+				else
+					if (player->GetMoveDirection() == Entity::RightToLeft&&player->GetState() == PlayerState::Slash)
+						Katana->SetPosition(player->GetPosition().x - 21, player->GetPosition().y - 5.5);
+					else
+						if (player->GetMoveDirection() == Entity::LeftToRight&&player->GetState() == PlayerState::CrouchSlash)
+							Katana->SetPosition(player->GetPosition().x + 21, player->GetPosition().y + 0);
+						else
+							if (player->GetMoveDirection() == Entity::RightToLeft&&player->GetState() == PlayerState::CrouchSlash)
+								Katana->SetPosition(player->GetPosition().x - 21, player->GetPosition().y - 0);
+							
+				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Katana, side, dt);
+				if (collisionTime != 2) // collide happen
+				{
+					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType || tmpcells_tonext->entity->GetType() == Entity::ItemType)
+					{
+						if (tmpcells_tonext->entity->GetAliveState() == Entity::Die)
+						{
+							tmpcells_tonext = tmpcells_tonext->p_next;
+							continue;
+						}
+						tmpcells_tonext->entity->OnCollision(Katana, side, dt);
+					}
+
+					tmpcells_tonext = tmpcells_tonext->p_next;
+					continue;
+				}
+			}
+
+			//collision ryu beaten
+			if (tmpcells_tonext->entity->IsActive() && ( (tmpcells_tonext->entity->GetAliveState()!=Entity::Die && tmpcells_tonext->entity->GetType() != Entity::ItemType) || (tmpcells_tonext->entity->GetType() == Entity::ItemType && tmpcells_tonext->entity->GetStatusItem() != Entity::UnavailableItem))) {
 				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, player, side, dt);
 				if (collisionTime == 2)
 				{
 					tmpcells_tonext = tmpcells_tonext->p_next;
 					continue;
 				}
-				if (!player->isHurting)
-				player->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);			
+				player->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);
+				if (tmpcells_tonext->entity->GetType() == Entity::ItemType)
+				{
+					player->AddItem(tmpcells_tonext->entity->GetTag());
+					tmpcells_tonext->entity->SetActive(false);
+				}
 			}
 		}
 		tmpcells_tonext = tmpcells_tonext->p_next;
 	}
+
 }
 
 
@@ -276,13 +318,13 @@ bool Grid::IsOverlap(BoxCollider r1, BoxCollider r2) {
 
 void Grid::CheckActivatedObjects()
 {
-	//lay cac unit hai ben ria map
-	bool** activatedcells = GetActivatedCells();
+	//lay cac unit hai ben ria map	
 	int jmax = 0;
 	int jmin = 1000;
+
 	for (int j = 0; j < columns; j++)
 	{
-		if (activatedcells[0][j] == true)
+		if (isActiveCells[0][j] == true)
 		{
 			if (j > jmax)
 				jmax = j;
@@ -292,58 +334,66 @@ void Grid::CheckActivatedObjects()
 			}
 		}
 	}
+
 	//lay huong di nhan vat
 	Entity::EntityDirection playerdirection = player->GetMoveDirection();
 	for (int i = 0; i < rows; i++)
-		for (int j_full = 0; j_full < columns; j_full++)
+		for (int j = 0; j < columns; j++)
 		{
-			if (gridcells[i][j_full] == NULL)
+			if (gridcells[i][j] == NULL)
 				continue;
-			if (j_full < jmin)
-			{ 
-				if (gridcells[i][j_full]->entity->GetType() == Entity::PlayerType)
-					j_full = j_full;
-				gridcells[i][j_full]->entity->SetActive(false);
+			if (!isActiveCells[i][j])
+				continue;
+			if (j < jmin)
+			{
+				gridcells[i][j]->entity->SetActive(false);
 			}
 			else
-				if (j_full > jmax)
+				if (j > jmax)
 				{
-					if (gridcells[i][j_full]->entity->GetType() == Entity::PlayerType)
-						j_full = j_full;
-					gridcells[i][j_full]->entity->SetActive(false);
+					gridcells[i][j]->entity->SetActive(false);
 				}
 				else
-
-					if (j_full == jmin)
+					if (j == jmin)
 					{
-						if ((player->GetMoveDirection() == Entity::RightToLeft) && (gridcells[i][j_full]->entity->GetMoveDirection() == Entity::LeftToRight))
-							if (!gridcells[i][j_full]->entity->IsActive())
-							{
-								Unit*tmpcells_toprev = gridcells[i][j_full]->p_prev;
-								Unit*tmpcells_tonext = gridcells[i][j_full];
-								while (tmpcells_tonext != NULL)
-								{
-									tmpcells_tonext->entity->SetActive(true);
-									tmpcells_tonext = tmpcells_tonext->p_next;
-								}
-							}
+						Unit*tmpcells_toprev = gridcells[i][j]->p_prev;
+						Unit*tmpcells_tonext = gridcells[i][j];
+						while (tmpcells_tonext != NULL)
+						{
+							if (tmpcells_tonext->entity->IsActive() == false && tmpcells_tonext->entity->GetMoveDirection() == Entity::LeftToRight)
+								tmpcells_tonext->entity->SetActive(true);
+							tmpcells_tonext = tmpcells_tonext->p_next;
+						}
+						while (tmpcells_toprev != NULL)
+						{
+							if (tmpcells_toprev->entity->IsActive() == false && tmpcells_toprev->entity->GetMoveDirection() == Entity::LeftToRight)
+								tmpcells_toprev->entity->SetActive(true);
+							tmpcells_toprev = tmpcells_toprev->p_prev;
+						}
 					}
 					else
-						if (j_full == jmax)
+						if (j == jmax)
 						{
-							if ((player->GetMoveDirection() == Entity::LeftToRight) && (gridcells[i][j_full]->entity->GetMoveDirection() == Entity::RightToLeft))
-								if (!gridcells[i][j_full]->entity->IsActive())
+							if ((player->GetMoveDirection() == Entity::LeftToRight))							
+							{
+								Unit*tmpcells_toprev = gridcells[i][j]->p_prev;
+								Unit*tmpcells_tonext = gridcells[i][j];
+								while (tmpcells_tonext != NULL)
 								{
-									Unit*tmpcells_toprev = gridcells[i][j_full]->p_prev;
-									Unit*tmpcells_tonext = gridcells[i][j_full];
-									while (tmpcells_tonext != NULL)
-									{
-										tmpcells_tonext->entity->SetActive(true);
-										tmpcells_tonext = tmpcells_tonext->p_next;
-									}
+									if (tmpcells_tonext->entity->IsActive() == false&&tmpcells_tonext->entity->GetMoveDirection() == Entity::RightToLeft)
+										tmpcells_tonext->entity->SetActive(true);					
+									tmpcells_tonext = tmpcells_tonext->p_next;
 								}
+								while (tmpcells_toprev != NULL)
+								{
+									if (tmpcells_toprev->entity->IsActive() == false && tmpcells_toprev->entity->GetMoveDirection() == Entity::RightToLeft)
+										tmpcells_toprev->entity->SetActive(true);
+									tmpcells_toprev = tmpcells_toprev->p_prev;
+								}
+							}
 						}
 		}
+		
 }
 
 //Render - Update
@@ -353,7 +403,7 @@ void Grid::RenderActive()
 		for (int j = 0; j < columns; j++)
 		{
 			if (gridcells[i][j] == NULL) continue;
-			if (gridcells[i][j]->entity->IsActive()) {
+			if (isActiveCells[i][j]) {
 				Unit*tmpcells_toprev = gridcells[i][j]->p_prev;
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
@@ -400,7 +450,6 @@ void Grid::UpdateActivatingCells(double dt)
 	}
 }
 
-///
 void Grid::UpdateActive(double dt)
 {
 	for (int i = 0; i < rows; i++)
@@ -413,21 +462,16 @@ void Grid::UpdateActive(double dt)
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
 				{
-					/*if (tmpcells_tonext->entity->GetType() == Entity::PlayerType)
-						tmpcells_tonext = tmpcells_tonext;*/
-					if (gridcells[i][j]->entity->IsActive())
+					if (tmpcells_tonext->entity->IsActive())
 						tmpcells_tonext->entity->Update(dt);
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
 				while (tmpcells_toprev != NULL)
 				{
-					/*if (tmpcells_toprev->entity->GetType() == Entity::PlayerType)
-						tmpcells_toprev = tmpcells_toprev;*/
-					if (gridcells[i][j]->entity->IsActive())
+					if (tmpcells_toprev->entity->IsActive())
 						tmpcells_toprev->entity->Update(dt);
 					tmpcells_toprev = tmpcells_toprev->p_prev;
 				}
-			}
-			
+			}		
 		}
 }

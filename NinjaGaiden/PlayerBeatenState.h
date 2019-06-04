@@ -4,7 +4,7 @@
 #include "PlayerData.h"
 #include "Player.h"
 
-class PlayerBeatenState: public PlayerState{
+class PlayerBeatenState : public PlayerState {
 public:
 	PlayerBeatenState(PlayerData*data);
 	~PlayerBeatenState();

@@ -8,53 +8,43 @@
 
 class Item : public Entity {
 public:
-
-	enum ItemState {
-		Unavailable,
-		Available
-	};
-	//enum ItemType {
-	//	SpiritPoints5,
-	//	SpiritPoints10,
-	//	Scores500,
-	//	Scores1000,
-	//	TimeFreeze,
-	//	Health,
-	//	ThrowingStar,
-	//	WindmillStar,
-	//	Flames
-	//};
-
-
-	Item();
+	
+	Item(Entity::EntityTag tagItem);
 	~Item();
-
 	virtual void Update(double dt);
 	virtual void Render();
+	void SetState(ItemState::State name);
+	void OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime);
 
-	//Get real rect in world 
 	virtual BoxCollider GetRect();
-	//Get spawn box in world
-	virtual BoxCollider GetSpawnRect();
+
+	virtual void SetMoveDirection(Entity::EntityDirection dir);
 
 	virtual void SetActive(bool active);
-	//= SetCollider
-	virtual void SetSpawnBox(BoxCollider box);
+
+
+	virtual void SetSpawnBox(BoxCollider box, int direction);
 	virtual float GetWidth();
 	virtual float GetHeight();
-	virtual void OnCollision(Entity *impactor, SideCollision side, float collisionTime);
 	virtual void MakeInactive();
-	virtual void Spawn();
+	virtual void SetColliderTop(int top);
+	virtual void SetColliderLeft(int left);
+	virtual void SetColliderBottom(int bottom);
+	virtual void SetColliderRight(int right);
 
 protected:
-
-	ItemState state;
+	ItemData *itemData;
+	ItemState
+		*itemAvailableState,
+		*itemHolderState;
+	Entity::EntityDirection spawnDirection;
 	BoxCollider collider;
 	D3DXVECTOR3 spawnPosition;
 	BoxCollider spawnBox;
 	float collisionTime;
 	SideCollision side;
-	ItemData *itemData;
+	int timelimit = 0;
+	
 };
 
 

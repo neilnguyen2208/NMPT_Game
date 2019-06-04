@@ -94,7 +94,7 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.left = posx;
 			box.bottom = posy - hei;
 			box.right = posx + wid;
-			sparta->SetSpawnBox(box, direction);			
+			sparta->SetSpawnBox(box, direction);
 			unit = new Unit(grid, sparta);
 		}
 				break;
@@ -146,21 +146,106 @@ void GameMap::SetMapPath(char * mapPath) {
 			unit = new Unit(grid, soldier);
 		}
 				break;
-		//case 6: {
-		//	Item *item = new Item();
-		//	BoxCollider box;
-		//	box.top = posy;
-		//	box.left = posx;
-		//	box.bottom = posy - hei;
-		//	box.right = posx + wid;
-		//	item->SetSpawnBox(box);
-		//	item->SetTag(Entity::SpiritPoints5);
-		//	//enemyGroup->AddObject(soldier);
-		//	unit = new Unit(grid, item);
-		//}
-		//		break;
+		case 6: { //SpiritPoints5
+			Item *item6 = new Item(Entity::SpiritPoints5);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item6->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item6);
 		}
-
+				break;
+		case 7: { //SpiritPoints10
+			Item *item7 = new Item(Entity::SpiritPoints10);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item7->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item7);
+		}
+				break;
+		case 8: { //Scores500
+			Item *item8 = new Item(Entity::Scores500);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item8->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item8);
+		}
+				break;
+		case 9: { //Scores1000
+			Item *item9 = new Item(Entity::Scores1000);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item9->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item9);
+		}
+				break;
+		case 10: { //TimeFreeze
+			Item *item10 = new Item(Entity::TimeFreeze);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item10->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item10);
+		}
+				break;
+		case 11: { //Health
+			Item *item11 = new Item(Entity::Health);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item11->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item11);
+		}
+				 break;
+		case 12: { //ThrowingStar
+			Item *item12 = new Item(Entity::ThrowingStar);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item12->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item12);
+		}
+				 break;
+		case 13: { //WindmillStar
+			Item *item13 = new Item(Entity::WindmillStar);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item13->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item13);
+		}
+				 break;
+		case 14: { //Flames
+			Item *item14 = new Item(Entity::Flames);
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			item14->SetSpawnBox(box, direction);
+			unit = new Unit(grid, item14);
+		}
+				 break;
+		}
 	}
 }
 

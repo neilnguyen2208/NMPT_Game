@@ -12,8 +12,7 @@ public:
 	Sparta();
 	~Sparta();
 	void OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime);
-	//virtual float GetWidth();
-	//virtual float GetHeight();
+
 	virtual void SetColliderTop(int top);
 	virtual void SetColliderLeft(int left);
 	virtual void SetColliderBottom(int bottom);

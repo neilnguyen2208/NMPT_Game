@@ -6,6 +6,8 @@ ThrowerAttackState::ThrowerAttackState(EnemyData *data) : EnemyState(data) {
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_THROWER);
 	m_Animation = new Animation();
 	m_Animation->AddFramesA(texture, 1, 1, 2, 2, 2, THROWER_FRAME * (1 / 60.0f));
+
+	throwerBullet = new ThrowerBullet();
 }
 
 ThrowerAttackState::~ThrowerAttackState() {

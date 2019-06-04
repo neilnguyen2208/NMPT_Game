@@ -48,6 +48,11 @@ void Soldier::SetState(EnemyState::State state) {
 		enemyData->state = soldierFollowState;
 	if (state == EnemyState::Attack)
 		enemyData->state = soldierAttackState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}
+
 	enemyData->state->ResetState();
 }
 
@@ -56,6 +61,7 @@ BoxCollider Soldier::GetCollider() {
 }
 
 void Soldier::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }

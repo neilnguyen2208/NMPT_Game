@@ -9,4 +9,5 @@ public:
 	~EagleFollowState();
 	virtual void ResetState();
 	virtual void Update(double dt);
+
 };

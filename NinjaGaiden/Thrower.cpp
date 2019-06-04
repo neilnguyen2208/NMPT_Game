@@ -55,8 +55,11 @@ void Thrower::SetColliderRight(int right) {
 void Thrower::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = throwerFollowState;
-	else
+	if(state==EnemyState::Attack)
 		enemyData->state = throwerAttackState;
+	if (state == EnemyState::Beaten)
+		enemyData->state = enemyBeatenState;
+	
 	enemyData->state->ResetState();
 }
 
@@ -65,6 +68,7 @@ BoxCollider Thrower::GetCollider() {
 }
 
 void Thrower::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }

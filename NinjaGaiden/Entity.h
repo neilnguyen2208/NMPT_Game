@@ -29,12 +29,32 @@ public:
 	};
 	enum EntityTag
 	{
-		Ground,
+		Ground, //Ground
+		Wall, //Wall
+
+		Player, //Player
+
+		// 3.1 Enemy
 		Sparta,
 		Cat,
 		Thrower,
 		Eagle,
 		Soldier,
+		// 3.1 Enemy weapon
+		ThrowerWeapon,
+		SoldierWeapon,
+
+		// 3.2 Enemy
+		Runner,
+		Canoner,
+		// 3.2 Enemy weapon
+		CanonerWeapon,
+
+		// 3.3
+		Boss,
+		BossWeapon,
+
+		//Directtly Process Item
 		SpiritPoints5, //6
 		SpiritPoints10, //7
 		Scores500, //8
@@ -44,8 +64,22 @@ public:
 		ThrowingStar, //12
 		WindmillStar, //13
 		Flames, //14
+
+		//Skill Item
+		FlameSkillIem,
+		BlueShurikenItem,
+		RedShurikenItem,
+
+		//Skill and Katana Entity (RyuWeaponType) use for Collide
+		FlameWheel,
+		RedShuriken,
+		BlueShuriken,
+		Katana,
+
+		//CamRect
 		CamRect,
-		Player,
+		
+		//None
 		None
 	};
 	enum EntityType {
@@ -53,7 +87,18 @@ public:
 		PlayerType,
 		EnemyType,
 		ItemType,
+		RyuWeaponType,
+		EnemyWeaponType,
 		NoneType
+	};
+	enum EntityAliveState {
+		Alive,
+		Beaten, 
+		Die
+	};
+	enum StatusItem {
+		AvailableItem,
+		UnavailableItem
 	};
 	enum EntityDirection {
 		LeftToRight,
@@ -67,6 +112,9 @@ public:
 	virtual void SetTag(EntityTag tag);
 	virtual EntityType GetType();
 	virtual void SetType(EntityType type);
+	virtual EntityAliveState GetAliveState();
+	virtual void SetAliveState(EntityAliveState alivestate);
+
 	virtual void SetStatic(bool flag);
 	virtual void SetPosition(float x, float y);
 	virtual void SetPosition(D3DXVECTOR2 pos);
@@ -82,6 +130,9 @@ public:
 	virtual float GetWidth();
 	virtual void SetHeight(int height);
 	virtual float GetHeight();
+
+	virtual void SetStatusItem(StatusItem status);
+	virtual StatusItem GetStatusItem();
 
 	virtual D3DXVECTOR2 GetVelocity();
 	virtual void SetVelocity(D3DXVECTOR2 vel);
@@ -108,6 +159,7 @@ protected:
 	int id;
 	EntityTag tag;
 	EntityType type;
+	EntityAliveState aliveState;
 	//duoc goi khi set position cua Entity, dung cho ke thua
 	virtual void OnSetPosition(D3DXVECTOR3 pos);
 
@@ -121,4 +173,5 @@ protected:
 	float width, height;
 
 	EntityDirection direction;
+	StatusItem status;
 };

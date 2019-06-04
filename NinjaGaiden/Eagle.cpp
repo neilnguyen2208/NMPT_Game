@@ -18,6 +18,7 @@ Eagle::~Eagle() {
 }
 
 void Eagle::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
+	Enemy::OnCollision(impactor, side, collisionTime);
 }
 void Eagle::Update(double dt) {
 	SetMoveDirection(Player::GetInstance()->GetPosition().x < position.x ? Entity::RightToLeft : Entity::LeftToRight);
@@ -54,6 +55,10 @@ void Eagle::SetColliderRight(int right) {
 void Eagle::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = eagleFollowState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}	
 	enemyData->state->ResetState();
 }
 
@@ -62,6 +67,7 @@ BoxCollider Eagle::GetCollider() {
 }
 
 void Eagle::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }

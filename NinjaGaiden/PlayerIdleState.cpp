@@ -16,9 +16,25 @@ void PlayerIdleState::Render() {
 }
 
 void PlayerIdleState::HandleInput() {
+	//xu ly theo priority nghe, Slash, Jump, Running, Crouch,... ?
 	KeyBoard *keyboard = KeyBoard::GetInstance();
+	bool isUseSkill = false;
+
+	if (keyboard->GetKey(DIK_UPARROW))
+	{
+		isUseSkill = true;
+	}
+
 	if (keyboard->GetKeyDown(DIK_D))
+	{
+		if (isUseSkill)
+		{
+			DebugOut(L"Use skill!");
+			playerData->player->SetState(UseSkill);
+		}
+		else
 		playerData->player->SetState(Slash);
+	}
 	else
 		if (keyboard->GetKeyDown(DIK_F))
 			playerData->player->SetState(Jumping);
@@ -35,6 +51,7 @@ void PlayerIdleState::HandleInput() {
 						playerData->player->SetState(Crouch);
 					else
 						playerData->player->SetVelocity(D3DXVECTOR2(0, 0));
+
 }
 
 void PlayerIdleState::OnCollision(Entity * impactor, Entity::SideCollision side) {
@@ -54,5 +71,6 @@ void PlayerIdleState::ResetState(int dummy) {
 	player->SetColliderLeft(-9);
 	player->SetColliderTop(16);
 	player->SetColliderBottom(-16);
+
 	PlayerState::ResetState(dummy);
 }

@@ -20,7 +20,7 @@ void SoldierAttackState::ResetState() {
 	enemy->SetColliderBottom(-16);
 	enemy->SetColliderLeft(-12);
 	enemy->SetColliderRight(4);
-	//met moi vai c
+	
 	enemy->offsetScaleX = enemy->GetBigWidth() - enemy->GetWidth();
 	enemy->SetVx(0);
 	EnemyState::ResetState();

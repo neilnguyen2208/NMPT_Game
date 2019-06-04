@@ -44,6 +44,16 @@ void Entity::SetType(EntityType type) {
 	this->type = type;
 }
 
+Entity::EntityAliveState Entity::GetAliveState()
+{
+	return this->aliveState;
+}
+
+void Entity::SetAliveState(EntityAliveState alivestate)
+{
+	this->aliveState = alivestate;
+}
+
 void Entity::SetStatic(bool flag) {
 	isStatic = flag;
 	velocity = D3DXVECTOR2(0, 0);
@@ -101,6 +111,16 @@ void Entity::SetHeight(int height) {
 
 float Entity::GetHeight() {
 	return height;
+}
+
+void Entity::SetStatusItem(StatusItem status)
+{
+	this->status = status;
+}
+
+Entity::StatusItem Entity::GetStatusItem()
+{
+	return status;
 }
 
 void Entity::SetVelocity(D3DXVECTOR2 vel) {
@@ -169,5 +189,5 @@ void Entity::Render() {
 }
 
 void Entity::OnCollision(Entity * impactor, SideCollision side, float collisionTime) {
-	//velocity = D3DXVECTOR2(0, 0);
+	
 }

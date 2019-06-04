@@ -37,6 +37,9 @@
     <Filter Include="Header Files\Components\Enemy">
       <UniqueIdentifier>{5bf5defd-646c-4da5-9f16-ba0e9997d9fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Item">
+      <UniqueIdentifier>{b272d84f-48eb-47c9-b31e-6110fa9ee0a1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Components\Enemy\Cat">
       <UniqueIdentifier>{8638e63c-fef2-4fb5-bdba-9f7f156ef4fe}</UniqueIdentifier>
     </Filter>
@@ -52,8 +55,14 @@
     <Filter Include="Header Files\Components\Enemy\Thrower">
       <UniqueIdentifier>{6b210260-2421-4b2c-af8f-4db25ac9f920}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\Item">
-      <UniqueIdentifier>{519d592c-8236-4dc0-930e-e589c005b0f4}</UniqueIdentifier>
+    <Filter Include="Header Files\Components\Weapon">
+      <UniqueIdentifier>{18593ede-c1fc-4786-8bfb-3075cc958824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon\RyuWeapon">
+      <UniqueIdentifier>{61789a5c-5ba0-427c-95da-f5691fe8f1b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon\EnemyWeapon">
+      <UniqueIdentifier>{cdadbe43-bcf0-4323-b3d9-ba3a222fd820}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,56 +120,11 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerClimbState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCrouchSlashState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCrouchState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerData.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerIdleState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerJumpingState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerRunningState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerSlashState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerUseItemState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Graphic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectGroup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Components\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyData.h">
-      <Filter>Header Files\Components\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyState.h">
-      <Filter>Header Files\Components\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Cat.h">
       <Filter>Header Files\Components\Enemy\Cat</Filter>
@@ -201,23 +165,92 @@
     <ClInclude Include="Unit.h">
       <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBeatenState.h">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files\Components\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemAvailableState.h">
+    <ClInclude Include="ItemState.h">
       <Filter>Header Files\Components\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemData.h">
       <Filter>Header Files\Components\Item</Filter>
     </ClInclude>
+    <ClInclude Include="ItemAvailableState.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
     <ClInclude Include="ItemHolderState.h">
       <Filter>Header Files\Components\Item</Filter>
     </ClInclude>
-    <ClInclude Include="ItemState.h">
-      <Filter>Header Files\Components\Item</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBeatenState.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyData.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BlueShuriken.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="FlameWheel.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="RedShuriken.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBeatenState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerClimbState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCrouchSlashState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCrouchState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerData.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpingState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRunningState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSlashState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUseSkillState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowerBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyWeapon.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyWeaponData.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyWeaponState.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyWeaponDestroyState.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,53 +305,11 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerClimbState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCrouchSlashState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCrouchState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerData.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerIdleState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerJumpingState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerRunningState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerSlashState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerUseItemState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Graphic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyState.cpp">
-      <Filter>Header Files\Components\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Header Files\Components\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Cat.cpp">
       <Filter>Header Files\Components\Enemy\Cat</Filter>
@@ -359,19 +350,82 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerBeatenState.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Header Files\Components\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemAvailableState.cpp">
+    <ClCompile Include="ItemState.cpp">
       <Filter>Header Files\Components\Item</Filter>
     </ClCompile>
     <ClCompile Include="ItemHolderState.cpp">
       <Filter>Header Files\Components\Item</Filter>
     </ClCompile>
-    <ClCompile Include="ItemState.cpp">
+    <ClCompile Include="Item.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBeatenState.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BlueShuriken.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="FlameWheel.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="RedShuriken.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBeatenState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerClimbState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCrouchSlashState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCrouchState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerData.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpingState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRunningState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSlashState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUseSkillState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowerBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyWeapon.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyWeaponState.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyWeaponDestroyState.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemAvailableState.cpp">
       <Filter>Header Files\Components\Item</Filter>
     </ClCompile>
   </ItemGroup>

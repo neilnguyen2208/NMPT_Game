@@ -20,6 +20,11 @@ void PlayerClimbState::HandleInput() {
 }
 
 void PlayerClimbState::OnCollision(Entity * impactor, Entity::SideCollision side) {
+	if (impactor->GetType() == Entity::EnemyType && playerData->player->timeHurtingAnimation == 0)
+	{
+		playerData->player->SetState(Beaten);
+		return;
+	}
 }
 
 PlayerState::State PlayerClimbState::GetState() {

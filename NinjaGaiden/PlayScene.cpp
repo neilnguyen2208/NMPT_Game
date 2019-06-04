@@ -19,6 +19,7 @@ PlayScene::PlayScene() {
 	//initiate player for map
 	player = new Player();
 	player->SetPosition(32, 40 + player->GetBigHeight() / 2.0f);
+//	DebugOut(L"%f", player->GetPosition().y);
 	unit = map->GetUnit();
 	unit = new Unit(grid, player);//them player(mot unit) vao grid, cac unit khac duoc them vao tu class gameMap
 	
@@ -32,8 +33,7 @@ PlayScene::~PlayScene() {
 
 void PlayScene::Render() {
 	map->Draw();
-	grid->RenderActive(); //
-	
+	grid->RenderActive(); 
 }
 
 void PlayScene::ProcessInput() {
@@ -120,9 +120,11 @@ void PlayScene::CheckCollision(double dt) {
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					if (!onGround/*&&grid->GetGridCells(i,j)->GetEntity()->GetTag()!=Entity::Eagle*/) {
-						tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
-					}
+					if (!onGround)
+						if (tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType)
+								tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
+
+
 				}
 				tmpcells_tonext = tmpcells_tonext->GetNextUnit();
 			}
@@ -143,15 +145,16 @@ void PlayScene::CheckCollision(double dt) {
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					if (!onGround/*&&grid->GetGridCells(i,j)->GetEntity()->GetTag()!=Entity::Eagle*/) {
-						tmpcells_toprev->GetEntity()->AddVy(-CAT_GRAVITY);
-					}
+					if (!onGround)
+						if (tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType)
+							tmpcells_toprev->GetEntity()->AddVy(-CAT_GRAVITY);
+				
 				}
 				tmpcells_toprev = tmpcells_toprev->GetPrevUnit();
 			}
 		}
 	}
-	
+
 	grid->HandleGridCollision(dt);
 }
 
