@@ -18,8 +18,18 @@ void PlayerJumpingState::Render() {
 void PlayerJumpingState::HandleInput() {
 	auto player = playerData->player;
 	auto keyboard = KeyBoard::GetInstance();
+	bool isUseSkill = false;
+
+	if (keyboard->GetKey(DIK_UPARROW))
+	{
+		isUseSkill = true;
+	}
+
 	if (keyboard->GetKeyDown(DIK_D)) {
-		player->SetState(Slash, 1);
+		if (isUseSkill)
+			playerData->player->SetState(UseSkill);
+		else
+			player->SetState(Slash, 1);
 		return;
 	}
 	if (keyboard->GetKey(DIK_LEFTARROW) && !keyboard->GetKey(DIK_RIGHTARROW)) {

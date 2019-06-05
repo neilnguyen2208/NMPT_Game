@@ -16,7 +16,6 @@ void PlayerIdleState::Render() {
 }
 
 void PlayerIdleState::HandleInput() {
-	//xu ly theo priority nghe, Slash, Jump, Running, Crouch,... ?
 	KeyBoard *keyboard = KeyBoard::GetInstance();
 	bool isUseSkill = false;
 
@@ -29,7 +28,6 @@ void PlayerIdleState::HandleInput() {
 	{
 		if (isUseSkill)
 		{
-			DebugOut(L"Use skill!");
 			playerData->player->SetState(UseSkill);
 		}
 		else
