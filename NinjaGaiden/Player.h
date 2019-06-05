@@ -53,6 +53,11 @@ public:
 	virtual void SetSkill(Skill skill);
 	virtual Skill GetSkill();
 
+	int timeFreeze;
+	bool useitemtimeFreeze;
+	void TimeFreezeSkill(bool skill);
+	void checkTimeFreezeSkill();
+
 protected:
 	static Player *instance;
 	PlayerData *playerData;

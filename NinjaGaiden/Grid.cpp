@@ -5,8 +5,6 @@
 #pragma region Kocare
 Grid::Grid()
 {
-	//
-	// Clear the grid.
 	for (int x = 0; x < GRID_COLUMNS; x++)
 	{
 		for (int y = 0; y < GRID_ROWS; y++)
@@ -296,7 +294,9 @@ void Grid::HandleGridSubFunction(int i, int j, double dt)
 					tmpcells_tonext = tmpcells_tonext->p_next;
 					continue;
 				}
+
 				player->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);
+
 				if (tmpcells_tonext->entity->GetType() == Entity::ItemType)
 				{
 					player->AddItem(tmpcells_tonext->entity->GetTag());
@@ -361,13 +361,27 @@ void Grid::CheckActivatedObjects()
 						while (tmpcells_tonext != NULL)
 						{
 							if (tmpcells_tonext->entity->IsActive() == false && tmpcells_tonext->entity->GetMoveDirection() == Entity::LeftToRight)
+							{ 
+								if (player->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+								{
+									tmpcells_tonext = tmpcells_tonext->p_next;
+									continue;
+								}
 								tmpcells_tonext->entity->SetActive(true);
+							}
 							tmpcells_tonext = tmpcells_tonext->p_next;
 						}
 						while (tmpcells_toprev != NULL)
 						{
 							if (tmpcells_toprev->entity->IsActive() == false && tmpcells_toprev->entity->GetMoveDirection() == Entity::LeftToRight)
+							{
+								if (player->useitemtimeFreeze == true && tmpcells_toprev->entity->GetType() == Entity::EnemyType)
+								{
+									tmpcells_toprev = tmpcells_toprev->p_prev;
+									continue;
+								}
 								tmpcells_toprev->entity->SetActive(true);
+							}
 							tmpcells_toprev = tmpcells_toprev->p_prev;
 						}
 					}
@@ -380,14 +394,28 @@ void Grid::CheckActivatedObjects()
 								Unit*tmpcells_tonext = gridcells[i][j];
 								while (tmpcells_tonext != NULL)
 								{
-									if (tmpcells_tonext->entity->IsActive() == false&&tmpcells_tonext->entity->GetMoveDirection() == Entity::RightToLeft)
-										tmpcells_tonext->entity->SetActive(true);					
+									if (tmpcells_tonext->entity->IsActive() == false && tmpcells_tonext->entity->GetMoveDirection() == Entity::RightToLeft)
+									{
+										if (player->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+										{
+											tmpcells_tonext = tmpcells_tonext->p_next;
+											continue;
+										}
+										tmpcells_tonext->entity->SetActive(true);
+									}
 									tmpcells_tonext = tmpcells_tonext->p_next;
 								}
 								while (tmpcells_toprev != NULL)
 								{
 									if (tmpcells_toprev->entity->IsActive() == false && tmpcells_toprev->entity->GetMoveDirection() == Entity::RightToLeft)
-										tmpcells_toprev->entity->SetActive(true);
+									{ 
+										if (player->useitemtimeFreeze == true && tmpcells_toprev->entity->GetType() == Entity::EnemyType)
+										{
+											tmpcells_toprev = tmpcells_toprev->p_prev;
+											continue;
+										}
+									tmpcells_toprev->entity->SetActive(true);
+									}
 									tmpcells_toprev = tmpcells_toprev->p_prev;
 								}
 							}
@@ -408,7 +436,7 @@ void Grid::RenderActive()
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
 				{
-					if (tmpcells_tonext->entity->IsActive())
+					if (tmpcells_tonext->entity->IsActive()) 
 						tmpcells_tonext->entity->Render();
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
@@ -463,15 +491,34 @@ void Grid::UpdateActive(double dt)
 				while (tmpcells_tonext != NULL)
 				{
 					if (tmpcells_tonext->entity->IsActive())
+					{
+						if (player->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+						{
+							if (tmpcells_tonext->entity->GetAliveState()==Entity::Beaten || tmpcells_tonext->entity->GetAliveState() == Entity::Die)
+								tmpcells_tonext->entity->Update(dt);
+							tmpcells_tonext = tmpcells_tonext->p_next;
+							continue;
+						}
 						tmpcells_tonext->entity->Update(dt);
+					}
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
 				while (tmpcells_toprev != NULL)
 				{
 					if (tmpcells_toprev->entity->IsActive())
+					{
+						if (player->useitemtimeFreeze == true && tmpcells_toprev->entity->GetType() == Entity::EnemyType)
+						{
+							if (tmpcells_toprev->entity->GetAliveState() == Entity::Beaten || tmpcells_toprev->entity->GetAliveState() == Entity::Die)
+								tmpcells_toprev->entity->Update(dt);
+							tmpcells_toprev = tmpcells_toprev->p_prev;
+							continue;
+						}
 						tmpcells_toprev->entity->Update(dt);
+					}
 					tmpcells_toprev = tmpcells_toprev->p_prev;
 				}
-			}		
+			}
 		}
+	player->checkTimeFreezeSkill();
 }

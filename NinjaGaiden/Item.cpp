@@ -105,7 +105,7 @@ void Item::OnCollision(Entity * impactor, Entity::SideCollision side, float coll
 	{
 		itemData->item->SetState(ItemState::Available);
 		SetStatusItem(Entity::AvailableItem);
-		SetVy(-80);
+		SetVy(-ITEM_VY);
 	}
 	if (impactor->GetType() == Entity::StaticType && side == Entity::Bottom)
 	{

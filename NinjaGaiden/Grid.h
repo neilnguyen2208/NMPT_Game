@@ -65,5 +65,5 @@ public:
 	double HurtingTime;
 
 	Unit* GetGridCells(int, int);
-	
+	bool flag = false;
 };

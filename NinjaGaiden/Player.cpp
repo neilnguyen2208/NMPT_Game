@@ -52,6 +52,8 @@ Player::Player() : Entity() {
 	isHurting = false;
 	
 	skill = Skill::NoneSkill;
+
+	useitemtimeFreeze = false;
 }
 
 Player::~Player() {
@@ -191,8 +193,8 @@ void Player::AddItem(Entity::EntityTag tag)
 	case Entity::Scores500:
 
 		break;
-	case Entity::TimeFreeze:
-
+	case Entity::TimeFreeze: 
+		TimeFreezeSkill(true);
 		break;
 	case Entity::Scores1000:
 
@@ -289,4 +291,25 @@ void Player::SetSkill(Skill skill)
 Player::Skill Player::GetSkill()
 {
 	return skill;
+}
+
+void Player::TimeFreezeSkill(bool skill)
+{
+	if (skill)
+	{
+		useitemtimeFreeze = true;
+	}
+	else {
+		timeFreeze = 0;
+		useitemtimeFreeze = false;
+	}
+}
+
+void Player::checkTimeFreezeSkill()
+{
+	if (timeFreeze < ANIMATION_ITEM_TIMEFREEZE && useitemtimeFreeze == true)
+	{
+		timeFreeze++;
+	}
+	else TimeFreezeSkill(false);
 }
