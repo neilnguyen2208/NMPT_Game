@@ -169,15 +169,13 @@ void Entity::Update(double dt) {
 	position.y += velocity.y * dt;
 }
 
-void Entity::UpdatePosition(double dt)
-{
-	position.x += velocity.x * dt;
-	position.y += velocity.y * dt;
-}
-
 void Entity::Render() {
 }
 
 void Entity::OnCollision(Entity * impactor, SideCollision side, float collisionTime) {
 	//velocity = D3DXVECTOR2(0, 0);
+}
+
+void Entity::MakeInactive()
+{
 }

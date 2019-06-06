@@ -36,3 +36,9 @@ void SoldierFollowState::Update(double dt) {
 	if (m_Animation->GetPercentTime() >= SOLDIER_FOLLOW_PERCENTTIME)
 		enemyData->enemy->SetState(EnemyState::Attack);
 }
+
+EnemyState::State SoldierFollowState::GetState()
+{
+	return Follow;
+}
+

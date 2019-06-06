@@ -1,7 +1,9 @@
 #include "Enemy.h"
 #include "EnemyBeatenState.h"
-
+#include"PlayScene.h"
+#include"GameConfig.h"
 Enemy::Enemy() : Entity() {
+
 	type = Entity::EnemyType;
 	enemyData = new EnemyData();
 	enemyData->enemy = this;
@@ -46,7 +48,7 @@ BoxCollider Enemy::GetSpawnRect() {
 
 void Enemy::SetActive(bool active) {
 	if (active)
-		Spawn();
+		Spawn(); 
 	else
 		MakeInactive();
 }

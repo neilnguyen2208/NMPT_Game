@@ -243,14 +243,11 @@
     <ClInclude Include="EnemyWeapon.h">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyWeaponData.h">
+    <ClInclude Include="SoldierBullet.h">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyWeaponState.h">
-      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyWeaponDestroyState.h">
-      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    <ClInclude Include="RyuWeapon.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -422,11 +419,11 @@
     <ClCompile Include="EnemyWeapon.cpp">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyWeaponState.cpp">
+    <ClCompile Include="SoldierBullet.cpp">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyWeaponDestroyState.cpp">
-      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    <ClCompile Include="RyuWeapon.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

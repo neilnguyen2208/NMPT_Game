@@ -1,12 +1,29 @@
 #include "EnemyWeapon.h"
+#include"GameConfig.h"
+#include"Debug.h"
 
 EnemyWeapon::EnemyWeapon()
 {
-}
+	type = Entity::EnemyWeaponType;
+	direction = Entity::LeftToRight;
+	isActive = false;
+	auto textures = Textures::GetInstance();
+	textures->Add(TEX_EXPLODE_WEAPON, "Resources/Sprites/ExplodeWeapon.png", D3DCOLOR_XRGB(254, 163, 176));
+	
+	//Set tag
+	D3DSURFACE_DESC desc;
+	textures->Get(TEX_EXPLODE_WEAPON)->GetLevelDesc(0, &desc);
+	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_EXPLODE_WEAPON);
+	ExplodeWidth = desc.Width / 3;
+	ExplodeHeight = desc.Height;
 
-void EnemyWeapon::SetActive(bool isactive)
-{
-	this->isActive = isactive;
+	m_AnimationExplode = new Animation();
+	m_AnimationExplode->AddFrames(texture, 1, 3, 0.05f);
+
+	SetAliveState(Entity::Alive);
+
+	camera = Camera::GetInstance();
+
 }
 
 bool EnemyWeapon::IsActive()
@@ -16,25 +33,53 @@ bool EnemyWeapon::IsActive()
 
 void EnemyWeapon::Update(double dt)
 {
-	if (isActive)
+	BoxCollider r2 = camera->GetRect();
+	if ((this->GetRect().bottom > r2.top ||this->GetRect().top < r2.bottom || this->GetRect().left > r2.right || this->GetRect().right < r2.left))//ko overlap
+	{
+		SetAliveState(Entity::Remove);
+		MakeInactive();
+	}
+	if (GetAliveState() == Entity::Die)
+	{
+		if (!m_AnimationExplode->IsLastFrame(dt))
+		{
+			velocity.x = 0;
+			velocity.y = 0;
+			m_AnimationExplode->Update(dt);
+		}
+		if (m_AnimationExplode->IsLastFrame(dt)){
+			m_AnimationExplode->ResetAnimation();
+			SetAliveState(Entity::Remove);
+			MakeInactive();
+		}
+	}
+	else
+	{
 		m_Animation->Update(dt);
+		/*if (m_Animation->IsLastFrame(dt)) {
+			m_Animation->ResetAnimation();
+		}*/
+	}
 	Entity::Update(dt);
 }
 
 void EnemyWeapon::Render() {
-	if (isActive)
-		m_Animation->Render();
+	if (GetAliveState()==Entity::Die&&IsActive()==true)
+	{
+		m_AnimationExplode->Render(position, BoxCollider(), D3DCOLOR_XRGB(255, 255, 255), direction == Entity::EntityDirection::RightToLeft);
+	}
+	else
+	{
+		m_Animation->Render(position, BoxCollider(), D3DCOLOR_XRGB(255, 255, 255), direction == Entity::EntityDirection::RightToLeft);
+	}
 }
-
 
 void EnemyWeapon::SetColliderTop(int top) {
 	collider.top = top;
 }
 
-
 void EnemyWeapon::SetColliderLeft(int left) {
 	collider.left = left;
-	collider.right = -collider.left;
 }
 
 void EnemyWeapon::SetColliderBottom(int bottom) {
@@ -65,14 +110,6 @@ BoxCollider EnemyWeapon::GetRect() {
 	return r;
 }
 
-void EnemyWeapon::SetSpawnBox(BoxCollider box, int direction) {
-	spawnBox = box;
-	spawnPosition.x = (box.left + box.right) / 2.0f;
-	spawnPosition.y = (box.bottom + box.top) / 2.0f;
-	spawnDirection = (EntityDirection)direction;
-	MakeInactive();
-}
-
 void EnemyWeapon::SetMoveDirection(Entity::EntityDirection dir) {
 	if (dir == direction)
 		return;
@@ -88,11 +125,19 @@ Entity::EntityDirection EnemyWeapon::GetMoveDirection()
 	return direction;
 }
 
+
+void EnemyWeapon::OnCollision(Entity* impactor, SideCollision side, float timeCollision)
+{
+	if (impactor->GetType() == Entity::RyuWeaponType)
+	{
+		SetAliveState(Entity::Die);
+	}
+}
+
 void EnemyWeapon::SetRect(BoxCollider box)
 {
 	collider = box;
 }
-
 
 float EnemyWeapon::GetWidth() {
 	return collider.right - collider.left;
@@ -111,27 +156,15 @@ float EnemyWeapon::GetBigHeight() {
 	return height;
 }
 
-
-BoxCollider EnemyWeapon::GetSpawnRect() {
-	return spawnBox;
-}
-
-void EnemyWeapon::MakeInactive()
-{
-	isActive = false;
-}
-
-void EnemyWeapon::Spawn() {
-	isActive = true;
-	position.x = spawnBox.left + width / 2.0f;
-	position.y = spawnBox.bottom + height / 2.0f;
-}
-
-Entity::EntityDirection EnemyWeapon::GetSpawnDirection() {
-	return spawnDirection;
-}
-
-
 EnemyWeapon::~EnemyWeapon()
 {
+	delete m_AnimationExplode;
+}
+
+void EnemyWeapon::SetActive(bool active) {
+	isActive = active;
+}
+
+void EnemyWeapon::MakeInactive() {
+	isActive = false;
 }

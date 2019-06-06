@@ -6,11 +6,10 @@ EnemyBeatenState::EnemyBeatenState(EnemyData* data)
 {
 	this->enemyData = data;
 	auto textures = Textures::GetInstance();
-	textures->Add(TEX_EXPLODE, "Resources/Sprites/EnemyBeatenSprite.png", D3DCOLOR_XRGB(254, 163, 176));
+	textures->Add(TEX_EXPLODE_ENEMY, "Resources/Sprites/ExplodeEnemy.png", D3DCOLOR_XRGB(254, 163, 176));
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(textures->Get(TEX_EXPLODE), 1, 1, 3, 1, 3, 0.05f);
+	m_Animation->AddFramesA(textures->Get(TEX_EXPLODE_ENEMY), 1, 1, 3, 1, 3, 0.05f);
 }
-
 
 EnemyBeatenState::~EnemyBeatenState()
 {

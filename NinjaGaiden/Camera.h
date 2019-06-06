@@ -3,6 +3,11 @@
 #include <d3dx9.h>
 #include "MyHelper.h"
 
+
+#define SCREEN_WIDTH 256
+#define SCREEN_HEIGHT 224
+
+
 class Camera {
 private:
 	D3DXVECTOR3 position;

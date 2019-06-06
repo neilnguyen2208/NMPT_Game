@@ -41,14 +41,14 @@ public:
 		Eagle,
 		Soldier,
 		// 3.1 Enemy weapon
-		ThrowerWeapon,
-		SoldierWeapon,
+		ThrowerBullet,
+		SoldierBullet,
 
 		// 3.2 Enemy
 		Runner,
 		Canoner,
 		// 3.2 Enemy weapon
-		CanonerWeapon,
+		CanonerBullet,
 
 		// 3.3
 		Boss,
@@ -91,13 +91,13 @@ public:
 	enum EntityAliveState {
 		Alive,
 		Beaten, 
-		Die
+		Die,
+		Remove
 	};
 	enum EntityDirection {
 		LeftToRight,
 		RightToLeft
 	};
-	void UpdatePosition(double dt);
 	virtual BoxCollider GetRect();
 	virtual void SetActive(bool active);
 	virtual bool IsActive();
@@ -144,7 +144,10 @@ public:
 
 	virtual void OnCollision(Entity *impactor, SideCollision side, float collisionTime);
 
+	virtual void MakeInactive();
+
 protected:
+	
 	bool isActive;
 	int id;
 	EntityTag tag;

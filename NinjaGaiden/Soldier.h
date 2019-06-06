@@ -9,6 +9,11 @@ class Soldier : public Enemy {
 public:
 	Soldier();
 	~Soldier();
+	enum Turn
+	{
+		AllowFirstTurn,
+		AllowSecondTurn,
+	};
 	void OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime);
 	virtual void Update(double dt);
 	virtual void SetColliderTop(int top);
@@ -18,9 +23,9 @@ public:
 	virtual void SetState(EnemyState::State);
 	virtual BoxCollider GetCollider();
 	virtual void Spawn();
+
 protected:
 	EnemyState
 		*soldierFollowState,
 		*soldierAttackState;
-		
 };

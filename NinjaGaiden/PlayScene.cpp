@@ -8,7 +8,7 @@ PlayScene::PlayScene() {
 	int height = Graphic::GetInstance()->GetBackBufferHeight();
 
 	//initiate camera for map
-	camera = new Camera(width, height);
+	camera = Camera::GetInstance();
 	map->SetCamera(camera); //set camera cho map de chay map
 	camera->SetPosition(D3DXVECTOR3(width / 2, height / 2, 0));//camera ban dau co vi tri giua man hinh
 
@@ -25,6 +25,7 @@ PlayScene::PlayScene() {
 	
 	//Set player for Grid to get Direction
 	grid->SetPlayer(player);
+
 }
 
 PlayScene::~PlayScene() {
@@ -49,7 +50,8 @@ void PlayScene::Update(double dt) {
 	grid->UpdateActive(dt); //Update nhung unit nao dang active
 	grid->UpdateActivatingCells(dt); //ham nay them vao de cap nhat cac cell duoc activated, chua kiem tra duoc do chua co va cham voi ground	
 	grid->CheckActivatedObjects();
-		
+	grid->ClearAllWeapon();
+
 	D3DXVECTOR3 playerPos = player->GetPosition();
 	camera->FollowPlayer(playerPos.x, playerPos.y);
 	CheckCamera();
@@ -121,7 +123,7 @@ void PlayScene::CheckCollision(double dt) {
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					if (!onGround/*&&grid->GetGridCells(i,j)->GetEntity()->GetTag()!=Entity::Eagle*/) {
+					if (!onGround&&tmpcells_tonext->GetEntity()->GetTag()!=Entity::SoldierBullet&&tmpcells_tonext->GetEntity()->GetType()!=Entity::RyuWeaponType ){
 						tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
 					}
 				}
@@ -144,7 +146,7 @@ void PlayScene::CheckCollision(double dt) {
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					if (!onGround/*&&grid->GetGridCells(i,j)->GetEntity()->GetTag()!=Entity::Eagle*/) {
+					if (!onGround&&tmpcells_toprev->GetEntity()->GetTag()!=Entity::SoldierBullet&& tmpcells_toprev->GetEntity()->GetType() != Entity::RyuWeaponType) {
 						tmpcells_toprev->GetEntity()->AddVy(-CAT_GRAVITY);
 					}
 				}
@@ -152,8 +154,14 @@ void PlayScene::CheckCollision(double dt) {
 			}
 		}
 	}
+
+	if (player->GetSkill() != Player::NoneSkill)
+	{
+		grid->HandleGridCollisionRyuWeaponEnemy(dt);
+	}
+	grid->HandleGridCollisionPlayerEnemy(dt);
 	
-	grid->HandleGridCollision(dt);
+	
 }
 
 void PlayScene::CheckCamera() {

@@ -1,149 +1,48 @@
-#include "BlueShuriken.h"
-
-BlueShuriken::BlueShuriken()
+#include "SoldierBullet.h"
+#include"GameConfig.h"
+SoldierBullet::SoldierBullet()
 {
-	Textures *textures = Textures::GetInstance();
-	textures->Add(TEX_BLUE_SHURIKEN_SKILL, "Resources/Sprites/BlueShuriken.png", D3DCOLOR_XRGB(254, 163, 176));
-	tag = Entity::BlueShuriken;
-	type = Entity::RyuWeaponType;
+	//Set type
+	auto textures = Textures::GetInstance();
+	textures->Add(TEX_SOLDIER_BULLET, "Resources/Sprites/SoldierBullet.png", D3DCOLOR_XRGB(254, 163, 176));
+
+	//Set tag
+	type = Entity::EnemyWeaponType;
+	tag = Entity::SoldierBullet;
 	D3DSURFACE_DESC desc;
-	textures->Get(TEX_BLUE_SHURIKEN_SKILL)->GetLevelDesc(0, &desc);
-	width = desc.Width / 2;
+	textures->Get(TEX_SOLDIER_BULLET)->GetLevelDesc(0, &desc);
+	width = desc.Width;
 	height = desc.Height;
-	
-	LPDIRECT3DTEXTURE9 tex = textures->Get(TEX_BLUE_SHURIKEN_SKILL);	
+
+	LPDIRECT3DTEXTURE9 tex = textures->Get(TEX_SOLDIER_BULLET);
 	m_Animation = new Animation();
-	m_Animation->AddFrames(tex, 1, 2, BLUE_SHURIKEN_SKILL_FRAME * (1 / 60.0f));
+	m_Animation->AddFrames(tex, 1, 1, SOLDIER_BULLET_FRAME*(1.0/60));
+
+	SetVy(SOLDIER_BULLET_VELOCITY_Y);
+	SetColliderLeft(-4);
+	SetColliderRight(+4);
+	SetColliderTop(+2);
+	SetColliderBottom(-2);
+
 }
 
-void BlueShuriken::SetActive(bool isactive)
+void SoldierBullet::OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime)
 {
-	this->isActive = isactive;
+	EnemyWeapon::OnCollision(impactor, side, collisionTime);
 }
 
-bool BlueShuriken::IsActive()
+void SoldierBullet::Render()
 {
-	return isActive;
+	EnemyWeapon::Render();
 }
 
-void BlueShuriken::Update(double dt)
+SoldierBullet::~SoldierBullet()
 {
-	if (isActive)
-		m_Animation->Update(dt);
-	Entity::Update(dt);
+	delete m_Animation;
 }
 
-void BlueShuriken::Render() {
-	if (isActive)
-		m_Animation->Render();
-}
-
-
-void BlueShuriken::SetColliderTop(int top) {
-	collider.top = top;
-}
-
-
-void BlueShuriken::SetColliderLeft(int left) {
-	collider.left = left;
-	collider.right = -collider.left;
-}
-
-void BlueShuriken::SetColliderBottom(int bottom) {
-	collider.bottom = bottom;
-}
-
-void BlueShuriken::SetColliderRight(int right) {
-	collider.right = right;
-}
-
-BoxCollider BlueShuriken::GetCollider() {
-	return collider;
-}
-
-BoxCollider BlueShuriken::GetRect() {
-	BoxCollider r;
-	r.top = position.y + collider.top;
-	r.bottom = position.y + collider.bottom;
-
-	if (direction == Entity::LeftToRight) {
-		r.left = position.x + collider.left;
-		r.right = position.x + collider.right;
-	}
-	else {
-		r.left = position.x - collider.right;
-		r.right = position.x - collider.left;
-	}
-	return r;
-}
-
-void BlueShuriken::SetSpawnBox(BoxCollider box, int direction) {
-	spawnBox = box;
-	spawnPosition.x = (box.left + box.right) / 2.0f;
-	spawnPosition.y = (box.bottom + box.top) / 2.0f;
-	spawnDirection = (EntityDirection)direction;
-	MakeInactive();
-}
-
-void BlueShuriken::SetMoveDirection(Entity::EntityDirection dir) {
-	if (dir == direction)
-		return;
-	direction = dir;
-	//if (dir == Entity::LeftToRight)
-	//	position.x += offsetScaleX;
-	//else
-	//	position.x -= offsetScaleX;
-}
-
-Entity::EntityDirection BlueShuriken::GetMoveDirection()
+void SoldierBullet::Update(double dt)
 {
-	return direction;
+	EnemyWeapon::Update(dt);
 }
 
-void BlueShuriken::SetRect(BoxCollider box)
-{
-	collider = box;
-}
-
-
-float BlueShuriken::GetWidth() {
-	return collider.right - collider.left;
-}
-
-float BlueShuriken::GetBigWidth() {
-	return width;
-}
-
-
-float BlueShuriken::GetHeight() {
-	return collider.top - collider.bottom;
-}
-
-float BlueShuriken::GetBigHeight() {
-	return height;
-}
-
-
-BoxCollider BlueShuriken::GetSpawnRect() {
-	return spawnBox;
-}
-
-void BlueShuriken::MakeInactive()
-{
-	isActive = false;
-}
-
-void BlueShuriken::Spawn() {
-	isActive = true;
-	position.x = spawnBox.left + width / 2.0f;
-	position.y = spawnBox.bottom + height / 2.0f;
-}
-
-Entity::EntityDirection BlueShuriken::GetSpawnDirection() {
-	return spawnDirection;
-}
-
-
-BlueShuriken::~BlueShuriken()
-{
-}
