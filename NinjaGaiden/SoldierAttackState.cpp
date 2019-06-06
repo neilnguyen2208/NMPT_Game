@@ -6,6 +6,7 @@ SoldierAttackState::SoldierAttackState(EnemyData *data) : EnemyState(data) {
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_SOLDIER);
 	m_Animation = new Animation();
 	m_Animation->AddFramesA(texture, 2, 2, 2, 2, 2, SOLDIER_ATTACK_FRAME * (1 / 60.0f));
+	turn = FirstTurn;
 	soldierBullet_1 = new SoldierBullet();
 	soldierBullet_2 = new SoldierBullet();
 	soldierBullet_3 = new SoldierBullet();
@@ -61,7 +62,6 @@ void SoldierAttackState::Update(double dt) {
 	}
 
 	if ((m_Animation->GetPercentTime() > 1.2 && m_Animation->GetPercentTime() < 1.3) && turn == FirstTurn)
-
 	{
 		soldierBullet_2->SetActive(true);
 		soldierBullet_2->SetMoveDirection(enemyData->enemy->GetMoveDirection());
@@ -181,6 +181,7 @@ void SoldierAttackState::Update(double dt) {
 		if (turn == FirstTurn)
 			turn = SecondTurn;
 		else
+			if(turn == SecondTurn)
 			turn = FirstTurn;
 		enemyData->enemy->SetState(EnemyState::Follow);
 	}

@@ -24,9 +24,7 @@ BlueShuriken::BlueShuriken()
 
 void BlueShuriken::Update(double dt)
 {
-	if (isActive)
-		m_Animation->Update(dt);
-	Entity::Update(dt);
+	RyuWeapon::Update(dt);
 }
 
 void BlueShuriken::Render() {

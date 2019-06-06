@@ -17,17 +17,17 @@ void PlayerUseSkillState::Update(double dt) {
 	m_Animation->Update(dt);
 	int currentFrame = m_Animation->GetCurrentFrameID();
 	if (playerData->player->GetSkill() == Player::NoneSkill)	
-		if (m_Animation->IsLastFrame(dt)) // Cai nay khong biet da dung chua
+		if (m_Animation->IsLastFrame(dt))
 			playerData->player->SetState(Idle);
 		
 	if (playerData->player->GetSkill() == Player::BlueShuriken)
 	{
-		DebugOut(L"%f\n", m_Animation->GetPercentTime());
+	//	DebugOut(L"%f\n", m_Animation->GetPercentTime());
 		ryuWeapon_Turn1 = new BlueShuriken();
 		ryuWeapon_Turn2 = new BlueShuriken();
 		ryuWeapon_Turn3 = new BlueShuriken();
 		//First turn
-		if ((m_Animation->GetPercentTime() > 0.2&& m_Animation->GetPercentTime() < 0.3) && turn == FirstTurn)
+		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == FirstTurn)
 			{
 				ryuWeapon_Turn1->SetActive(true);
 				ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
@@ -50,7 +50,7 @@ void PlayerUseSkillState::Update(double dt) {
 			}
 
 		//Second Turn
-		if ((m_Animation->GetPercentTime() > 0.2&& m_Animation->GetPercentTime() < 0.3) && turn == SecondTurn)
+		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
 		{
 			ryuWeapon_Turn2->SetActive(true);
 			ryuWeapon_Turn2->SetMoveDirection(playerData->player->GetMoveDirection());
@@ -73,7 +73,7 @@ void PlayerUseSkillState::Update(double dt) {
 		}
 
 		//Third Turn
-		if ((m_Animation->GetPercentTime() > 0.2&& m_Animation->GetPercentTime() < 0.3) && turn ==ThirdTurn)
+		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn ==ThirdTurn)
 		{
 			ryuWeapon_Turn3->SetActive(true);
 			ryuWeapon_Turn3->SetMoveDirection(playerData->player->GetMoveDirection());
@@ -97,11 +97,11 @@ void PlayerUseSkillState::Update(double dt) {
 
 		if (m_Animation->IsLastFrame(dt)) // Cai nay khong biet da dung chua
 		{
-			if (turn = FirstTurn)
+			if (turn == FirstTurn)
 				turn = SecondTurn;
-			else if (turn = SecondTurn)
+			else if (turn == SecondTurn)
 				turn = ThirdTurn;
-			else
+			else if(turn == ThirdTurn)
 				turn = FirstTurn;
 			playerData->player->SetState(Idle);
 		}

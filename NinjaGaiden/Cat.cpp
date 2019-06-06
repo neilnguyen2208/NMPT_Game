@@ -7,6 +7,7 @@ Cat::Cat() : Enemy() {
 	catFollowState = new CatFollowState(enemyData);
 	//Set tag
 	tag = Entity::Cat;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_CAT)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;

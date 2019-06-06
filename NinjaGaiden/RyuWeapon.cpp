@@ -22,18 +22,16 @@ bool RyuWeapon::IsActive()
 void RyuWeapon::Update(double dt)
 {
 	BoxCollider r2 = camera->GetRect();
-	if ((this->GetRect().bottom > r2.top ||this->GetRect().top < r2.bottom || this->GetRect().left > r2.right || this->GetRect().right < r2.left))//ko overlap
+	if ((this->GetRect().bottom > r2.top || this->GetRect().top < r2.bottom || this->GetRect().left > r2.right || this->GetRect().right < r2.left))//ko overlap
 	{
 		SetAliveState(Entity::Remove);
 		MakeInactive();
-	}
-	if (GetAliveState() == Entity::Die)
-	{		
-			SetAliveState(Entity::Remove);
-			MakeInactive();
+		return;
 	}
 	else
-		m_Animation->Update(dt);
+		if (GetAliveState() == Entity::Remove)
+			return;
+	m_Animation->Update(dt);
 	Entity::Update(dt);
 }
 

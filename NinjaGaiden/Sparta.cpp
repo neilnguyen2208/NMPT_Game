@@ -7,6 +7,7 @@ Sparta::Sparta() : Enemy() {
 	spartaFollowState = new SpartaFollowState(enemyData);
 	//Set tag
 	tag = Entity::Sparta;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_SPARTA)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;

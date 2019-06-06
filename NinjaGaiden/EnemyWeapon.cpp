@@ -47,18 +47,18 @@ void EnemyWeapon::Update(double dt)
 			velocity.y = 0;
 			m_AnimationExplode->Update(dt);
 		}
-		if (m_AnimationExplode->IsLastFrame(dt)){
-			m_AnimationExplode->ResetAnimation();
+		if (m_AnimationExplode->IsLastFrame(dt)){			
 			SetAliveState(Entity::Remove);
+			m_AnimationExplode->ResetAnimation();
 			MakeInactive();
 		}
 	}
 	else
 	{
 		m_Animation->Update(dt);
-		/*if (m_Animation->IsLastFrame(dt)) {
+		if (m_Animation->IsLastFrame(dt)) {
 			m_Animation->ResetAnimation();
-		}*/
+		}
 	}
 	Entity::Update(dt);
 }

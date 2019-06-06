@@ -8,6 +8,7 @@ Eagle::Eagle() : Enemy() {
 	eagleFollowState = new EagleFollowState(enemyData);
 	//Set tag
 	tag = Entity::Eagle;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_EAGLE)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;
