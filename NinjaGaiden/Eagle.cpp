@@ -8,6 +8,7 @@ Eagle::Eagle() : Enemy() {
 	eagleFollowState = new EagleFollowState(enemyData);
 	//Set tag
 	tag = Entity::Eagle;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_EAGLE)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;
@@ -18,6 +19,7 @@ Eagle::~Eagle() {
 }
 
 void Eagle::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
+	Enemy::OnCollision(impactor, side, collisionTime);
 }
 void Eagle::Update(double dt) {
 	SetMoveDirection(Player::GetInstance()->GetPosition().x < position.x ? Entity::RightToLeft : Entity::LeftToRight);
@@ -54,6 +56,10 @@ void Eagle::SetColliderRight(int right) {
 void Eagle::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = eagleFollowState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}	
 	enemyData->state->ResetState();
 }
 
@@ -62,6 +68,7 @@ BoxCollider Eagle::GetCollider() {
 }
 
 void Eagle::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }

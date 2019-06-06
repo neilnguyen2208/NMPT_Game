@@ -1,13 +1,15 @@
 #include "Thrower.h"
-
+#include"Unit.h"
+#include"Debug.h"
 Thrower::Thrower() : Enemy() {
 	//Set type
 	auto textures = Textures::GetInstance();
-		textures->Add(TEX_THROWER, "Resources/Sprites/throwerspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(TEX_THROWER, "Resources/Sprites/throwerspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
 	throwerFollowState = new ThrowerFollowState(enemyData);
 	throwerAttackState = new ThrowerAttackState(enemyData);
 	//Set tag
 	tag = Entity::Thrower;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_THROWER)->GetLevelDesc(0, &desc);
 
@@ -55,8 +57,11 @@ void Thrower::SetColliderRight(int right) {
 void Thrower::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = throwerFollowState;
-	else
+	if(state==EnemyState::Attack)
 		enemyData->state = throwerAttackState;
+	if (state == EnemyState::Beaten)
+		enemyData->state = enemyBeatenState;
+	
 	enemyData->state->ResetState();
 }
 
@@ -65,6 +70,7 @@ BoxCollider Thrower::GetCollider() {
 }
 
 void Thrower::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }

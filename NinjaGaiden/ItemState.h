@@ -10,14 +10,18 @@ public:
 		Unavailable,
 		Available
 	};
-	ItemState(ItemData *data);
-	ItemState();
 	~ItemState();
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void OnCollision(Entity *impactor, Entity::SideCollision side);
 	virtual void ResetState();
+	virtual int GetAnimationHeight();
+	virtual int GetAnimationWidth();
+	Animation *GetAnimation() { return m_Animation; }
+
 protected:
+	ItemState(ItemData *data);
+	ItemState();
 	Animation *m_Animation;
 	ItemData *itemData;
 };

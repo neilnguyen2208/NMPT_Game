@@ -44,6 +44,16 @@ void Entity::SetType(EntityType type) {
 	this->type = type;
 }
 
+Entity::EntityAliveState Entity::GetAliveState()
+{
+	return this->aliveState;
+}
+
+void Entity::SetAliveState(EntityAliveState alivestate)
+{
+	this->aliveState = alivestate;
+}
+
 void Entity::SetStatic(bool flag) {
 	isStatic = flag;
 	velocity = D3DXVECTOR2(0, 0);
@@ -159,15 +169,23 @@ void Entity::Update(double dt) {
 	position.y += velocity.y * dt;
 }
 
-void Entity::UpdatePosition(double dt)
-{
-	position.x += velocity.x * dt;
-	position.y += velocity.y * dt;
-}
-
 void Entity::Render() {
 }
 
 void Entity::OnCollision(Entity * impactor, SideCollision side, float collisionTime) {
 	//velocity = D3DXVECTOR2(0, 0);
+}
+
+void Entity::MakeInactive()
+{
+}
+
+void Entity::SetStatusItem(StatusItem status)
+{
+	this->status = status;
+}
+
+Entity::StatusItem Entity::GetStatusItem()
+{
+	return status;
 }

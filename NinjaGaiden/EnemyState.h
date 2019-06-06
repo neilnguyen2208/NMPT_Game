@@ -9,7 +9,8 @@ class EnemyState {
 public:
 	enum State {
 		Follow,
-		Attack
+		Attack,
+		Beaten
 	};
 	EnemyState(EnemyData *data);
 	EnemyState();
@@ -18,6 +19,8 @@ public:
 	virtual void Render();
 	virtual void OnCollision(Entity *impactor, Entity::SideCollision side);
 	virtual void ResetState();
+	virtual State GetState();
+	
 protected:
 	Animation *m_Animation;
 	EnemyData *enemyData;

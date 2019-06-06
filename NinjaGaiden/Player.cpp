@@ -6,7 +6,8 @@
 #include "PlayerCrouchSlashState.h"
 #include "PlayerJumpingState.h"
 #include "PlayerClimbState.h"
-#include "PlayerUseItemState.h"
+#include "PlayerUseSkillState.h"
+#include "PlayerBeatenState.h"
 #include "Debug.h"
 
 
@@ -21,7 +22,7 @@ Player::Player() : Entity() {
 	instance = this;
 
 	Textures *textures = Textures::GetInstance();
-	textures->Add(TEX_PLAYER, "Resources/Sprites/ryuspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(254, 163, 176));
 
 	playerData = new PlayerData();
 	playerData->player = this;
@@ -33,18 +34,26 @@ Player::Player() : Entity() {
 	crouchSlashState = new PlayerCrouchSlashState(playerData);
 	jumpState = new PlayerJumpingState(playerData);
 	climbState = new PlayerClimbState(playerData);
-	useItemState = new PlayerUseItemState(playerData);
+	useSkillState = new PlayerUseSkillState(playerData);
+	beatenState = new PlayerBeatenState(playerData);
 
 	SetState(PlayerState::Idle);
 	SetTag(Entity::EntityTag::Player);
 	SetType(Entity::EntityType::PlayerType);
+	SetAliveState(Entity::EntityAliveState::Alive);
 
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_PLAYER)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;
-	height = desc.Height / 9;
+	height = desc.Height / 10;
 
 	isActive = true;
+	isRenderLastFrame = true;
+	isHurting = false;
+
+	skill = Skill::NoneSkill;
+
+	useitemtimeFreeze = false;
 }
 
 Player::~Player() {
@@ -61,28 +70,56 @@ void Player::Update(double dt) {
 
 	BoxCollider exPlayer = BoxCollider(GetPosition(), GetWidth(), GetBigHeight());
 
-	//--DEBUG--
-	if (vely != velocity)
-		vely = vely;
-	//--DEBUG--
-	if (exPlayer.bottom < 39) {
-		vely = vely;
+
+	if (!isHurting)
+	{
+		if ((side == Left && velocity.x < 0) || (side == Right && velocity.x > 0))
+			velocity.x = 0;
+		if ((side == Bottom && velocity.y < 0))
+			velocity.y = 0;
 	}
-	//-Debug
-	auto xside = NotKnow;
-	auto impactorRect = BoxCollider(40, 0, 0, 544);
-	float groundTime = CollisionDetector::SweptAABB(exPlayer, GetVelocity(), impactorRect, D3DXVECTOR2(0, 0), xside, dt);
-
-	if ((side == Left && velocity.x < 0) || (side == Right && velocity.x > 0))
-		velocity.x = 0;
-	if ((side == Bottom && velocity.y < 0))
-		velocity.y = 0;
-
 	side = NotKnow;
+
+
+	if (isHurting)
+	{
+		HurtingTime += dt;
+		AddVy(-10);
+		isRenderLastFrame = false;
+		aliveState = Entity::Beaten;
+	}
+	if (HurtingTime >= PLAYER_MAX_HURTING_TIME)
+	{
+		playerData->player->SetState(PlayerState::Idle);
+		isHurting = false;
+		onAir = false;
+		HurtingTime = 0;
+		isHurtingAnimation = true;
+		aliveState = Entity::Alive;
+	}
 }
 
 void Player::Render() {
-	playerData->state->Render();
+	if (isHurtingAnimation &&  timeHurtingAnimation <= PLAYER_HURTING_TIME_ANIMATION)
+	{
+		if (!isRenderLastFrame)
+		{
+			isRenderLastFrame = true;
+		}
+		else
+		{
+			playerData->state->Render();
+			isRenderLastFrame = false;
+		}
+		timeHurtingAnimation++;
+	}
+	else
+	{
+		playerData->state->Render();
+		timeHurtingAnimation = 0;
+		isHurtingAnimation = false;
+	}
+
 }
 
 void Player::SetState(PlayerState::State name, int dummy) {
@@ -107,37 +144,75 @@ void Player::SetState(PlayerState::State name, int dummy) {
 	case PlayerState::Climb:
 		playerData->state = climbState;
 		break;
-	case PlayerState::UseItem:
-		playerData->state = useItemState;
+	case PlayerState::UseSkill:
+		playerData->state = useSkillState;
 		break;
-	case PlayerState::Jump:
+	case PlayerState::Jumping:
 		playerData->state = jumpState;
 		break;
 	case PlayerState::Falling:
 		playerData->state = jumpState;
 		falling = true;
 		break;
+	case PlayerState::Beaten:
+		playerData->state = beatenState;
+		break;
 	}
 	currentState = playerData->state->GetState();
 
 	playerData->state->ResetState(dummy);
-	//if (falling && velocity.y > 0) {
-	//	SetVy(0);
-	//}
+
 }
 
 void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
 	if (impactor->GetTag() == CamRect)
 		return;
 	playerData->state->OnCollision(impactor, side);
-	if (side == Bottom && velocity.y < 0) {
-		velocity.y *= collisionTime;
-		DebugOut(L"Set lai velocity la: %f", velocity.y);
+	if (!isHurting)
+	{
+		if (side == Bottom && velocity.y < 0) {
+			velocity.y *= collisionTime;
+		}
+		else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
+			velocity.x *= collisionTime;
 	}
-	else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
-		velocity.x *= collisionTime;
 	this->collisionTime = collisionTime;
 	this->side = side;
+}
+
+
+void Player::AddItem(Entity::EntityTag tag)
+{
+	switch (tag)
+	{
+	case Entity::SpiritPoints5:
+
+		break;
+	case Entity::SpiritPoints10:
+
+		break;
+	case Entity::Scores500:
+
+		break;
+	case Entity::TimeFreeze:
+		TimeFreezeSkill(true);
+		break;
+	case Entity::Scores1000:
+
+		break;
+	case Entity::Health:
+
+		break;
+	case Entity::ThrowingStar:
+		SetSkill(Player::Skill::BlueShuriken);
+		break;
+	case Entity::WindmillStar:
+		SetSkill(Player::Skill::RedShuriken);
+		break;
+	case Entity::Flames:
+		SetSkill(Player::Skill::FlameRound);
+		break;
+	}
 }
 
 BoxCollider Player::GetRect() {
@@ -209,3 +284,34 @@ void Player::HandleInput() {
 		playerData->state->HandleInput();
 }
 
+void Player::SetSkill(Skill skill)
+{
+	this->skill = skill;
+}
+
+Player::Skill Player::GetSkill()
+{
+	return skill;
+}
+
+
+void Player::TimeFreezeSkill(bool skill)
+{
+	if (skill)
+	{
+		useitemtimeFreeze = true;
+	}
+	else {
+		timeFreeze = 0;
+		useitemtimeFreeze = false;
+	}
+}
+
+void Player::checkTimeFreezeSkill()
+{
+	if (timeFreeze < ANIMATION_ITEM_TIMEFREEZE && useitemtimeFreeze == true)
+	{
+		timeFreeze++;
+	}
+	else TimeFreezeSkill(false);
+}

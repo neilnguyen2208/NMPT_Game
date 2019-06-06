@@ -28,4 +28,5 @@ public:
 	void CheckCamera();
 	//Player*GetPlayer();//hien tai, dung de truyen cho map roi truyen cho grid de xac dinh chiue di cua ninja va active cac unit theo chieu di
 	void Reset();
+	
 };

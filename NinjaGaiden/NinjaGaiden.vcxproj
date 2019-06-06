@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BlueShuriken.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cat.h" />
@@ -142,9 +143,12 @@
     <ClInclude Include="Eagle.h" />
     <ClInclude Include="EagleFollowState.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBeatenState.h" />
     <ClInclude Include="EnemyData.h" />
     <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="EnemyWeapon.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FlameWheel.h" />
     <ClInclude Include="GameConfig.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameMap.h" />
@@ -158,8 +162,8 @@
     <ClInclude Include="ItemState.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MyHelper.h" />
-    <ClInclude Include="ObjectGroup.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBeatenState.h" />
     <ClInclude Include="PlayerClimbState.h" />
     <ClInclude Include="PlayerCrouchSlashState.h" />
     <ClInclude Include="PlayerCrouchState.h" />
@@ -169,12 +173,15 @@
     <ClInclude Include="PlayerRunningState.h" />
     <ClInclude Include="PlayerSlashState.h" />
     <ClInclude Include="PlayerState.h" />
-    <ClInclude Include="PlayerUseItemState.h" />
+    <ClInclude Include="PlayerUseSkillState.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="RedShuriken.h" />
+    <ClInclude Include="RyuWeapon.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoldierAttackState.h" />
+    <ClInclude Include="SoldierBullet.h" />
     <ClInclude Include="SoldierFollowState.h" />
     <ClInclude Include="Sparta.h" />
     <ClInclude Include="SpartaFollowState.h" />
@@ -183,11 +190,13 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Thrower.h" />
     <ClInclude Include="ThrowerAttackState.h" />
+    <ClInclude Include="ThrowerBullet.h" />
     <ClInclude Include="ThrowerFollowState.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BlueShuriken.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="CatFollowState.cpp" />
@@ -196,8 +205,11 @@
     <ClCompile Include="Eagle.cpp" />
     <ClCompile Include="EagleFollowState.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBeatenState.cpp" />
     <ClCompile Include="EnemyState.cpp" />
+    <ClCompile Include="EnemyWeapon.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FlameWheel.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameTime.cpp" />
@@ -210,8 +222,8 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyHelper.cpp" />
-    <ClCompile Include="ObjectGroup.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBeatenState.cpp" />
     <ClCompile Include="PlayerClimbState.cpp" />
     <ClCompile Include="PlayerCrouchSlashState.cpp" />
     <ClCompile Include="PlayerCrouchState.cpp" />
@@ -221,13 +233,16 @@
     <ClCompile Include="PlayerRunningState.cpp" />
     <ClCompile Include="PlayerSlashState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
-    <ClCompile Include="PlayerUseItemState.cpp" />
+    <ClCompile Include="PlayerUseSkillState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="RedShuriken.cpp" />
+    <ClCompile Include="RyuWeapon.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene31.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoldierAttackState.cpp" />
+    <ClCompile Include="SoldierBullet.cpp" />
     <ClCompile Include="SoldierFollowState.cpp" />
     <ClCompile Include="Sparta.cpp" />
     <ClCompile Include="SpartaFollowState.cpp" />
@@ -235,6 +250,7 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Thrower.cpp" />
     <ClCompile Include="ThrowerAttackState.cpp" />
+    <ClCompile Include="ThrowerBullet.cpp" />
     <ClCompile Include="ThrowerFollowState.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>

@@ -5,6 +5,8 @@
 #include "EnemyState.h"
 #include "Camera.h"
 #include "Player.h"
+#include "ThrowerBullet.h"
+#include "Grid.h"
 
 class Enemy : public Entity {
 public:
@@ -16,7 +18,6 @@ public:
 
 	virtual void Update(double dt);
 	virtual void Render();
-
 	
 	virtual BoxCollider GetRect();
 	virtual BoxCollider GetSpawnRect();
@@ -40,7 +41,7 @@ public:
 	virtual void MakeInactive();
 	virtual void Spawn();
 	virtual Entity::EntityDirection GetSpawnDirection();
-
+	
 protected:
 
 	D3DXVECTOR3 spawnPosition;
@@ -50,5 +51,6 @@ protected:
 	float collisionTime;
 	SideCollision side;
 	EnemyData *enemyData;
+	EnemyState *enemyBeatenState;
 
 };

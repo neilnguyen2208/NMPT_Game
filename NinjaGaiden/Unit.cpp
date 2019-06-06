@@ -1,11 +1,11 @@
 #include"Unit.h"
 
-Unit::Unit(Grid* grid, Entity* entity)
+Unit::Unit(Grid* grid, Entity* entity) 
 {
-	this->entity = entity;
 	this->grid = grid;
-	p_prev = NULL;
-	p_next = NULL;
+	this->entity = entity;
+	this->p_next = NULL;
+	this->p_prev = NULL;
 	grid->AddToCell(this);
 	x = entity->GetPosition().x;
 	y = entity->GetPosition().y;
@@ -25,4 +25,19 @@ BoxCollider Unit::GetCellRect(int i, int j, int cellHeight,int cellWidth)
 	rect.left = j*cellWidth;
 	rect.right = (j + 1)*cellWidth - 1;
 	return rect;
+}
+
+Entity* Unit::GetEntity()
+{
+	return this->entity;
+}
+
+Unit* Unit::GetNextUnit()
+{
+	return this->p_next;
+}
+
+Unit* Unit::GetPrevUnit()
+{
+	return this->p_prev;
 }

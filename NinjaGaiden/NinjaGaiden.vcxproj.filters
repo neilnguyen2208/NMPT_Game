@@ -34,23 +34,35 @@
     <Filter Include="Header Files\Components\Player">
       <UniqueIdentifier>{5c846848-81ee-4693-8277-a426017dff9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enemy">
+    <Filter Include="Header Files\Components\Enemy">
       <UniqueIdentifier>{5bf5defd-646c-4da5-9f16-ba0e9997d9fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enemy\Cat">
+    <Filter Include="Header Files\Components\Item">
+      <UniqueIdentifier>{b272d84f-48eb-47c9-b31e-6110fa9ee0a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Cat">
       <UniqueIdentifier>{8638e63c-fef2-4fb5-bdba-9f7f156ef4fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enemy\Eagle">
+    <Filter Include="Header Files\Components\Enemy\Eagle">
       <UniqueIdentifier>{865470ef-12d3-48e9-ae3f-92d38c27b0d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enemy\Soldier">
+    <Filter Include="Header Files\Components\Enemy\Soldier">
       <UniqueIdentifier>{137feeaa-877d-44a5-911e-ab6c74dcdd24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enemy\Sparta">
+    <Filter Include="Header Files\Components\Enemy\Sparta">
       <UniqueIdentifier>{161e07b4-e6fc-40c2-a2ee-77ed30bdc55f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enemy\Thrower">
+    <Filter Include="Header Files\Components\Enemy\Thrower">
       <UniqueIdentifier>{6b210260-2421-4b2c-af8f-4db25ac9f920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon">
+      <UniqueIdentifier>{18593ede-c1fc-4786-8bfb-3075cc958824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon\RyuWeapon">
+      <UniqueIdentifier>{61789a5c-5ba0-427c-95da-f5691fe8f1b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon\EnemyWeapon">
+      <UniqueIdentifier>{cdadbe43-bcf0-4323-b3d9-ba3a222fd820}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +120,91 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Graphic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cat.h">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClInclude>
+    <ClInclude Include="CatFollowState.h">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClInclude>
+    <ClInclude Include="Eagle.h">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClInclude>
+    <ClInclude Include="EagleFollowState.h">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="SoldierAttackState.h">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="SoldierFollowState.h">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="SpartaFollowState.h">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClInclude>
+    <ClInclude Include="Sparta.h">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowerFollowState.h">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowerAttackState.h">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClInclude>
+    <ClInclude Include="Thrower.h">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemState.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemData.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemAvailableState.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemHolderState.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBeatenState.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyData.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BlueShuriken.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="FlameWheel.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="RedShuriken.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
     <ClInclude Include="Player.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBeatenState.h">
       <Filter>Header Files\Components\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerClimbState.h">
@@ -138,80 +234,20 @@
     <ClInclude Include="PlayerState.h">
       <Filter>Header Files\Components\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerUseItemState.h">
+    <ClInclude Include="PlayerUseSkillState.h">
       <Filter>Header Files\Components\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Graphic.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ThrowerBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="EnemyWeapon.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="ItemAvailableState.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SoldierBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="ItemData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemHolderState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Source Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyData.h">
-      <Filter>Source Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyState.h">
-      <Filter>Source Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Cat.h">
-      <Filter>Source Files\Enemy\Cat</Filter>
-    </ClInclude>
-    <ClInclude Include="CatFollowState.h">
-      <Filter>Source Files\Enemy\Cat</Filter>
-    </ClInclude>
-    <ClInclude Include="Eagle.h">
-      <Filter>Source Files\Enemy\Eagle</Filter>
-    </ClInclude>
-    <ClInclude Include="EagleFollowState.h">
-      <Filter>Source Files\Enemy\Eagle</Filter>
-    </ClInclude>
-    <ClInclude Include="Soldier.h">
-      <Filter>Source Files\Enemy\Soldier</Filter>
-    </ClInclude>
-    <ClInclude Include="SoldierAttackState.h">
-      <Filter>Source Files\Enemy\Soldier</Filter>
-    </ClInclude>
-    <ClInclude Include="SoldierFollowState.h">
-      <Filter>Source Files\Enemy\Soldier</Filter>
-    </ClInclude>
-    <ClInclude Include="SpartaFollowState.h">
-      <Filter>Source Files\Enemy\Sparta</Filter>
-    </ClInclude>
-    <ClInclude Include="Sparta.h">
-      <Filter>Source Files\Enemy\Sparta</Filter>
-    </ClInclude>
-    <ClInclude Include="ThrowerFollowState.h">
-      <Filter>Source Files\Enemy\Thrower</Filter>
-    </ClInclude>
-    <ClInclude Include="ThrowerAttackState.h">
-      <Filter>Source Files\Enemy\Thrower</Filter>
-    </ClInclude>
-    <ClInclude Include="Thrower.h">
-      <Filter>Source Files\Enemy\Thrower</Filter>
-    </ClInclude>
-    <ClInclude Include="Unit.h">
-      <Filter>Header Files\Components\Manager</Filter>
+    <ClInclude Include="RyuWeapon.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -266,7 +302,85 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Graphic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cat.cpp">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClCompile>
+    <ClCompile Include="CatFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClCompile>
+    <ClCompile Include="Eagle.cpp">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClCompile>
+    <ClCompile Include="EagleFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="SoldierAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="SoldierFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="Sparta.cpp">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClCompile>
+    <ClCompile Include="SpartaFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowerFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowerAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClCompile>
+    <ClCompile Include="Thrower.cpp">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemState.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemHolderState.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemAvailableState.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBeatenState.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BlueShuriken.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="FlameWheel.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="RedShuriken.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBeatenState.cpp">
       <Filter>Header Files\Components\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayerClimbState.cpp">
@@ -296,74 +410,20 @@
     <ClCompile Include="PlayerState.cpp">
       <Filter>Header Files\Components\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerUseItemState.cpp">
+    <ClCompile Include="PlayerUseSkillState.cpp">
       <Filter>Header Files\Components\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Graphic.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ThrowerBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="EnemyWeapon.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="ItemAvailableState.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="SoldierBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="ItemHolderState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyState.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Cat.cpp">
-      <Filter>Source Files\Enemy\Cat</Filter>
-    </ClCompile>
-    <ClCompile Include="CatFollowState.cpp">
-      <Filter>Source Files\Enemy\Cat</Filter>
-    </ClCompile>
-    <ClCompile Include="Eagle.cpp">
-      <Filter>Source Files\Enemy\Eagle</Filter>
-    </ClCompile>
-    <ClCompile Include="EagleFollowState.cpp">
-      <Filter>Source Files\Enemy\Eagle</Filter>
-    </ClCompile>
-    <ClCompile Include="Soldier.cpp">
-      <Filter>Source Files\Enemy\Soldier</Filter>
-    </ClCompile>
-    <ClCompile Include="SoldierAttackState.cpp">
-      <Filter>Source Files\Enemy\Soldier</Filter>
-    </ClCompile>
-    <ClCompile Include="SoldierFollowState.cpp">
-      <Filter>Source Files\Enemy\Soldier</Filter>
-    </ClCompile>
-    <ClCompile Include="Sparta.cpp">
-      <Filter>Source Files\Enemy\Sparta</Filter>
-    </ClCompile>
-    <ClCompile Include="SpartaFollowState.cpp">
-      <Filter>Source Files\Enemy\Sparta</Filter>
-    </ClCompile>
-    <ClCompile Include="ThrowerFollowState.cpp">
-      <Filter>Source Files\Enemy\Thrower</Filter>
-    </ClCompile>
-    <ClCompile Include="ThrowerAttackState.cpp">
-      <Filter>Source Files\Enemy\Thrower</Filter>
-    </ClCompile>
-    <ClCompile Include="Thrower.cpp">
-      <Filter>Source Files\Enemy\Thrower</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit.cpp">
-      <Filter>Header Files\Components\Manager</Filter>
+    <ClCompile Include="RyuWeapon.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

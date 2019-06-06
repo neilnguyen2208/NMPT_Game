@@ -5,7 +5,7 @@ PlayerUseItemState::PlayerUseItemState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 3, 3, 3, 9, 4, 0.1f);
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 3, 3, 3, 10, 4, 0.1f);
 }
 
 PlayerUseItemState::~PlayerUseItemState() {

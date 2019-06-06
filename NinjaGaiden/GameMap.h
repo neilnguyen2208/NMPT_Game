@@ -6,6 +6,7 @@
 #include "Sparta.h"
 #include "Cat.h"
 #include "Thrower.h"
+#include "Item.h"
 #include "Eagle.h"
 #include "Soldier.h"
 #include <iostream>

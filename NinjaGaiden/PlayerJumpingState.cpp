@@ -5,7 +5,7 @@ PlayerJumpingState::PlayerJumpingState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 8, 8, 4, 9, 4, PLAYER_JUMPING_FRAME * (1.0f/60));
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 8, 8, 4, 10, 4, PLAYER_JUMPING_FRAME * (1.0f/60));
 }
 
 PlayerJumpingState::~PlayerJumpingState() {
@@ -18,8 +18,18 @@ void PlayerJumpingState::Render() {
 void PlayerJumpingState::HandleInput() {
 	auto player = playerData->player;
 	auto keyboard = KeyBoard::GetInstance();
+	bool isUseSkill = false;
+
+	if (keyboard->GetKey(DIK_UPARROW))
+	{
+		isUseSkill = true;
+	}
+
 	if (keyboard->GetKeyDown(DIK_D)) {
-		player->SetState(Slash, 1);
+		if (isUseSkill)
+			playerData->player->SetState(UseSkill);
+		else
+			player->SetState(Slash, 1);
 		return;
 	}
 	if (keyboard->GetKey(DIK_LEFTARROW) && !keyboard->GetKey(DIK_RIGHTARROW)) {
@@ -49,8 +59,12 @@ void PlayerJumpingState::HandleInput() {
 	}
 }
 
-void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	
+void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision side) {	
+	if ((impactor->GetType() == Entity::EnemyType||impactor->GetType()==Entity::EnemyWeaponType) && playerData->player->timeHurtingAnimation == 0)
+	{
+		playerData->player->SetState(Beaten);
+		return;
+	}
 	if (impactor->GetTag() == Entity::Ground && side == Entity::Bottom) {
 		auto keyboard = KeyBoard::GetInstance();
 		if (keyboard->GetKey(DIK_LEFTARROW) && !(keyboard->GetKey(DIK_RIGHTARROW)))
@@ -64,12 +78,12 @@ void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision si
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		OutputDebugString(L"Jumping to ground\n");
+		//OutputDebugString(L"Jumping to ground\n");
 	}
 }
 
 PlayerState::State PlayerJumpingState::GetState() {
-	return (playerData->player->GetVelocity().y > 0) ? Jump : Falling;
+	return (playerData->player->GetVelocity().y > 0) ? Jumping : Falling;
 }
 
 void PlayerJumpingState::ResetState(int dummy) {

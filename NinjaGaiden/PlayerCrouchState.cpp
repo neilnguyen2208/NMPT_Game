@@ -5,7 +5,7 @@ PlayerCrouchState::PlayerCrouchState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
-	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 6, 6, 1, 9, 4, 0.1f);
+	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 6, 6, 1, 10, 4, 0.1f);
 
 }
 
@@ -26,7 +26,7 @@ void PlayerCrouchState::HandleInput() {
 			playerData->player->SetState(Slash);
 		else
 			if (keyboard->GetKeyDown(DIK_F))
-				playerData->player->SetState(Jump);
+				playerData->player->SetState(Jumping);
 			else
 				if (keyboard->GetKey(DIK_LEFT) && !keyboard->GetKey(DIK_RIGHT)) 
 					playerData->player->SetState(Running);
@@ -38,6 +38,11 @@ void PlayerCrouchState::HandleInput() {
 }
 
 void PlayerCrouchState::OnCollision(Entity * impactor, Entity::SideCollision side) {
+	if (impactor->GetType() == Entity::EnemyType||impactor->GetTag()==Entity::EnemyWeaponType && playerData->player->timeHurtingAnimation == 0)
+	{
+		playerData->player->SetState(Beaten);
+		return;
+	}
 }
 
 PlayerState::State PlayerCrouchState::GetState() {

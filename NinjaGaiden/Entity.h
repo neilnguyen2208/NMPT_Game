@@ -29,23 +29,53 @@ public:
 	};
 	enum EntityTag
 	{
-		Ground,
-		Player,
+		Ground, //Ground
+		Wall, //Wall
+
+		Player, //Player
+
+		// 3.1 Enemy
 		Sparta,
 		Cat,
 		Thrower,
 		Eagle,
 		Soldier,
-		SpiritPoints5,
-		SpiritPoints10,
-		Scores500,
-		Scores1000,
-		TimeFreeze,
-		Health,
-		ThrowingStar,
-		WindmillStar,
-		Flames,
+		// 3.1 Enemy weapon
+		ThrowerBullet,
+		SoldierBullet,
+
+		// 3.2 Enemy
+		Runner,
+		Canoner,
+		// 3.2 Enemy weapon
+		CanonerBullet,
+
+		// 3.3
+		Boss,
+		BossWeapon,
+
+		//Directtly Process Item
+		SpiritPoints5, //6
+		SpiritPoints10, //7
+		Scores500, //8
+		Scores1000, //9
+		TimeFreeze, //10
+		Health, //11
+		ThrowingStar, //12
+		WindmillStar, //13
+		Flames, //14
+
+
+		//Skill and Katana Entity (RyuWeaponType) use for Collide
+		FlameWheel,
+		RedShuriken,
+		BlueShuriken,
+		Katana,
+
+		//CamRect
 		CamRect,
+		
+		//None
 		None
 	};
 	enum EntityType {
@@ -53,13 +83,24 @@ public:
 		PlayerType,
 		EnemyType,
 		ItemType,
+		RyuWeaponType,
+		EnemyWeaponType,
 		NoneType
+	};
+	enum EntityAliveState {
+		Alive,
+		Beaten, 
+		Die,
+		Remove
 	};
 	enum EntityDirection {
 		LeftToRight,
 		RightToLeft
 	};
-	void UpdatePosition(double dt);
+	enum StatusItem {
+		AvailableItem,
+		UnavailableItem
+	};
 	virtual BoxCollider GetRect();
 	virtual void SetActive(bool active);
 	virtual bool IsActive();
@@ -67,6 +108,9 @@ public:
 	virtual void SetTag(EntityTag tag);
 	virtual EntityType GetType();
 	virtual void SetType(EntityType type);
+	virtual EntityAliveState GetAliveState();
+	virtual void SetAliveState(EntityAliveState alivestate);
+
 	virtual void SetStatic(bool flag);
 	virtual void SetPosition(float x, float y);
 	virtual void SetPosition(D3DXVECTOR2 pos);
@@ -103,11 +147,18 @@ public:
 
 	virtual void OnCollision(Entity *impactor, SideCollision side, float collisionTime);
 
+	virtual void MakeInactive();
+
+	virtual void SetStatusItem(StatusItem status);
+	virtual StatusItem GetStatusItem();
+
 protected:
+	
 	bool isActive;
 	int id;
 	EntityTag tag;
 	EntityType type;
+	EntityAliveState aliveState;
 	//duoc goi khi set position cua Entity, dung cho ke thua
 	virtual void OnSetPosition(D3DXVECTOR3 pos);
 
@@ -120,8 +171,7 @@ protected:
 	//size cua entity
 	float width, height;
 
-	//Update Position
-	
-
 	EntityDirection direction;
+	StatusItem status;
+
 };

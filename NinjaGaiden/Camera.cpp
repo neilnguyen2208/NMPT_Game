@@ -3,6 +3,8 @@
 Camera *Camera::instance = NULL;
 
 Camera * Camera::GetInstance() {
+	if (instance == NULL)
+		instance = new Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
 	return instance;
 }
 

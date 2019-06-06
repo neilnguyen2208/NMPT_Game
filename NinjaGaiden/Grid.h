@@ -7,6 +7,8 @@
 #include "GameConfig.h"
 #include "MyHelper.h"
 #include "Enemy.h"
+#include "PlayerData.h"
+#include "PlayerState.h"
 
 class Unit;
 
@@ -22,13 +24,12 @@ class Grid {
 
 	Player*player;//lay huong di nhan vat
 	Unit*** gridcells; //Unit* gridCells[rows][columns]
-	void HandleMelee();
-	void HandleCell(Unit* unit);
-	void HandleCell(int x, int y); //unit = gridcells[x][y]
-	void HandleAttack(Unit* unit, Unit* other);
-	void HandleUnit(Unit* unit, Unit* other);
-	double distance(Unit* unit, Unit* other);	
+	
 	Camera*camera;
+
+	static Grid*instance;
+
+	
 
 public:
 	vector<Entity*> staticObject; //array of static entity (ground)
@@ -46,13 +47,14 @@ public:
 
 	void SetPlayer(Player*);
 	Player::EntityDirection GetDirection();
+	
 
 	void CheckActivatedObjects(); 
 
 	Camera*GetCamera();
 	void SetCamera(Camera*camera);
 
-	Grid();
+	
 	Grid(BoxCollider r, int rows = GRID_ROWS, int columns = GRID_COLUMNS);//constructor cua grid dua vao khung cua the gioi, so luong hang, so luong cot
 	~Grid();
 	int GetRows() { return rows; }
@@ -61,9 +63,20 @@ public:
 	void RenderActive();
 	void UpdateActivatingCells(double dt);//update the isActiveCell after a frame
 	void UpdateActive(double dt);
-	//void UpdatePosition(double dt);
+	
+	void HandleGridCollisionPlayerEnemy(double dt); //unit = gridcells[i][j]
+	void HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt);
+	bool IsOverlap(BoxCollider r1, BoxCollider r2);
+	double HurtingTime;
+
+	void HandleGridCollisionRyuWeaponEnemy(double dt);
+	void HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j,Entity*weapon, double dt);
 
 	Unit* GetGridCells(int, int);
-	Entity* GetEntity(int, int);
-	//vector<Unit*> 
+	
+	static Grid* GetInstance(BoxCollider box);
+
+	void RemoveFromGrid(Unit*);
+
+	void ClearAllWeapon();
 };

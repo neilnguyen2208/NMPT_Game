@@ -24,6 +24,14 @@ void ItemState::OnCollision(Entity * impactor, Entity::SideCollision side) {
 
 }
 
+int ItemState::GetAnimationHeight() {
+	return m_Animation->GetHeightCurrentFrame();
+}
+
+int ItemState::GetAnimationWidth() {
+	return m_Animation->GetWidthCurrentFrame();
+}
+
 void ItemState::ResetState() {
 	m_Animation->ResetAnimation();
 }

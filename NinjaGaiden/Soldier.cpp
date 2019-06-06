@@ -8,6 +8,7 @@ Soldier::Soldier() : Enemy() {
 	soldierAttackState = new SoldierAttackState(enemyData);
 	//Set tag
 	tag = Entity::Soldier;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_SOLDIER)->GetLevelDesc(0, &desc);
 	width = desc.Width / 2.0;
@@ -48,6 +49,11 @@ void Soldier::SetState(EnemyState::State state) {
 		enemyData->state = soldierFollowState;
 	if (state == EnemyState::Attack)
 		enemyData->state = soldierAttackState;
+	if (state == EnemyState::Beaten)
+	{
+		enemyData->state = enemyBeatenState;
+	}
+
 	enemyData->state->ResetState();
 }
 
@@ -56,6 +62,7 @@ BoxCollider Soldier::GetCollider() {
 }
 
 void Soldier::Spawn() {
+	aliveState = Entity::Alive;
 	SetState(EnemyState::Follow);
 	Enemy::Spawn();
 }
