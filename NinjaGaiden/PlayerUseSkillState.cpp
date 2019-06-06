@@ -14,45 +14,41 @@ PlayerUseSkillState::~PlayerUseSkillState() {
 }
 
 void PlayerUseSkillState::Update(double dt) {
-	if (m_Animation->IsLastFrame(dt)) {
-		if (playerData->player->onAir)
-			playerData->player->SetState(Falling);
-		else
-			if (KeyBoard::GetInstance()->GetKey(DIK_DOWNARROW))
-				playerData->player->SetState(Crouch);
-			else
-				playerData->player->SetState(Idle);
-		return;
-	}
-		
+
+	m_Animation->Update(dt);
+	int currentFrame = m_Animation->GetCurrentFrameID();
+	if (playerData->player->GetSkill() == Player::NoneSkill)
+		if (m_Animation->IsLastFrame(dt))
+			playerData->player->SetState(Idle);
+
 	if (playerData->player->GetSkill() == Player::BlueShuriken)
 	{
-	//	DebugOut(L"%f\n", m_Animation->GetPercentTime());
+		//	DebugOut(L"%f\n", m_Animation->GetPercentTime());
 		ryuWeapon_Turn1 = new BlueShuriken();
 		ryuWeapon_Turn2 = new BlueShuriken();
 		ryuWeapon_Turn3 = new BlueShuriken();
 		//First turn
 		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == FirstTurn)
-			{
-				ryuWeapon_Turn1->SetActive(true);
-				ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
-				if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
-					ryuWeapon_Turn1->SetPosition(playerData->player->GetPosition().x + 22, playerData->player->GetPosition().y + 6); //	
-					ryuWeapon_Turn1->SetVx((BLUE_SHURIKEN_VELOCITY_X));
-				}
-				else
-				{
-					ryuWeapon_Turn1->SetPosition(playerData->player->GetPosition().x - 22, playerData->player->GetPosition().y + 6); //	
-					ryuWeapon_Turn1->SetVx((-BLUE_SHURIKEN_VELOCITY_X));
-				}
-				ryuWeapon_Turn1->SetAliveState(Entity::Alive);
-				Unit* unit;
-				unit = new Unit(grid, ryuWeapon_Turn1);
+		{
+			ryuWeapon_Turn1->SetActive(true);
+			ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
+			if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
+				ryuWeapon_Turn1->SetPosition(playerData->player->GetPosition().x + 22, playerData->player->GetPosition().y + 6); //	
+				ryuWeapon_Turn1->SetVx((BLUE_SHURIKEN_VELOCITY_X));
 			}
 			else
 			{
-				ryuWeapon_Turn1->SetActive(false);
+				ryuWeapon_Turn1->SetPosition(playerData->player->GetPosition().x - 22, playerData->player->GetPosition().y + 6); //	
+				ryuWeapon_Turn1->SetVx((-BLUE_SHURIKEN_VELOCITY_X));
 			}
+			ryuWeapon_Turn1->SetAliveState(Entity::Alive);
+			Unit* unit;
+			unit = new Unit(grid, ryuWeapon_Turn1);
+		}
+		else
+		{
+			ryuWeapon_Turn1->SetActive(false);
+		}
 
 		//Second Turn
 		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
@@ -78,7 +74,7 @@ void PlayerUseSkillState::Update(double dt) {
 		}
 
 		//Third Turn
-		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn ==ThirdTurn)
+		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == ThirdTurn)
 		{
 			ryuWeapon_Turn3->SetActive(true);
 			ryuWeapon_Turn3->SetMoveDirection(playerData->player->GetMoveDirection());
@@ -106,9 +102,15 @@ void PlayerUseSkillState::Update(double dt) {
 				turn = SecondTurn;
 			else if (turn == SecondTurn)
 				turn = ThirdTurn;
-			else if(turn == ThirdTurn)
+			else if (turn == ThirdTurn)
 				turn = FirstTurn;
-			playerData->player->SetState(Idle);
+			if (playerData->player->onAir)
+				playerData->player->SetState(Falling);
+			else
+				if (KeyBoard::GetInstance()->GetKey(DIK_DOWNARROW))
+					playerData->player->SetState(Crouch);
+				else
+					playerData->player->SetState(Idle);
 		}
 		return;
 	}

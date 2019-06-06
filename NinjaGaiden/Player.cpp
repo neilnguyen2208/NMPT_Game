@@ -51,7 +51,7 @@ Player::Player() : Entity() {
 	isRenderLastFrame = true;
 	isHurting = false;
 
-	skill = Skill::NoneSkill;
+	skill = Skill::BlueShuriken;
 
 	useitemtimeFreeze = false;
 }
