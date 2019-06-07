@@ -1,4 +1,4 @@
-#include "Grid.h"
+﻿#include "Grid.h"
 #include"Unit.h"
 
 #pragma region Kocare
@@ -264,6 +264,7 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 							continue;
 						}
 						tmpcells_tonext->entity->OnCollision(Katana, side, dt); 
+						player->AddScore(tmpcells_tonext->entity->GetTag()); // cộng điểm cho ninja chi chém enemy
 						
 					}					
 					tmpcells_tonext = tmpcells_tonext->p_next;
@@ -284,6 +285,7 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 					continue;
 				}
 				player->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);
+
 
 				if (tmpcells_tonext->entity->GetType() == Entity::ItemType)
 				{

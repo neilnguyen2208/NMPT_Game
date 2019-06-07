@@ -18,12 +18,12 @@ private:
 	string s1;
 	string t;
 	string st;
-	string l;
+	string f;
 	string p;
 	HRESULT	hr;
-	LPDIRECT3DTEXTURE9 tex1, tex2, texpower, texborder;
+	LPDIRECT3DTEXTURE9 texblood1, texblood2, texpower, texborder, texskill1, texskill2, texskill3;
 public:
 	Scoreboard();
 	~Scoreboard();
-	void DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int time, int stage, int life, int lifeEnemy, int power);
+	void DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int fate, int time, int stage, int blood, int bloodEnemy, int power, int skill);
 };

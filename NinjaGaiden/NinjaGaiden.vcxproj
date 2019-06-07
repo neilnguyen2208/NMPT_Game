@@ -181,6 +181,7 @@
     <ClInclude Include="RyuWeapon.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoldierAttackState.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene31.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoldierAttackState.cpp" />

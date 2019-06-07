@@ -50,9 +50,14 @@ Player::Player() : Entity() {
 	isRenderLastFrame = true;
 	isHurting = false;
 
-	skill = Skill::BlueShuriken;
+	skill = Skill::NoneSkill;
 
 	useitemtimeFreeze = false;
+	score = 0;
+	power = 0;
+	blood = 16;
+	fate = 2;
+	skillnumer= 0;
 }
 
 Player::~Player() {
@@ -165,7 +170,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 
 void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
 	if (impactor->GetTag() == CamRect)
-		return;
+		return;	
 	playerData->state->OnCollision(impactor, side);
 	if (!isHurting)
 	{
@@ -174,7 +179,7 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 		}
 		else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
 			velocity.x *= collisionTime;
-	}
+	};
 	this->collisionTime = collisionTime;
 	this->side = side;
 }
@@ -185,31 +190,34 @@ void Player::AddItem(Entity::EntityTag tag)
 	switch (tag)
 	{
 	case Entity::SpiritPoints5:
-
+		power += 5;
 		break;
 	case Entity::SpiritPoints10:
-
+		power += 10;
 		break;
 	case Entity::Scores500:
-
+		score += 500;
 		break;
 	case Entity::TimeFreeze:
 		TimeFreezeSkill(true);
 		break;
 	case Entity::Scores1000:
-
+		score += 1000;
 		break;
 	case Entity::Health:
-
+		blood += 5;
 		break;
 	case Entity::ThrowingStar:
 		SetSkill(Player::Skill::BlueShuriken);
+		skillnumer = 1;
 		break;
 	case Entity::WindmillStar:
 		SetSkill(Player::Skill::RedShuriken);
+		skillnumer = 2;
 		break;
 	case Entity::Flames:
 		SetSkill(Player::Skill::FlameRound);
+		skillnumer = 3;
 		break;
 	}
 }
@@ -291,6 +299,50 @@ void Player::SetSkill(Skill skill)
 Player::Skill Player::GetSkill()
 {
 	return skill;
+}
+
+void Player::AddScore(Entity::EntityTag tag)
+{
+	switch (tag)
+	{
+	case Entity::Sparta:
+		score += 100;
+		break;
+	case Entity::Cat:
+		score += 200;
+		break;
+	case Entity::Soldier:
+		score += 200;
+		break;
+	case Entity::Eagle:
+		score += 300;
+		break;
+	case Entity::Thrower:
+		score += 300;
+		break;
+	}
+}
+
+void Player::AddBlood(Entity::EntityTag tag)
+{
+	switch (tag)
+	{
+	case Entity::Sparta:
+		blood--;
+		break;
+	case Entity::Cat:
+		blood--;
+		break;
+	case Entity::Soldier:
+		blood--;
+		break;
+	case Entity::Eagle:
+		blood-=3;
+		break;
+	case Entity::Thrower:
+		blood--;
+		break;
+	}
 }
 
 

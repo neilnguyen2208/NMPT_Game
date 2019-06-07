@@ -21,7 +21,7 @@ void PlayerUseSkillState::Update(double dt) {
 		if (m_Animation->IsLastFrame(dt))
 			playerData->player->SetState(Idle);
 
-	if (playerData->player->GetSkill() == Player::BlueShuriken)
+	if (playerData->player->GetSkill() == Player::BlueShuriken && playerData->player->power >= 3)
 	{
 		//	DebugOut(L"%f\n", m_Animation->GetPercentTime());
 		ryuWeapon_Turn1 = new BlueShuriken();
@@ -44,6 +44,7 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn1->SetAliveState(Entity::Alive);
 			Unit* unit;
 			unit = new Unit(grid, ryuWeapon_Turn1);
+			playerData->player->power -= 3;
 		}
 		else
 		{
@@ -67,6 +68,7 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn2->SetAliveState(Entity::Alive);
 			Unit* unit;
 			unit = new Unit(grid, ryuWeapon_Turn2);
+			playerData->player->power -= 3;
 		}
 		else
 		{
@@ -90,11 +92,13 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn3->SetAliveState(Entity::Alive);
 			Unit* unit;
 			unit = new Unit(grid, ryuWeapon_Turn3);
+			playerData->player->power -= 3;
 		}
 		else
 		{
 			ryuWeapon_Turn3->SetActive(false);
 		}
+
 
 		if (m_Animation->IsLastFrame(dt)) // Cai nay khong biet da dung chua
 		{

@@ -82,7 +82,6 @@ void PlayerSlashState::OnCollision(Entity * impactor, Entity::SideCollision side
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		OutputDebugString("slash to ground");
 	}	
 }
 

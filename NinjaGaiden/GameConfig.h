@@ -21,6 +21,9 @@
 #define TEX_BLEED 20
 #define TEX_POWER 21
 #define TEX_BORDER 22
+#define TEX_SKILL_1 23
+#define TEX_SKILL_2 24
+#define TEX_SKILL_3 25
 
 #define PLAYER_SLASH_FRAME 7
 #define PLAYER_RUNNING_FRAME 4

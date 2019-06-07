@@ -8,6 +8,7 @@
 #include "Unit.h"
 #include "Scoreboard.h"
 #include "Graphic.h"
+#include "Score.h"
 
 class PlayScene : public Scene {
 
@@ -20,6 +21,7 @@ class PlayScene : public Scene {
 	Unit*unit;
 	Grid*grid;
 	Scoreboard *sb;
+	Score *score;
 public:
 	PlayScene();
 	virtual ~PlayScene();

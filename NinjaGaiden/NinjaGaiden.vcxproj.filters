@@ -28,9 +28,6 @@
     <Filter Include="Header Files\Components\Misc">
       <UniqueIdentifier>{80c835db-e168-4d26-aebb-84a9d6230ecd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\Scene">
-      <UniqueIdentifier>{6509d641-db06-43de-9393-2c3084f2ed12}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Components\Player">
       <UniqueIdentifier>{5c846848-81ee-4693-8277-a426017dff9d}</UniqueIdentifier>
     </Filter>
@@ -64,8 +61,11 @@
     <Filter Include="Header Files\Components\Weapon\EnemyWeapon">
       <UniqueIdentifier>{cdadbe43-bcf0-4323-b3d9-ba3a222fd820}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\Score">
+    <Filter Include="Header Files\Components\Board">
       <UniqueIdentifier>{d3b5b7d5-1212-43b0-9c7a-87813aad9996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Player\Scene">
+      <UniqueIdentifier>{6509d641-db06-43de-9393-2c3084f2ed12}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,10 +112,10 @@
       <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Stage31.h">
-      <Filter>Header Files\Components\Scene</Filter>
+      <Filter>Header Files\Components\Player\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files\Components\Scene</Filter>
+      <Filter>Header Files\Components\Player\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files\Components\Manager</Filter>
@@ -247,10 +247,13 @@
       <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClInclude>
     <ClInclude Include="Scoreboard.h">
-      <Filter>Header Files\Components\Score</Filter>
+      <Filter>Header Files\Components\Board</Filter>
     </ClInclude>
     <ClInclude Include="Graphic.h">
       <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Header Files\Components\Board</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -294,10 +297,10 @@
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Scene31.cpp">
-      <Filter>Header Files\Components\Scene</Filter>
+      <Filter>Header Files\Components\Player\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Header Files\Components\Scene</Filter>
+      <Filter>Header Files\Components\Player\Scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Header Files\Components\Manager</Filter>
@@ -420,13 +423,16 @@
       <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClCompile>
     <ClCompile Include="Scoreboard.cpp">
-      <Filter>Header Files\Components\Score</Filter>
+      <Filter>Header Files\Components\Board</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphic.cpp">
       <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Header Files\Components\Board</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

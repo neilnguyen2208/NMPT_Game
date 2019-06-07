@@ -27,6 +27,7 @@ PlayScene::PlayScene() {
 	grid->SetPlayer(player);
 
 	sb = new Scoreboard();
+	score = new Score();
 }
 
 PlayScene::~PlayScene() {
@@ -36,8 +37,8 @@ PlayScene::~PlayScene() {
 void PlayScene::Render() {
 	map->Draw();
 	grid->RenderActive(); 	
-	sb->DrawTextTop(Graphic::GetInstance()->Getdirect3DDevice(), 1, 2, 3, 4, 8, 5);
-}
+	sb->DrawTextTop(Graphic::GetInstance()->Getdirect3DDevice(), score->GetScore(), score->GetFate(), score->GetTime(), score->GetScene(), score->GetNinjaBlood(), score->GetBossBlood(), score->GetPower(), score->GetSkill());
+}                                                                           
 
 void PlayScene::ProcessInput() {
 	KeyBoard *input = KeyBoard::GetInstance();
@@ -56,6 +57,12 @@ void PlayScene::Update(double dt) {
 	D3DXVECTOR3 playerPos = player->GetPosition();
 	camera->FollowPlayer(playerPos.x, playerPos.y);
 	CheckCamera();
+
+	score->SetSkill(player->skillnumer);
+	score->SetPower(player->power);
+	score->SetScore(player->score);
+	score->SetNinjaBlood(player->blood);
+	score->SetFate(player->fate);
 }
 
 void PlayScene::CheckCollision(double dt) {
