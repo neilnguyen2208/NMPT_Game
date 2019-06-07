@@ -113,16 +113,6 @@ float Entity::GetHeight() {
 	return height;
 }
 
-void Entity::SetStatusItem(StatusItem status)
-{
-	this->status = status;
-}
-
-Entity::StatusItem Entity::GetStatusItem()
-{
-	return status;
-}
-
 void Entity::SetVelocity(D3DXVECTOR2 vel) {
 	if (vel.x > 0)
 		direction = LeftToRight;
@@ -179,15 +169,23 @@ void Entity::Update(double dt) {
 	position.y += velocity.y * dt;
 }
 
-void Entity::UpdatePosition(double dt)
-{
-	position.x += velocity.x * dt;
-	position.y += velocity.y * dt;
-}
-
 void Entity::Render() {
 }
 
 void Entity::OnCollision(Entity * impactor, SideCollision side, float collisionTime) {
-	
+	//velocity = D3DXVECTOR2(0, 0);
+}
+
+void Entity::MakeInactive()
+{
+}
+
+void Entity::SetStatusItem(StatusItem status)
+{
+	this->status = status;
+}
+
+Entity::StatusItem Entity::GetStatusItem()
+{
+	return status;
 }

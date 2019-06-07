@@ -17,7 +17,6 @@ void PlayerBeatenState::Render() {
 	m_Animation->Render(playerData->player->GetPosition(), BoxCollider(), D3DCOLOR_XRGB(255, 255, 255), playerData->player->GetMoveDirection() == Entity::EntityDirection::RightToLeft);
 }
 
-
 void PlayerBeatenState::OnCollision(Entity * impactor, Entity::SideCollision side) {
 
 }

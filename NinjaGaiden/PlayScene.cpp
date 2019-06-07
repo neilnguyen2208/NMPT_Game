@@ -1,5 +1,5 @@
 #include "PlayScene.h"
-#include "Debug.h"
+
 
 PlayScene::PlayScene() {
 	//LoadResources
@@ -8,7 +8,7 @@ PlayScene::PlayScene() {
 	int height = Graphic::GetInstance()->GetBackBufferHeight();
 
 	//initiate camera for map
-	camera = new Camera(width, height);
+	camera = Camera::GetInstance();
 	map->SetCamera(camera); //set camera cho map de chay map
 	camera->SetPosition(D3DXVECTOR3(width / 2, height / 2, 0));//camera ban dau co vi tri giua man hinh
 
@@ -19,12 +19,14 @@ PlayScene::PlayScene() {
 	//initiate player for map
 	player = new Player();
 	player->SetPosition(32, 40 + player->GetBigHeight() / 2.0f);
-//	DebugOut(L"%f", player->GetPosition().y);
+
 	unit = map->GetUnit();
 	unit = new Unit(grid, player);//them player(mot unit) vao grid, cac unit khac duoc them vao tu class gameMap
 	
 	//Set player for Grid to get Direction
 	grid->SetPlayer(player);
+
+	sb = new Scoreboard();
 }
 
 PlayScene::~PlayScene() {
@@ -33,7 +35,8 @@ PlayScene::~PlayScene() {
 
 void PlayScene::Render() {
 	map->Draw();
-	grid->RenderActive(); 
+	grid->RenderActive(); 	
+	sb->DrawTextTop(Graphic::GetInstance()->Getdirect3DDevice(), 1, 2, 3, 4, 8, 5);
 }
 
 void PlayScene::ProcessInput() {
@@ -48,7 +51,8 @@ void PlayScene::Update(double dt) {
 	grid->UpdateActive(dt); //Update nhung unit nao dang active
 	grid->UpdateActivatingCells(dt); //ham nay them vao de cap nhat cac cell duoc activated, chua kiem tra duoc do chua co va cham voi ground	
 	grid->CheckActivatedObjects();
-		
+	grid->ClearAllWeapon();
+
 	D3DXVECTOR3 playerPos = player->GetPosition();
 	camera->FollowPlayer(playerPos.x, playerPos.y);
 	CheckCamera();
@@ -120,11 +124,9 @@ void PlayScene::CheckCollision(double dt) {
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					if (!onGround)
-						if (tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType)
-								tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
-
-
+					if (!onGround&&tmpcells_tonext->GetEntity()->GetTag()!=Entity::SoldierBullet&&tmpcells_tonext->GetEntity()->GetType()!=Entity::RyuWeaponType&&tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType){
+						tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
+					}
 				}
 				tmpcells_tonext = tmpcells_tonext->GetNextUnit();
 			}
@@ -145,17 +147,22 @@ void PlayScene::CheckCollision(double dt) {
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					if (!onGround)
-						if (tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType)
-							tmpcells_toprev->GetEntity()->AddVy(-CAT_GRAVITY);
-				
+					if (!onGround&&tmpcells_toprev->GetEntity()->GetTag()!=Entity::SoldierBullet&& tmpcells_toprev->GetEntity()->GetType() != Entity::RyuWeaponType&&tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType) {
+						tmpcells_toprev->GetEntity()->AddVy(-CAT_GRAVITY);
+					}
 				}
 				tmpcells_toprev = tmpcells_toprev->GetPrevUnit();
 			}
 		}
 	}
 
-	grid->HandleGridCollision(dt);
+	if (player->GetSkill() != Player::NoneSkill)
+	{
+		grid->HandleGridCollisionRyuWeaponEnemy(dt);
+	}
+	grid->HandleGridCollisionPlayerEnemy(dt);
+	
+	
 }
 
 void PlayScene::CheckCamera() {

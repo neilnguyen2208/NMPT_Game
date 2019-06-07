@@ -8,7 +8,7 @@
 
 class Item : public Entity {
 public:
-	
+
 	Item(Entity::EntityTag tagItem);
 	~Item();
 	virtual void Update(double dt);
@@ -44,7 +44,7 @@ protected:
 	float collisionTime;
 	SideCollision side;
 	int timelimit = 0;
-	
+
 };
 
 

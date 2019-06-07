@@ -1,9 +1,4 @@
 #pragma once
-//27
-//41
-//48
-//59
-#pragma once
 #include "EnemyState.h"
 #include "Textures.h"
 #include "Animation.h"
@@ -14,4 +9,5 @@ public:
 	~SoldierFollowState();
 	virtual void ResetState();
 	virtual void Update(double dt);
+	virtual State GetState();
 };

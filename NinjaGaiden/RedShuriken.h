@@ -3,7 +3,7 @@
 #include"Animation.h"
 #include"Textures.h"
 #include"Player.h"
-//#include"RyuWeaponGroup.h"
+//#include"RyuWeapon.h"
 
 class RedShuriken :public Entity
 {

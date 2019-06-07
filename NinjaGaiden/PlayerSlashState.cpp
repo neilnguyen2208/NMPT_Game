@@ -1,6 +1,6 @@
 #include "PlayerSlashState.h"
 #include "Textures.h"
-#include"Debug.h"
+
 PlayerSlashState::PlayerSlashState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
@@ -61,12 +61,11 @@ void PlayerSlashState::HandleInput() {
 			if (player->GetVelocity().y <= PLAYER_MAX_FALLING_VELOCITY) {
 				player->SetVy(PLAYER_MAX_FALLING_VELOCITY);
 			}
-		}
-	
+		}		
 }
 
 void PlayerSlashState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	if (impactor->GetType() == Entity::EnemyType && playerData->player->timeHurtingAnimation == 0)
+	if ((impactor->GetType() == Entity::EnemyType||impactor->GetType()==Entity::EnemyWeaponType) && playerData->player->timeHurtingAnimation == 0)
 	{
 		playerData->player->SetState(Beaten);
 	}
@@ -83,7 +82,7 @@ void PlayerSlashState::OnCollision(Entity * impactor, Entity::SideCollision side
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		OutputDebugString(L"slash to ground");
+		OutputDebugString("slash to ground");
 	}	
 }
 

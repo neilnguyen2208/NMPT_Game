@@ -3,7 +3,7 @@
 #include"Animation.h"
 #include"Textures.h"
 #include"Camera.h"
-class EnemyWeapon :public Entity
+class RyuWeapon :public Entity
 {
 public:
 
@@ -38,8 +38,8 @@ public:
 
 	virtual void MakeInactive();
 	
-	EnemyWeapon();
-	~EnemyWeapon();
+	RyuWeapon();
+	~RyuWeapon();
 
 protected:
 
@@ -47,7 +47,6 @@ protected:
 	float collisionTime;
 	SideCollision side;
 	Animation* m_Animation;
-	Animation* m_AnimationExplode;
 	
 	int ExplodeWidth;
 	int ExplodeHeight;

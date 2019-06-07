@@ -1,11 +1,11 @@
 #include"Unit.h"
 
-Unit::Unit(Grid* grid, Entity* entity)
+Unit::Unit(Grid* grid, Entity* entity) 
 {
-	this->entity = entity;
 	this->grid = grid;
-	p_prev = NULL;
-	p_next = NULL;
+	this->entity = entity;
+	this->p_next = NULL;
+	this->p_prev = NULL;
 	grid->AddToCell(this);
 	x = entity->GetPosition().x;
 	y = entity->GetPosition().y;

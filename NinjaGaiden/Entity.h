@@ -41,14 +41,14 @@ public:
 		Eagle,
 		Soldier,
 		// 3.1 Enemy weapon
-		ThrowerWeapon,
-		SoldierWeapon,
+		ThrowerBullet,
+		SoldierBullet,
 
 		// 3.2 Enemy
 		Runner,
 		Canoner,
 		// 3.2 Enemy weapon
-		CanonerWeapon,
+		CanonerBullet,
 
 		// 3.3
 		Boss,
@@ -65,10 +65,6 @@ public:
 		WindmillStar, //13
 		Flames, //14
 
-		//Skill Item
-		FlameSkillIem,
-		BlueShurikenItem,
-		RedShurikenItem,
 
 		//Skill and Katana Entity (RyuWeaponType) use for Collide
 		FlameWheel,
@@ -94,17 +90,17 @@ public:
 	enum EntityAliveState {
 		Alive,
 		Beaten, 
-		Die
-	};
-	enum StatusItem {
-		AvailableItem,
-		UnavailableItem
+		Die,
+		Remove
 	};
 	enum EntityDirection {
 		LeftToRight,
 		RightToLeft
 	};
-	void UpdatePosition(double dt);
+	enum StatusItem {
+		AvailableItem,
+		UnavailableItem
+	};
 	virtual BoxCollider GetRect();
 	virtual void SetActive(bool active);
 	virtual bool IsActive();
@@ -131,9 +127,6 @@ public:
 	virtual void SetHeight(int height);
 	virtual float GetHeight();
 
-	virtual void SetStatusItem(StatusItem status);
-	virtual StatusItem GetStatusItem();
-
 	virtual D3DXVECTOR2 GetVelocity();
 	virtual void SetVelocity(D3DXVECTOR2 vel);
 
@@ -154,7 +147,13 @@ public:
 
 	virtual void OnCollision(Entity *impactor, SideCollision side, float collisionTime);
 
+	virtual void MakeInactive();
+
+	virtual void SetStatusItem(StatusItem status);
+	virtual StatusItem GetStatusItem();
+
 protected:
+	
 	bool isActive;
 	int id;
 	EntityTag tag;
@@ -174,4 +173,5 @@ protected:
 
 	EntityDirection direction;
 	StatusItem status;
+
 };

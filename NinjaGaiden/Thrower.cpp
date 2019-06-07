@@ -1,13 +1,15 @@
 #include "Thrower.h"
+#include"Unit.h"
 
 Thrower::Thrower() : Enemy() {
 	//Set type
 	auto textures = Textures::GetInstance();
-		textures->Add(TEX_THROWER, "Resources/Sprites/throwerspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(TEX_THROWER, "Resources/Sprites/throwerspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
 	throwerFollowState = new ThrowerFollowState(enemyData);
 	throwerAttackState = new ThrowerAttackState(enemyData);
 	//Set tag
 	tag = Entity::Thrower;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_THROWER)->GetLevelDesc(0, &desc);
 

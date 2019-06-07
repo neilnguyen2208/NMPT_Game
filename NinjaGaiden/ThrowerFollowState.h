@@ -9,5 +9,5 @@ public:
 	~ThrowerFollowState();
 	virtual void ResetState();
 	virtual void Update(double dt);
-
+	virtual State GetState();
 };

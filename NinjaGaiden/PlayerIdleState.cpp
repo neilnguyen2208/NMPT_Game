@@ -1,6 +1,6 @@
 #include "PlayerIdleState.h"
 #include "Textures.h"
-#include"Debug.h"
+
 PlayerIdleState::PlayerIdleState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
@@ -16,6 +16,7 @@ void PlayerIdleState::Render() {
 }
 
 void PlayerIdleState::HandleInput() {
+	//xu ly theo priority nghe, Slash, Jump, Running, Crouch,... ?
 	KeyBoard *keyboard = KeyBoard::GetInstance();
 	bool isUseSkill = false;
 
@@ -53,7 +54,7 @@ void PlayerIdleState::HandleInput() {
 }
 
 void PlayerIdleState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	if (impactor->GetType() == Entity::EnemyType && playerData->player->timeHurtingAnimation == 0)
+	if ((impactor->GetType() == Entity::EnemyType|| impactor->GetType() == Entity::EnemyWeaponType) && playerData->player->timeHurtingAnimation == 0)
 	{
 		playerData->player->SetState(Beaten);
 		return;

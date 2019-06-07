@@ -7,6 +7,7 @@ Cat::Cat() : Enemy() {
 	catFollowState = new CatFollowState(enemyData);
 	//Set tag
 	tag = Entity::Cat;
+	type = Entity::EnemyType;
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_CAT)->GetLevelDesc(0, &desc);
 	width = desc.Width / 4;
@@ -23,7 +24,7 @@ void Cat::OnCollision(Entity * impactor, Entity::SideCollision side, float colli
 		if (side == Entity::Bottom) {
 			if ((MyHelper::Distance(myRect.left, impactorRect.left) < ENEMY_OFFSET_BORDER && velocity.x < 0) || (MyHelper::Distance(myRect.right, impactorRect.right) < ENEMY_OFFSET_BORDER && velocity.x > 0)/* || (impactorRect.left > myRect.left && impactorRect.left < myRect.right && velocity.x < 0) || (impactorRect.right > myRect.left && impactorRect.right < myRect.right && velocity.x > 0)*/)
 				SetVx(-velocity.x);
-				SetVy(CAT_JUMP_VELOCITY);
+			SetVy(CAT_JUMP_VELOCITY);
 		}
 	}
 	Enemy::OnCollision(impactor, side, collisionTime);

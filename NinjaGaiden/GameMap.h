@@ -6,12 +6,13 @@
 #include "Sparta.h"
 #include "Cat.h"
 #include "Thrower.h"
+#include "Item.h"
 #include "Eagle.h"
 #include "Soldier.h"
-#include "Item.h"
 #include <iostream>
 #include <fstream>
-#include"Unit.h"
+#include "Unit.h"
+
 
 class Tileset {
 	int tileWidth;

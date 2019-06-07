@@ -27,6 +27,10 @@ class Grid {
 	
 	Camera*camera;
 
+	static Grid*instance;
+
+	
+
 public:
 	vector<Entity*> staticObject; //array of static entity (ground)
 	vector<Entity*> GetStaticObjects();
@@ -43,13 +47,14 @@ public:
 
 	void SetPlayer(Player*);
 	Player::EntityDirection GetDirection();
+	
 
 	void CheckActivatedObjects(); 
 
 	Camera*GetCamera();
 	void SetCamera(Camera*camera);
 
-	Grid();
+	
 	Grid(BoxCollider r, int rows = GRID_ROWS, int columns = GRID_COLUMNS);//constructor cua grid dua vao khung cua the gioi, so luong hang, so luong cot
 	~Grid();
 	int GetRows() { return rows; }
@@ -59,11 +64,19 @@ public:
 	void UpdateActivatingCells(double dt);//update the isActiveCell after a frame
 	void UpdateActive(double dt);
 	
-	void HandleGridCollision(double dt); //unit = gridcells[i][j]
-	void HandleGridSubFunction(int i, int j, double dt);
+	void HandleGridCollisionPlayerEnemy(double dt); //unit = gridcells[i][j]
+	void HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt);
 	bool IsOverlap(BoxCollider r1, BoxCollider r2);
 	double HurtingTime;
 
+	void HandleGridCollisionRyuWeaponEnemy(double dt);
+	void HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j,Entity*weapon, double dt);
+
 	Unit* GetGridCells(int, int);
-	bool flag = false;
+	
+	static Grid* GetInstance(BoxCollider box);
+
+	void RemoveFromGrid(Unit*);
+
+	void ClearAllWeapon();
 };

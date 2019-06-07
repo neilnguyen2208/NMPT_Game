@@ -36,6 +36,8 @@ void GameManager::Render() {
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
+		/*Graphic::DrawTextTop(1, 2, 3, 4, 5);*/
+
 		scene->Render();
 
 		spriteHandler->End();

@@ -1,6 +1,6 @@
 #include "ThrowerFollowState.h"
 #include "Enemy.h"
-
+#include<iostream>
 ThrowerFollowState::ThrowerFollowState(EnemyData *data) : EnemyState(data) {
 	auto textures = Textures::GetInstance();
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_THROWER);
@@ -36,4 +36,15 @@ void ThrowerFollowState::ResetState() {
 
 void ThrowerFollowState::Update(double dt) {
 	m_Animation->Update(dt);
+	if (m_Animation->GetPercentTime() >= 3.0f)
+	{
+		enemyData->enemy->SetState(EnemyState::Attack);
+	}
 }
+
+EnemyState::State ThrowerFollowState::GetState()
+{
+	return Follow;
+}
+
+

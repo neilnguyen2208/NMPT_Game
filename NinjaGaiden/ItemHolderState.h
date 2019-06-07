@@ -9,8 +9,4 @@ public:
 	~ItemHolderState();
 	virtual void ResetState();
 	virtual void Update(double dt);
-	/*virtual void Render();
-	virtual void HandleInput();
-	virtual void OnCollision(Entity *impactor, Entity::SideCollision side);
-	virtual State GetState();*/
 };

@@ -20,7 +20,9 @@ public:
 	virtual void SetState(EnemyState::State);
 	virtual BoxCollider GetCollider();
 	virtual void Spawn();
+
 protected:
 	EnemyState *throwerFollowState,
 		*throwerAttackState;
+	
 };

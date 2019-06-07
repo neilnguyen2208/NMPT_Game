@@ -3,19 +3,19 @@
 #include "ItemHolderState.h"
 
 Item::Item(Entity::EntityTag tagItem) : Entity() {
-	
+
 	type = Entity::ItemType;
 	SetTag(tagItem);
 	auto textures = Textures::GetInstance();
 	textures->Add(TEX_HOLDER, "Resources/Sprites/holderspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
 	textures->Add(TEX_ITEM, "Resources/Sprites/itemspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
-	
+
 	itemData = new ItemData();
 	itemData->item = this;
 
 	itemAvailableState = new ItemAvailableState(itemData);
 	itemHolderState = new ItemHolderState(itemData);
-	
+
 	SetState(ItemState::Unavailable);
 	SetType(Entity::EntityType::ItemType);
 	SetStatusItem(Entity::UnavailableItem);
@@ -33,10 +33,10 @@ void Item::Update(double dt) {
 		if (timelimit < ITEM_TIME_LIMIT)
 		{
 			Entity::Update(dt);
-			timelimit += dt*100;
+			timelimit += dt * 100;
 		}
 		else MakeInactive();
-			
+
 }
 
 void Item::Render() {

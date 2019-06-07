@@ -5,6 +5,8 @@
 #include "EnemyState.h"
 #include "Camera.h"
 #include "Player.h"
+#include "ThrowerBullet.h"
+#include "Grid.h"
 
 class Enemy : public Entity {
 public:
@@ -39,7 +41,7 @@ public:
 	virtual void MakeInactive();
 	virtual void Spawn();
 	virtual Entity::EntityDirection GetSpawnDirection();
-
+	
 protected:
 
 	D3DXVECTOR3 spawnPosition;
@@ -50,5 +52,5 @@ protected:
 	SideCollision side;
 	EnemyData *enemyData;
 	EnemyState *enemyBeatenState;
-	
+
 };

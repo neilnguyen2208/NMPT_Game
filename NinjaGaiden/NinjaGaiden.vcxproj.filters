@@ -64,6 +64,9 @@
     <Filter Include="Header Files\Components\Weapon\EnemyWeapon">
       <UniqueIdentifier>{cdadbe43-bcf0-4323-b3d9-ba3a222fd820}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Score">
+      <UniqueIdentifier>{d3b5b7d5-1212-43b0-9c7a-87813aad9996}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -80,9 +83,6 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Header Files\Components\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Header Files\Components\Misc</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDetector.h">
       <Filter>Header Files\Components\Manager</Filter>
@@ -119,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files\Components\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphic.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files</Filter>
@@ -243,14 +240,17 @@
     <ClInclude Include="EnemyWeapon.h">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyWeaponData.h">
+    <ClInclude Include="SoldierBullet.h">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyWeaponState.h">
-      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    <ClInclude Include="RyuWeapon.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyWeaponDestroyState.h">
-      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    <ClInclude Include="Scoreboard.h">
+      <Filter>Header Files\Components\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic.h">
+      <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>Header Files\Components\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Debug.cpp">
-      <Filter>Header Files\Components\Misc</Filter>
     </ClCompile>
     <ClCompile Include="CollisionDetector.cpp">
       <Filter>Header Files\Components\Manager</Filter>
@@ -304,12 +301,6 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Header Files\Components\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cat.cpp">
       <Filter>Header Files\Components\Enemy\Cat</Filter>
@@ -354,6 +345,9 @@
       <Filter>Header Files\Components\Item</Filter>
     </ClCompile>
     <ClCompile Include="ItemHolderState.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemAvailableState.cpp">
       <Filter>Header Files\Components\Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
@@ -419,14 +413,20 @@
     <ClCompile Include="EnemyWeapon.cpp">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyWeaponState.cpp">
+    <ClCompile Include="SoldierBullet.cpp">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyWeaponDestroyState.cpp">
-      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    <ClCompile Include="RyuWeapon.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="ItemAvailableState.cpp">
-      <Filter>Header Files\Components\Item</Filter>
+    <ClCompile Include="Scoreboard.cpp">
+      <Filter>Header Files\Components\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

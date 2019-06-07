@@ -8,7 +8,6 @@
 #include "PlayerClimbState.h"
 #include "PlayerUseSkillState.h"
 #include "PlayerBeatenState.h"
-#include "Debug.h"
 
 
 Player* Player::instance = NULL;
@@ -50,8 +49,8 @@ Player::Player() : Entity() {
 	isActive = true;
 	isRenderLastFrame = true;
 	isHurting = false;
-	
-	skill = Skill::NoneSkill;
+
+	skill = Skill::BlueShuriken;
 
 	useitemtimeFreeze = false;
 }
@@ -180,6 +179,7 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 	this->side = side;
 }
 
+
 void Player::AddItem(Entity::EntityTag tag)
 {
 	switch (tag)
@@ -193,7 +193,7 @@ void Player::AddItem(Entity::EntityTag tag)
 	case Entity::Scores500:
 
 		break;
-	case Entity::TimeFreeze: 
+	case Entity::TimeFreeze:
 		TimeFreezeSkill(true);
 		break;
 	case Entity::Scores1000:
@@ -292,6 +292,7 @@ Player::Skill Player::GetSkill()
 {
 	return skill;
 }
+
 
 void Player::TimeFreezeSkill(bool skill)
 {
