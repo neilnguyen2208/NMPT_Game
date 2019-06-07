@@ -23,6 +23,9 @@ public:
 	virtual void SetColliderBottom(int bottom);
 	virtual void SetColliderRight(int right);
 	virtual void SetMoveDirection(Entity::EntityDirection dir);
+
+	
+
 	EntityDirection GetMoveDirection();
 	
 	virtual void OnCollision(Entity* impactor, SideCollision side, float timeCollision);
@@ -37,6 +40,8 @@ public:
 	virtual BoxCollider GetCollider();
 
 	virtual void MakeInactive();
+
+	
 	
 	RyuWeapon();
 	~RyuWeapon();

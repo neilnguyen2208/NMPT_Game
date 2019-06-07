@@ -179,3 +179,13 @@ void Entity::OnCollision(Entity * impactor, SideCollision side, float collisionT
 void Entity::MakeInactive()
 {
 }
+
+void Entity::SetStatusItem(StatusItem status)
+{
+	this->status = status;
+}
+
+Entity::StatusItem Entity::GetStatusItem()
+{
+	return status;
+}

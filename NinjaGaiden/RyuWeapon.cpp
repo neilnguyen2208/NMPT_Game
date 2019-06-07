@@ -5,7 +5,6 @@
 RyuWeapon::RyuWeapon()
 {
 	type = Entity::RyuWeaponType;
-	direction = Entity::LeftToRight;
 	isActive = false;
 
 	//Set tag
@@ -90,6 +89,10 @@ void RyuWeapon::SetMoveDirection(Entity::EntityDirection dir) {
 
 Entity::EntityDirection RyuWeapon::GetMoveDirection()
 {
+	if (velocity.x > 0)
+		return LeftToRight;
+	if (velocity.x < 0)
+		return RightToLeft;
 	return direction;
 }
 

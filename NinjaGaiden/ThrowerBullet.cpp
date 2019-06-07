@@ -42,7 +42,7 @@ ThrowerBullet::~ThrowerBullet()
 
 void ThrowerBullet::Update(double dt)
 {
-	this->AddVy(-GRAVITY);
+	this->AddVy(-GRAVITY-12);
 	if (this->GetVelocity().y < 0)
 		int x = 0;
 	if (this->GetVelocity().y <= THROWER_BULLET_MAX_FALLING_VELOCITY)

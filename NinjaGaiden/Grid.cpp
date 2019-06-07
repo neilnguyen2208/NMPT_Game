@@ -157,7 +157,7 @@ void Grid::AddToCell(Unit * other)
 	int j = (int)(other->entity->GetPosition().x / Grid::cellWidth);
 	int i = (int)(other->entity->GetPosition().y / Grid::cellHeight);
 
-	if (i < 0 || j < 0) //
+	if (i < 0 || j < 0||i>rows-1||j>columns-1) //
 	{
 		other->entity->MakeInactive();
 		DebugOut(L"%dOut of grid", j);
@@ -178,31 +178,31 @@ void Grid::AddToCell(Unit * other)
 #pragma endregion
 void Grid::HandleGridCollisionPlayerEnemy(double dt)
 {
-	int iPlayer = player->GetPosition().y / cellHeight;
-	int jPlayer = player->GetPosition().x / cellWidth;
-
-	if (iPlayer < 0 || jPlayer < 0) return;
-
-	HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer, dt);
-	
-	// Also try the neighboring cells.
-
-	if (iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer, dt);
-	if (iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer, dt);//
-
-	if (player->GetMoveDirection() == Entity::RightToLeft)
-	{
-		if (jPlayer > 0 && iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer - 1, dt); //
-		if (jPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer - 1, dt); //
-		if (jPlayer > 0 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer - 1, dt); //		
-	}
-	if (player->GetMoveDirection() == Entity::LeftToRight)
-	{
-		if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer + 1, dt);//
-		if (jPlayer < columns - 1 && iPlayer >0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer + 1, dt);//
-		if (jPlayer < columns - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer + 1, dt);//		
-	}
-
+//	int iPlayer = player->GetPosition().y / cellHeight;
+//	int jPlayer = player->GetPosition().x / cellWidth;
+//
+//	if (iPlayer < 0 || jPlayer < 0) return;
+//
+//	HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer, dt);
+//	
+//	// Also try the neighboring cells.
+//
+//	if (iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer, dt);
+//	if (iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer, dt);//
+//
+//	if (player->GetMoveDirection() == Entity::RightToLeft)
+//	{
+//		if (jPlayer > 0 && iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer - 1, dt); //
+//		if (jPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer - 1, dt); //
+//		if (jPlayer > 0 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer - 1, dt); //		
+//	}
+//	if (player->GetMoveDirection() == Entity::LeftToRight)
+//	{
+//		if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer + 1, dt);//
+//		if (jPlayer < columns - 1 && iPlayer >0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer + 1, dt);//
+//		if (jPlayer < columns - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer + 1, dt);//		
+//	}
+//
 }
 
 void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
@@ -254,7 +254,7 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Katana, side, dt);
 				if (collisionTime != 2) // collide happen
 				{
-					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType||tmpcells_tonext->entity->GetType()==Entity::EnemyWeaponType)
+					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType||tmpcells_tonext->entity->GetType()==Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::ItemType)
 					{				
 						if (tmpcells_tonext->entity->GetAliveState()==Entity::Die)
 						{
@@ -278,14 +278,21 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 			}
 
 			//collision ryu beaten
-			if (tmpcells_tonext->entity->IsActive()&& tmpcells_tonext->entity->GetAliveState()!=Entity::Die) {
+			if (tmpcells_tonext->entity->IsActive() && ((tmpcells_tonext->entity->GetAliveState() != Entity::Die && tmpcells_tonext->entity->GetType() != Entity::ItemType) || (tmpcells_tonext->entity->GetType() == Entity::ItemType && tmpcells_tonext->entity->GetStatusItem() != Entity::UnavailableItem))) {
 				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, player, side, dt);
 				if (collisionTime == 2)
 				{
 					tmpcells_tonext = tmpcells_tonext->p_next;
 					continue;
 				}
-				player->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);			
+				player->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);
+
+				if (tmpcells_tonext->entity->GetType() == Entity::ItemType)
+				{
+					player->AddItem(tmpcells_tonext->entity->GetTag());
+					tmpcells_tonext->entity->SetActive(false);
+					tmpcells_tonext->entity->SetAliveState(Entity::Remove);
+				}
 			}
 		}
 		tmpcells_tonext = tmpcells_tonext->p_next;
@@ -347,13 +354,27 @@ void Grid::CheckActivatedObjects()
 							while (tmpcells_tonext != NULL)
 							{
 								if (tmpcells_tonext->entity->IsActive() == false && tmpcells_tonext->entity->GetMoveDirection() == Entity::LeftToRight)
+								{
+									if (player->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+									{
+										tmpcells_tonext = tmpcells_tonext->p_next;
+										continue;
+									}
 									tmpcells_tonext->entity->SetActive(true);
+								}
 								tmpcells_tonext = tmpcells_tonext->p_next;
 							}
 							while (tmpcells_toprev != NULL)
 							{
 								if (tmpcells_toprev->entity->IsActive() == false && tmpcells_toprev->entity->GetMoveDirection() == Entity::LeftToRight)
+								{
+									if (player->useitemtimeFreeze == true && tmpcells_toprev->entity->GetType() == Entity::EnemyType)
+									{
+										tmpcells_toprev = tmpcells_toprev->p_prev;
+										continue;
+									}
 									tmpcells_toprev->entity->SetActive(true);
+								}
 								tmpcells_toprev = tmpcells_toprev->p_prev;
 							}
 						}
@@ -363,13 +384,27 @@ void Grid::CheckActivatedObjects()
 								while (tmpcells_tonext != NULL)
 								{
 									if (tmpcells_tonext->entity->IsActive() == false && (tmpcells_tonext->entity->GetMoveDirection() == Entity::RightToLeft||tmpcells_tonext->entity->GetType()==Entity::EnemyWeaponType))
+									{
+										if (player->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+										{
+											tmpcells_tonext = tmpcells_tonext->p_next;
+											continue;
+										}
 										tmpcells_tonext->entity->SetActive(true);
+									}
 									tmpcells_tonext = tmpcells_tonext->p_next;
 								}
 								while (tmpcells_toprev != NULL)
 								{
 									if (tmpcells_toprev->entity->IsActive() == false && (tmpcells_toprev->entity->GetMoveDirection() == Entity::RightToLeft || tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType))
+									{
+										if (player->useitemtimeFreeze == true && tmpcells_toprev->entity->GetType() == Entity::EnemyType)
+										{
+											tmpcells_toprev = tmpcells_toprev->p_prev;
+											continue;
+										}
 										tmpcells_toprev->entity->SetActive(true);
+									}
 									tmpcells_toprev = tmpcells_toprev->p_prev;
 								}
 						}
@@ -379,13 +414,27 @@ void Grid::CheckActivatedObjects()
 								while (tmpcells_tonext != NULL)
 								{
 									if (tmpcells_tonext->entity->IsActive() == false&& tmpcells_tonext->entity->GetAliveState() != Entity::Die)
+									{
+										if (player->useitemtimeFreeze == true)
+										{
+											tmpcells_tonext = tmpcells_tonext->p_next;
+											continue;
+										}
 										tmpcells_tonext->entity->SetActive(true);
+									}
 									tmpcells_tonext = tmpcells_tonext->p_next;
 								}
 								while (tmpcells_toprev != NULL)
 								{
 									if (tmpcells_toprev->entity->IsActive() == false&& tmpcells_toprev->entity->GetAliveState() != Entity::Die)
+									{
+										if (player->useitemtimeFreeze == true)
+										{
+											tmpcells_toprev = tmpcells_toprev->p_prev;
+											continue;
+										}
 										tmpcells_toprev->entity->SetActive(true);
+									}
 									tmpcells_toprev = tmpcells_toprev->p_prev;
 								}
 							}
@@ -420,7 +469,6 @@ void Grid::UpdateActivatingCells(double dt)
 	{
 		for (int j = 0; j < columns; j++)
 		{		
-
 			if (gridcells[i][j] != NULL&&isActiveCells[i][j]==true)
 			{
 				Unit*tmpcells_tonext = gridcells[i][j];	
@@ -455,13 +503,21 @@ void Grid::UpdateActive(double dt)
 				while (tmpcells_tonext != NULL)
 				{
 					if (tmpcells_tonext->entity->IsActive())
+					{
+						if (player->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+						{
+							if (tmpcells_tonext->entity->GetAliveState() == Entity::Beaten || tmpcells_tonext->entity->GetAliveState() == Entity::Die)
+								tmpcells_tonext->entity->Update(dt);
+							tmpcells_tonext = tmpcells_tonext->p_next;
+							continue;
+						}
 						tmpcells_tonext->entity->Update(dt);
+					}
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
-
 			}
 		}
-		
+	player->checkTimeFreezeSkill();
 }
 
 void Grid::RemoveFromGrid(Unit *unit)
@@ -497,17 +553,16 @@ void Grid::ClearAllWeapon()
 				Unit*tmpcells_tonext = gridcells[i][j];
 				while (tmpcells_tonext != NULL)
 				{
-					if ((tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::RyuWeaponType) && tmpcells_tonext->entity->GetAliveState() == Entity::Remove)
+					if ((tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::RyuWeaponType || tmpcells_tonext->entity->GetType() == Entity::ItemType)&& tmpcells_tonext->entity->GetAliveState() == Entity::Remove)
 						RemoveFromGrid(tmpcells_tonext);
 					tmpcells_tonext = tmpcells_tonext->p_next;
 				}
 				while (tmpcells_toprev != NULL)
 				{
-					if ((tmpcells_toprev->entity->GetType() == Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::RyuWeaponType) && tmpcells_toprev->entity->GetAliveState() == Entity::Remove)
+					if ((tmpcells_toprev->entity->GetType() == Entity::EnemyWeaponType || tmpcells_toprev->entity->GetType() == Entity::RyuWeaponType || tmpcells_toprev->entity->GetType() == Entity::ItemType) && tmpcells_toprev->entity->GetAliveState() == Entity::Remove)
 						RemoveFromGrid(tmpcells_toprev);
 					tmpcells_toprev = tmpcells_toprev->p_prev;
-				}
-			
+				}			
 		}
 }
 
@@ -560,28 +615,42 @@ void Grid::HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j,Entity*ryuW
 	//Process collide to next
 	while (tmpcells_tonext != NULL)
 	{
-		if (tmpcells_tonext->entity->IsActive() == true && tmpcells_tonext->entity->GetTag() != Entity::Player || tmpcells_tonext->entity->GetType() != Entity::RyuWeaponType)
+		if (tmpcells_tonext->entity->IsActive() == true && tmpcells_tonext->entity->GetType() != Entity::RyuWeaponType)
 		{
-			//collision ryu weapon enemy
-			float collisionTime_1 = CollisionDetector::SweptAABB(tmpcells_tonext->entity, ryuWeapon, side, dt);
-			float collisionTime_2 = CollisionDetector::SweptAABB(ryuWeapon, tmpcells_tonext->entity, side, dt);
-			if (collisionTime_1 != 2) // collide happen
-			{
-				if (tmpcells_tonext->entity->GetType() == Entity::EnemyType || tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType)
-				{
-					tmpcells_tonext->entity->OnCollision(ryuWeapon, side, dt);
+			if (ryuWeapon->GetTag() == Entity::EntityTag::RedShuriken&&tmpcells_tonext->entity->GetType()==Entity::EntityType::PlayerType) //collsion ryu and red shuriken
+			{			
+				float timeCollision = CollisionDetector::SweptAABB(ryuWeapon, tmpcells_tonext->entity, side, dt);
+				if (timeCollision != 2) // collide happen
+				{					
+						ryuWeapon->OnCollision(tmpcells_tonext->entity, side, dt);			
 				}
 			}
-			if (collisionTime_2 != 2)
+			if (tmpcells_tonext->entity->GetType() != Entity::PlayerType)
+				//collision ryu weapon enemy
 			{
-				if (tmpcells_tonext->entity->GetType() == Entity::EnemyType || tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType)
+				float collisionTime_1 = CollisionDetector::SweptAABB(tmpcells_tonext->entity, ryuWeapon, side, dt);
+				float collisionTime_2 = CollisionDetector::SweptAABB(ryuWeapon, tmpcells_tonext->entity, side, dt);
+				if (collisionTime_1 != 2) // collide happen
 				{
-					ryuWeapon->OnCollision(tmpcells_tonext->entity, side, dt);
+					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType || tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::ItemType)
+					{
+						tmpcells_tonext->entity->OnCollision(ryuWeapon, side, dt);
+					}
+				}
+				if (collisionTime_2 != 2)
+				{
+					if (tmpcells_tonext->entity->GetType() == Entity::EnemyType || tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::ItemType)
+					{
+						ryuWeapon->OnCollision(tmpcells_tonext->entity, side, dt);
+					}
 				}
 			}
 		}
 		tmpcells_tonext = tmpcells_tonext->p_next;
 	}
+
+
+
 }
 
 

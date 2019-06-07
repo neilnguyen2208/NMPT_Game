@@ -64,6 +64,9 @@
     <Filter Include="Header Files\Components\Weapon\EnemyWeapon">
       <UniqueIdentifier>{cdadbe43-bcf0-4323-b3d9-ba3a222fd820}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Enemy\Runner">
+      <UniqueIdentifier>{aa27e678-401b-4a1f-a495-5730100d215a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">

@@ -55,17 +55,16 @@ public:
 		BossWeapon,
 
 		//Directtly Process Item
-		SpiritPoints5,
-		SpiritPoints10,
-		Scores500,
-		Scores1000,
-		TimeFreeze,
-		HealthPotion,
+		SpiritPoints5, //6
+		SpiritPoints10, //7
+		Scores500, //8
+		Scores1000, //9
+		TimeFreeze, //10
+		Health, //11
+		ThrowingStar, //12
+		WindmillStar, //13
+		Flames, //14
 
-		//Skill Item
-		FlameSkillIem,
-		BlueShurikenItem,
-		RedShurikenItem,
 
 		//Skill and Katana Entity (RyuWeaponType) use for Collide
 		FlameWheel,
@@ -97,6 +96,10 @@ public:
 	enum EntityDirection {
 		LeftToRight,
 		RightToLeft
+	};
+	enum StatusItem {
+		AvailableItem,
+		UnavailableItem
 	};
 	virtual BoxCollider GetRect();
 	virtual void SetActive(bool active);
@@ -146,6 +149,9 @@ public:
 
 	virtual void MakeInactive();
 
+	virtual void SetStatusItem(StatusItem status);
+	virtual StatusItem GetStatusItem();
+
 protected:
 	
 	bool isActive;
@@ -166,4 +172,6 @@ protected:
 	float width, height;
 
 	EntityDirection direction;
+	StatusItem status;
+
 };

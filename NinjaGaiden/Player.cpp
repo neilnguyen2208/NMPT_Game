@@ -1,3 +1,4 @@
+#pragma once
 #include "Player.h"
 #include "PlayerRunningState.h"
 #include "PlayerIdleState.h"
@@ -7,19 +8,23 @@
 #include "PlayerJumpingState.h"
 #include "PlayerClimbState.h"
 #include "PlayerUseSkillState.h"
-#include"PlayerBeatenState.h"
+#include "PlayerBeatenState.h"
 #include "Debug.h"
 
 
 Player* Player::instance = NULL;
 
 Player * Player::GetInstance() {
+	if (instance == NULL)
+	{
+		instance = new Player();
+	}
 	return instance;
 }
 
 Player::Player() : Entity() {
 
-	instance = this;
+	//instance = this;
 
 	Textures *textures = Textures::GetInstance();
 	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(254, 163, 176));
@@ -41,6 +46,7 @@ Player::Player() : Entity() {
 	SetTag(Entity::EntityTag::Player);
 	SetType(Entity::EntityType::PlayerType);
 	SetAliveState(Entity::EntityAliveState::Alive);
+	SetMoveDirection(Entity::EntityDirection::LeftToRight);
 
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_PLAYER)->GetLevelDesc(0, &desc);
@@ -50,14 +56,18 @@ Player::Player() : Entity() {
 	isActive = true;
 	isRenderLastFrame = true;
 	isHurting = false;
-	//
-	skill = Skill::BlueShuriken;
+
+	skill = Skill::FlameWheelSkill;
+
+	useitemtimeFreeze = false;
+
 }
 
 Player::~Player() {
 }
 
 void Player::Update(double dt) {
+
 	auto vely = velocity;
 
 	if (playerData->state)
@@ -178,6 +188,41 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 	this->side = side;
 }
 
+
+void Player::AddItem(Entity::EntityTag tag)
+{
+	switch (tag)
+	{
+	case Entity::SpiritPoints5:
+
+		break;
+	case Entity::SpiritPoints10:
+
+		break;
+	case Entity::Scores500:
+
+		break;
+	case Entity::TimeFreeze:
+		TimeFreezeSkill(true);
+		break;
+	case Entity::Scores1000:
+
+		break;
+	case Entity::Health:
+
+		break;
+	case Entity::ThrowingStar:
+		SetSkill(Player::Skill::BlueShurikenSkill);
+		break;
+	case Entity::WindmillStar:
+		SetSkill(Player::Skill::RedShurikenSkill);
+		break;
+	case Entity::Flames:
+		SetSkill(Player::Skill::FlameWheelSkill);
+		break;
+	}
+}
+
 BoxCollider Player::GetRect() {
 	BoxCollider r;
 	r.top = position.y + collider.top;
@@ -255,4 +300,26 @@ void Player::SetSkill(Skill skill)
 Player::Skill Player::GetSkill()
 {
 	return skill;
+}
+
+
+void Player::TimeFreezeSkill(bool skill)
+{
+	if (skill)
+	{
+		useitemtimeFreeze = true;
+	}
+	else {
+		timeFreeze = 0;
+		useitemtimeFreeze = false;
+	}
+}
+
+void Player::checkTimeFreezeSkill()
+{
+	if (timeFreeze < ANIMATION_ITEM_TIMEFREEZE && useitemtimeFreeze == true)
+	{
+		timeFreeze++;
+	}
+	else TimeFreezeSkill(false);
 }
