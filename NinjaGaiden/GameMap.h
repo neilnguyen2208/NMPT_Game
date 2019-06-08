@@ -9,6 +9,8 @@
 #include "Item.h"
 #include "Eagle.h"
 #include "Soldier.h"
+#include "Runner.h"
+#include"Cannoner.h"
 #include <iostream>
 #include <fstream>
 #include"Unit.h"

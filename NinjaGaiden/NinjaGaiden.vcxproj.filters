@@ -67,6 +67,9 @@
     <Filter Include="Header Files\Components\Enemy\Runner">
       <UniqueIdentifier>{aa27e678-401b-4a1f-a495-5730100d215a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Enemy\Canonner">
+      <UniqueIdentifier>{138c8ad7-540c-4222-9965-50d070d11e24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -252,6 +255,21 @@
     <ClInclude Include="RyuWeapon.h">
       <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClInclude>
+    <ClInclude Include="Runner.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="RunnerFollowState.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannoner.h">
+      <Filter>Header Files\Components\Enemy\Canonner</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonerAttackState.h">
+      <Filter>Header Files\Components\Enemy\Canonner</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonerBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -427,6 +445,21 @@
     </ClCompile>
     <ClCompile Include="RyuWeapon.cpp">
       <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Runner.cpp">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="RunnerFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannoner.cpp">
+      <Filter>Header Files\Components\Enemy\Canonner</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonerAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Canonner</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonerBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

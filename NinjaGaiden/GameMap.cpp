@@ -146,6 +146,30 @@ void GameMap::SetMapPath(char * mapPath) {
 			unit = new Unit(grid, soldier);
 		}
 				break;
+		case 6: {
+			Runner *runner = new Runner();
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			runner->SetSpawnBox(box, direction);
+			//enemyGroup->AddObject(soldier);
+			unit = new Unit(grid, runner);
+		}
+				break;
+		case 7: {
+			Cannoner *cannoner = new Cannoner();
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			cannoner->SetSpawnBox(box, direction);
+			//enemyGroup->AddObject(soldier);
+			unit = new Unit(grid, cannoner);
+		}
+				break;
 		case 9: { //SpiritPoints5 
 			Item *item9 = new Item(Entity::SpiritPoints5);
 			BoxCollider box;

@@ -57,7 +57,7 @@ Player::Player() : Entity() {
 	isRenderLastFrame = true;
 	isHurting = false;
 
-	skill = Skill::FlameWheelSkill;
+	skill = Skill::RedShurikenSkill;
 
 	useitemtimeFreeze = false;
 

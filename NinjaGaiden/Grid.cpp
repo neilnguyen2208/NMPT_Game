@@ -178,31 +178,31 @@ void Grid::AddToCell(Unit * other)
 #pragma endregion
 void Grid::HandleGridCollisionPlayerEnemy(double dt)
 {
-//	int iPlayer = player->GetPosition().y / cellHeight;
-//	int jPlayer = player->GetPosition().x / cellWidth;
-//
-//	if (iPlayer < 0 || jPlayer < 0) return;
-//
-//	HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer, dt);
-//	
-//	// Also try the neighboring cells.
-//
-//	if (iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer, dt);
-//	if (iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer, dt);//
-//
-//	if (player->GetMoveDirection() == Entity::RightToLeft)
-//	{
-//		if (jPlayer > 0 && iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer - 1, dt); //
-//		if (jPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer - 1, dt); //
-//		if (jPlayer > 0 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer - 1, dt); //		
-//	}
-//	if (player->GetMoveDirection() == Entity::LeftToRight)
-//	{
-//		if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer + 1, dt);//
-//		if (jPlayer < columns - 1 && iPlayer >0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer + 1, dt);//
-//		if (jPlayer < columns - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer + 1, dt);//		
-//	}
-//
+	//int iPlayer = player->GetPosition().y / cellHeight;
+	//int jPlayer = player->GetPosition().x / cellWidth;
+
+	//if (iPlayer < 0 || jPlayer < 0) return;
+
+	//HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer, dt);
+	//
+	//// Also try the neighboring cells.
+
+	//if (iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer, dt);
+	//if (iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer, dt);//
+
+	//if (player->GetMoveDirection() == Entity::RightToLeft)
+	//{
+	//	if (jPlayer > 0 && iPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer - 1, dt); //
+	//	if (jPlayer > 0) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer - 1, dt); //
+	//	if (jPlayer > 0 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer - 1, dt); //		
+	//}
+	//if (player->GetMoveDirection() == Entity::LeftToRight)
+	//{
+	//	if (jPlayer < columns - 1 && iPlayer < rows - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer + 1, jPlayer + 1, dt);//
+	//	if (jPlayer < columns - 1 && iPlayer >0) HandleGridCollisionPlayerEnemySubFunction(iPlayer - 1, jPlayer + 1, dt);//
+	//	if (jPlayer < columns - 1) HandleGridCollisionPlayerEnemySubFunction(iPlayer, jPlayer + 1, dt);//		
+	//}
+
 }
 
 void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)

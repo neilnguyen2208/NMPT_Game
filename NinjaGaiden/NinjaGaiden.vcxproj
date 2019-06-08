@@ -136,6 +136,9 @@
     <ClInclude Include="BlueShuriken.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cannoner.h" />
+    <ClInclude Include="CannonerAttackState.h" />
+    <ClInclude Include="CannonerBullet.h" />
     <ClInclude Include="Cat.h" />
     <ClInclude Include="CatFollowState.h" />
     <ClInclude Include="CollisionDetector.h" />
@@ -176,6 +179,8 @@
     <ClInclude Include="PlayerUseSkillState.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RedShuriken.h" />
+    <ClInclude Include="Runner.h" />
+    <ClInclude Include="RunnerFollowState.h" />
     <ClInclude Include="RyuWeapon.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -198,6 +203,9 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BlueShuriken.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cannoner.cpp" />
+    <ClCompile Include="CannonerAttackState.cpp" />
+    <ClCompile Include="CannonerBullet.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="CatFollowState.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
@@ -236,6 +244,8 @@
     <ClCompile Include="PlayerUseSkillState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RedShuriken.cpp" />
+    <ClCompile Include="Runner.cpp" />
+    <ClCompile Include="RunnerFollowState.cpp" />
     <ClCompile Include="RyuWeapon.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene31.cpp" />

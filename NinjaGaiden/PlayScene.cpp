@@ -117,13 +117,12 @@ void PlayScene::CheckCollision(double dt) {
 
 						if (collisionTime == 2)
 							continue;
-						if (tmpcells_tonext->GetEntity()->GetTag() != Entity::Cat)
-							tmpcells_tonext->GetEntity()->OnCollision(staticObjects[k], side, collisionTime);
+						tmpcells_tonext->GetEntity()->OnCollision(staticObjects[k], side, collisionTime);
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					//if (!onGround&&tmpcells_tonext->GetEntity()->GetTag()!=Entity::SoldierBullet&&tmpcells_tonext->GetEntity()->GetType()!=Entity::RyuWeaponType&&tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType){
-					if(!onGround&&tmpcells_tonext->GetEntity()->GetTag()==Entity::Cat){
+					
+					if(!onGround&&(tmpcells_tonext->GetEntity()->GetTag()==Entity::Cat||tmpcells_tonext->GetEntity()->GetTag()==Entity::Runner)){
 						tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
 					}
 				}
