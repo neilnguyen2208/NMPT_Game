@@ -9,10 +9,11 @@
 #include "Item.h"
 #include "Eagle.h"
 #include "Soldier.h"
+#include "Runner.h"
+#include"Cannoner.h"
 #include <iostream>
 #include <fstream>
-#include "Unit.h"
-
+#include"Unit.h"
 
 class Tileset {
 	int tileWidth;
@@ -50,10 +51,10 @@ public:
 	//void GetActiveObject(std::vector<Entity*> &entities);
 	//void UpdateActive(double dt);
 	//void RenderActive();
-	
+
 	~GameMap();
 private:
-	
+
 	Player*player;
 	Unit*unit;
 	Grid *grid;

@@ -17,7 +17,7 @@ PlayScene::PlayScene() {
 	grid->SetCamera(camera); //lay camera dua cho grid de tim cac cell co the active
 
 	//initiate player for map
-	player = new Player();
+	player = Player::GetInstance();
 	player->SetPosition(32, 40 + player->GetBigHeight() / 2.0f);
 
 	unit = map->GetUnit();
@@ -113,11 +113,11 @@ void PlayScene::CheckCollision(double dt) {
 				continue;
 
 			Unit*tmpcells_tonext = grid->GetGridCells(i, j);
-			Unit*tmpcells_toprev = grid->GetGridCells(i, j)->GetPrevUnit();
+			
 
 			while (tmpcells_tonext != NULL)
 			{
-				if (tmpcells_tonext->GetEntity()->IsActive() == true && tmpcells_tonext->GetEntity()->GetTag() != Entity::Player)
+				if (tmpcells_tonext->GetEntity()->IsActive() == true && (tmpcells_tonext->GetEntity()->GetType() == Entity::EnemyType || tmpcells_tonext->GetEntity()->GetType() == Entity::EntityType::ItemType))
 				{
 					bool onGround = false;
 					for (size_t k = 0; k < staticObjects.size(); k++) {
@@ -131,34 +131,11 @@ void PlayScene::CheckCollision(double dt) {
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					if (!onGround&&tmpcells_tonext->GetEntity()->GetTag()!=Entity::SoldierBullet&&tmpcells_tonext->GetEntity()->GetType()!=Entity::RyuWeaponType&&tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType){
+					if (!onGround && (tmpcells_tonext->GetEntity()->GetTag() == Entity::Cat || tmpcells_tonext->GetEntity()->GetTag() == Entity::Runner)) {
 						tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
 					}
 				}
 				tmpcells_tonext = tmpcells_tonext->GetNextUnit();
-			}
-
-			while (tmpcells_toprev != NULL)
-			{
-				if (tmpcells_toprev->GetEntity()->IsActive() == true && tmpcells_toprev->GetEntity()->GetTag() != Entity::Player)
-				{
-					bool onGround = false;
-					for (size_t k = 0; k < staticObjects.size(); k++) {
-
-						float collisionTime = CollisionDetector::SweptAABB(tmpcells_toprev->GetEntity(), staticObjects[k], side, dt);
-
-						if (collisionTime == 2)
-							continue;
-
-						tmpcells_toprev->GetEntity()->OnCollision(staticObjects[k], side, collisionTime);
-						if (side == Entity::Bottom)
-							onGround = true;
-					}
-					if (!onGround&&tmpcells_toprev->GetEntity()->GetTag()!=Entity::SoldierBullet&& tmpcells_toprev->GetEntity()->GetType() != Entity::RyuWeaponType&&tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType) {
-						tmpcells_toprev->GetEntity()->AddVy(-CAT_GRAVITY);
-					}
-				}
-				tmpcells_toprev = tmpcells_toprev->GetPrevUnit();
 			}
 		}
 	}

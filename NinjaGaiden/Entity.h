@@ -46,9 +46,9 @@ public:
 
 		// 3.2 Enemy
 		Runner,
-		Canoner,
+		Cannoner,
 		// 3.2 Enemy weapon
-		CanonerBullet,
+		CannonerBullet,
 
 		// 3.3
 		Boss,

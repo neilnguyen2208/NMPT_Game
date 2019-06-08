@@ -67,6 +67,12 @@
     <Filter Include="Header Files\Components\Player\Scene">
       <UniqueIdentifier>{6509d641-db06-43de-9393-2c3084f2ed12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Enemy\Runner">
+      <UniqueIdentifier>{c6aa7fd1-7b1f-48e4-840b-08de433c5e3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Cannoner">
+      <UniqueIdentifier>{c9eb82d3-3210-4b76-b63c-896b17c60933}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -255,6 +261,21 @@
     <ClInclude Include="Score.h">
       <Filter>Header Files\Components\Board</Filter>
     </ClInclude>
+    <ClInclude Include="Runner.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="RunnerFollowState.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannoner.h">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonerAttackState.h">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonerBullet.h">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -278,9 +299,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Header Files\Components\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Header Files\Components\Object</Filter>
-    </ClCompile>
     <ClCompile Include="GameMap.cpp">
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
@@ -292,9 +310,6 @@
     </ClCompile>
     <ClCompile Include="MyHelper.cpp">
       <Filter>Header Files\Components\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Scene31.cpp">
       <Filter>Header Files\Components\Player\Scene</Filter>
@@ -374,9 +389,6 @@
     <ClCompile Include="RedShuriken.cpp">
       <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerBeatenState.cpp">
       <Filter>Header Files\Components\Player</Filter>
     </ClCompile>
@@ -433,6 +445,30 @@
     </ClCompile>
     <ClCompile Include="Score.cpp">
       <Filter>Header Files\Components\Board</Filter>
+    </ClCompile>
+    <ClCompile Include="Runner.cpp">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="RunnerFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannoner.cpp">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonerAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonerBullet.cpp">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Header Files\Components\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

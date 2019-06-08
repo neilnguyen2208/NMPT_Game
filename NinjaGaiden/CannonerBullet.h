@@ -2,15 +2,15 @@
 #include"Entity.h"
 #include"Animation.h"
 #include"Textures.h"
-#include"Player.h"
-#include"RyuWeapon.h"
+#include"Enemy.h"
+#include"EnemyWeapon.h"
 
-class FlameWheel :public RyuWeapon
+class CannonerBullet:public EnemyWeapon
 {
 public:
 
-	FlameWheel();
-	~FlameWheel();
+	CannonerBullet();
+	~CannonerBullet();
 	void OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime);
 	virtual void Render();
 	virtual void Update(double dt);

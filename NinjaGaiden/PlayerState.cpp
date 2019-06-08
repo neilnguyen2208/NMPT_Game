@@ -23,24 +23,7 @@ void PlayerState::HandleInput() {
 }
 
 void PlayerState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-	switch (impactor->GetTag())
-	{
-	case Entity::Sparta:
-		playerData->player->score += 100;
-		break;
-		//case Entity::Cat:
-		//	score += 200;
-		//	break;
-		//case Entity::Soldier:
-		//	score += 200;
-		//	break;
-		//case Entity::Eagle:
-		//	score += 300;
-		//	break;
-		//case Entity::Thrower:
-		//	score += 300;
-		//	break;
-	}
+	
 }
 
 PlayerState::State PlayerState::GetState() {

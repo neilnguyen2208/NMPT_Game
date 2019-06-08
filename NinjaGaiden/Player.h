@@ -39,9 +39,9 @@ public:
 
 	//Cac item khac xu ky ngay khi nhat duoc
 	enum Skill {
-		BlueShuriken,
-		RedShuriken,
-		FlameRound,
+		BlueShurikenSkill,
+		RedShurikenSkill,
+		FlameWheelSkill,
 		NoneSkill
 	};
 	virtual void SetSkill(Skill skill);

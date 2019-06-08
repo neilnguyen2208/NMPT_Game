@@ -1,10 +1,10 @@
 #include "RyuWeapon.h"
 #include"GameConfig.h"
 
+
 RyuWeapon::RyuWeapon()
 {
 	type = Entity::RyuWeaponType;
-	direction = Entity::LeftToRight;
 	isActive = false;
 
 	//Set tag
@@ -35,7 +35,7 @@ void RyuWeapon::Update(double dt)
 }
 
 void RyuWeapon::Render() {
-	if(IsActive())
+	if (IsActive())
 	{
 		m_Animation->Render(position, BoxCollider(), D3DCOLOR_XRGB(255, 255, 255), direction == Entity::EntityDirection::RightToLeft);
 	}
@@ -89,6 +89,10 @@ void RyuWeapon::SetMoveDirection(Entity::EntityDirection dir) {
 
 Entity::EntityDirection RyuWeapon::GetMoveDirection()
 {
+	if (velocity.x > 0)
+		return LeftToRight;
+	if (velocity.x < 0)
+		return RightToLeft;
 	return direction;
 }
 

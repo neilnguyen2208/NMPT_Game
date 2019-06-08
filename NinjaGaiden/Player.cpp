@@ -13,12 +13,16 @@
 Player* Player::instance = NULL;
 
 Player * Player::GetInstance() {
+	if (instance == NULL)
+	{
+		instance = new Player();
+	}
 	return instance;
 }
 
 Player::Player() : Entity() {
 
-	instance = this;
+	//instance = this;
 
 	Textures *textures = Textures::GetInstance();
 	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(254, 163, 176));
@@ -57,7 +61,7 @@ Player::Player() : Entity() {
 	power = 0;
 	blood = 16;
 	fate = 2;
-	skillnumer= 0;
+	skillnumer = 0;
 }
 
 Player::~Player() {
@@ -170,7 +174,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 
 void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
 	if (impactor->GetTag() == CamRect)
-		return;	
+		return;
 	playerData->state->OnCollision(impactor, side);
 	if (!isHurting)
 	{
@@ -208,15 +212,15 @@ void Player::AddItem(Entity::EntityTag tag)
 		blood += 5;
 		break;
 	case Entity::ThrowingStar:
-		SetSkill(Player::Skill::BlueShuriken);
+		SetSkill(Player::Skill::BlueShurikenSkill);
 		skillnumer = 1;
 		break;
 	case Entity::WindmillStar:
-		SetSkill(Player::Skill::RedShuriken);
+		SetSkill(Player::Skill::RedShurikenSkill);
 		skillnumer = 2;
 		break;
 	case Entity::Flames:
-		SetSkill(Player::Skill::FlameRound);
+		SetSkill(Player::Skill::FlameWheelSkill);
 		skillnumer = 3;
 		break;
 	}
@@ -337,7 +341,7 @@ void Player::AddBlood(Entity::EntityTag tag)
 		blood--;
 		break;
 	case Entity::Eagle:
-		blood-=3;
+		blood -= 3;
 		break;
 	case Entity::Thrower:
 		blood--;
