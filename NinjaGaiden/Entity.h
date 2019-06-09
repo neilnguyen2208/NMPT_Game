@@ -30,7 +30,9 @@ public:
 	enum EntityTag
 	{
 		Ground, //Ground
+
 		Wall, //Wall
+		ClimbWall,
 
 		Player, //Player
 
@@ -40,7 +42,7 @@ public:
 		Thrower,
 		Eagle,
 		Soldier,
-		
+
 		// 3.1 Enemy weapon
 		ThrowerBullet,
 		SoldierBullet,
@@ -66,7 +68,6 @@ public:
 		WindmillStar, //13
 		Flames, //14
 
-
 		//Skill and Katana Entity (RyuWeaponType) use for Collide
 		FlameWheel,
 		RedShuriken,
@@ -75,7 +76,7 @@ public:
 
 		//CamRect
 		CamRect,
-		
+
 		//None
 		None
 	};

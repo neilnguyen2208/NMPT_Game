@@ -1,5 +1,5 @@
 #include "RedShuriken.h"
-#include"Debug.h"
+
 RedShuriken::RedShuriken()
 {
 	Textures *textures = Textures::GetInstance();

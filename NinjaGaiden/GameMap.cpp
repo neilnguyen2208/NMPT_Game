@@ -73,12 +73,12 @@ void GameMap::SetMapPath(char * mapPath) {
 		reader >> wid;
 		reader >> hei;
 		reader >> direction;
-		if (i == 39)
-			i = i;
+		/*if (i == 39)
+			i = i;*/
 		switch (id) {
 		case 0: {
 			Entity *ground = new Entity();
-			ground->SetTag((Entity::EntityTag)id);
+			ground->SetTag(Entity::Ground);
 			ground->SetType(Entity::StaticType);
 			ground->SetStatic(true);
 			ground->SetPosition(D3DXVECTOR3(posx + wid / 2, posy - hei / 2, 0));
@@ -94,7 +94,7 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.left = posx;
 			box.bottom = posy - hei;
 			box.right = posx + wid;
-			sparta->SetSpawnBox(box, direction);			
+			sparta->SetSpawnBox(box, direction);
 			unit = new Unit(grid, sparta);
 		}
 				break;
@@ -191,7 +191,7 @@ void GameMap::SetMapPath(char * mapPath) {
 			item10->SetSpawnBox(box, direction);
 			unit = new Unit(grid, item10);
 		}
-				break;
+				 break;
 		case 11: { //Scores500 
 			Item *item11 = new Item(Entity::Scores500);
 			BoxCollider box;
@@ -202,7 +202,7 @@ void GameMap::SetMapPath(char * mapPath) {
 			item11->SetSpawnBox(box, direction);
 			unit = new Unit(grid, item11);
 		}
-				break;
+				 break;
 		case 12: { //Scores1000 
 			Item *item12 = new Item(Entity::Scores1000);
 			BoxCollider box;
@@ -213,7 +213,7 @@ void GameMap::SetMapPath(char * mapPath) {
 			item12->SetSpawnBox(box, direction);
 			unit = new Unit(grid, item12);
 		}
-				break;
+				 break;
 		case 13: { //TimeFreeze 
 			Item *item13 = new Item(Entity::TimeFreeze);
 			BoxCollider box;
@@ -267,6 +267,28 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.right = posx + wid;
 			item17->SetSpawnBox(box, direction);
 			unit = new Unit(grid, item17);
+		}
+				 break;
+		case 18: { //Wall
+			Entity *ground = new Entity();
+			ground->SetTag(Entity::Wall);
+			ground->SetType(Entity::StaticType);
+			ground->SetStatic(true);
+			ground->SetPosition(D3DXVECTOR3(posx + wid / 2, posy - hei / 2, 0));
+			ground->SetWidth(wid);
+			ground->SetHeight(hei);
+			grid->staticObject.push_back(ground);
+		}
+				break;
+		case 19: { //ClimbWall
+			Entity *ground = new Entity();
+			ground->SetTag(Entity::ClimbWall);
+			ground->SetType(Entity::StaticType);
+			ground->SetStatic(true);
+			ground->SetPosition(D3DXVECTOR3(posx + wid / 2, posy - hei / 2, 0));
+			ground->SetWidth(wid);
+			ground->SetHeight(hei);
+			grid->staticObject.push_back(ground);
 		}
 				 break;
 		}

@@ -1,5 +1,4 @@
 #include "Eagle.h"
-#include "Debug.h"
 
 Eagle::Eagle() : Enemy() {
 	//Set type

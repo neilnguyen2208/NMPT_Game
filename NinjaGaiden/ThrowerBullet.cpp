@@ -1,6 +1,5 @@
 #include "ThrowerBullet.h"
 #include"GameConfig.h"
-#include"Debug.h"
 #include"Unit.h"
 #include"Grid.h"
 ThrowerBullet::ThrowerBullet()
@@ -42,7 +41,7 @@ ThrowerBullet::~ThrowerBullet()
 
 void ThrowerBullet::Update(double dt)
 {
-	this->AddVy(-GRAVITY-12);
+	this->AddVy(-GRAVITY);
 	if (this->GetVelocity().y < 0)
 		int x = 0;
 	if (this->GetVelocity().y <= THROWER_BULLET_MAX_FALLING_VELOCITY)

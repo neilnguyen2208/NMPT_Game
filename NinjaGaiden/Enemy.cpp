@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "EnemyBeatenState.h"
 #include"PlayScene.h"
+#include"PlayScene2.h"
 #include"GameConfig.h"
 Enemy::Enemy() : Entity() {
 
@@ -121,10 +122,8 @@ void Enemy::OnCollision(Entity * impactor, SideCollision side, float collisionTi
 	if (impactor->GetType() == Entity::StaticType&&enemyData->enemy->GetTag()!=Entity::Eagle) {
 		if (side == Entity::Bottom) {
 			if ((MyHelper::Distance(myRect.left, impactorRect.left) < ENEMY_OFFSET_BORDER && velocity.x < 0) || (MyHelper::Distance(myRect.right, impactorRect.right) < ENEMY_OFFSET_BORDER && velocity.x > 0) || (impactorRect.left > myRect.left && impactorRect.left < myRect.right && velocity.x < 0) || (impactorRect.right > myRect.left && impactorRect.right < myRect.right && velocity.x > 0))
-			{
-				if (enemyData->enemy->GetTag() != Entity::Cat && enemyData->enemy->GetTag() != Entity::Runner)
+				if (enemyData->enemy->GetTag() != Entity::Runner&&enemyData->enemy->GetTag() != Entity::Cat)
 					SetVx(-velocity.x);
-			}
 			SetVy(0);
 		}
 	}

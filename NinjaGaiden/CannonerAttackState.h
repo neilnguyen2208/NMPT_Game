@@ -22,9 +22,7 @@ class CannonerAttackState : public EnemyState {
 		SecondTurn
 	};
 
-	bool isAttacking;
 	Turn turn;
-	DWORD timer;
 	Animation* m_AnimationAttack;
 
 public:

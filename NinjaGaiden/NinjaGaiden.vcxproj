@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -86,9 +86,12 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CallingConvention>Cdecl</CallingConvention>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr.lib;dsound.lib;dxguid.lib;winmm.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -178,12 +181,15 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerUseSkillState.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PlayScene2.h" />
     <ClInclude Include="RedShuriken.h" />
     <ClInclude Include="Runner.h" />
     <ClInclude Include="RunnerFollowState.h" />
     <ClInclude Include="RyuWeapon.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Score.h" />
+    <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoldierAttackState.h" />
     <ClInclude Include="SoldierBullet.h" />
@@ -191,7 +197,6 @@
     <ClInclude Include="Sparta.h" />
     <ClInclude Include="SpartaFollowState.h" />
     <ClInclude Include="Sprites.h" />
-    <ClInclude Include="Stage31.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Thrower.h" />
     <ClInclude Include="ThrowerAttackState.h" />
@@ -243,13 +248,15 @@
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerUseSkillState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="PlayScene2.cpp" />
     <ClCompile Include="RedShuriken.cpp" />
     <ClCompile Include="Runner.cpp" />
     <ClCompile Include="RunnerFollowState.cpp" />
     <ClCompile Include="RyuWeapon.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Scene31.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoldierAttackState.cpp" />
     <ClCompile Include="SoldierBullet.cpp" />

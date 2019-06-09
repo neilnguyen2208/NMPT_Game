@@ -1,5 +1,4 @@
 #include "PlayScene.h"
-#include "Debug.h"
 
 PlayScene::PlayScene() {
 	//LoadResources
@@ -17,16 +16,15 @@ PlayScene::PlayScene() {
 	grid->SetCamera(camera); //lay camera dua cho grid de tim cac cell co the active
 
 	//initiate player for map
-	//player = new Player();
-	player = Player::GetInstance();
+	player = new Player();
 	player->SetPosition(32, 40 + player->GetBigHeight() / 2.0f);
-//	DebugOut(L"%f", player->GetPosition().y);
-	unit = map->GetUnit();
 	unit = new Unit(grid, player);//them player(mot unit) vao grid, cac unit khac duoc them vao tu class gameMap
 	
 	//Set player for Grid to get Direction
 	grid->SetPlayer(player);
 
+	sb = new Scoreboard();
+	score = new Score();
 }
 
 PlayScene::~PlayScene() {
@@ -35,9 +33,9 @@ PlayScene::~PlayScene() {
 
 void PlayScene::Render() {
 	map->Draw();
-	grid->RenderActive(); //
-	
-}
+	grid->RenderActive(); 	
+	sb->DrawTextTop(Graphic::GetInstance()->Getdirect3DDevice(), score->GetScore(), score->GetFate(), score->GetTime(), score->GetScene(), score->GetNinjaBlood(), score->GetBossBlood(), score->GetPower(), score->GetSkill());
+}                                                                           
 
 void PlayScene::ProcessInput() {
 	KeyBoard *input = KeyBoard::GetInstance();
@@ -48,6 +46,7 @@ void PlayScene::Update(double dt) {
 	ProcessInput();
 	CheckCollision(dt);
 
+	
 	grid->UpdateActive(dt); //Update nhung unit nao dang active
 	grid->UpdateActivatingCells(dt); //ham nay them vao de cap nhat cac cell duoc activated, chua kiem tra duoc do chua co va cham voi ground	
 	grid->CheckActivatedObjects();
@@ -56,16 +55,17 @@ void PlayScene::Update(double dt) {
 	D3DXVECTOR3 playerPos = player->GetPosition();
 	camera->FollowPlayer(playerPos.x, playerPos.y);
 	CheckCamera();
+
+	score->SetSkill(player->skillnumer);
+	score->SetPower(player->power);
+	score->SetScore(player->score);
+	score->SetNinjaBlood(player->blood);
+	score->SetFate(player->fate);
 }
 
 void PlayScene::CheckCollision(double dt) {
 
 	vector<Entity*> staticObjects = grid->GetStaticObjects(); //stacic object from 
-
-	float cellWidth = grid->GetCellWidth();
-	float cellHeight = grid->GetCellHeight();
-	int rows = grid->GetRows();
-	int columns = grid->GetColumns();
 
 	auto side = Entity::NotKnow;
 
@@ -97,18 +97,23 @@ void PlayScene::CheckCollision(double dt) {
 		player->OnFalling();
 	}
 
-	//gridcells activate with ground
-	for (size_t i = 0; i < rows; i++)
-	{
-		for (size_t j = 0; j < columns; j++) {
+	float cellWidth = grid->GetCellWidth();
+	float cellHeight = grid->GetCellHeight();
+	int iMax = grid->GetRows() - 1;
+	int jMax = camera->GetRect().right / cellWidth;
+	int jMin = camera->GetRect().left / cellWidth;
 
+	//gridcells activate with ground
+	for (size_t i = 0; i <= iMax; i++)
+	{
+		for (size_t j = jMin; j <= jMax; j++) {
 			if (grid->GetGridCells(i, j) == NULL)
 				continue;
 
 			Unit*tmpcells_tonext = grid->GetGridCells(i, j);
 			while (tmpcells_tonext != NULL)
 			{
-				if (tmpcells_tonext->GetEntity()->IsActive() == true && (tmpcells_tonext->GetEntity()->GetType()==Entity::EnemyType||tmpcells_tonext->GetEntity()->GetType()==Entity::EntityType::ItemType))
+				if (tmpcells_tonext->GetEntity()->IsActive() == true && tmpcells_tonext->GetEntity()->GetTag() != Entity::Player)
 				{
 					bool onGround = false;
 					for (size_t k = 0; k < staticObjects.size(); k++) {
@@ -117,12 +122,13 @@ void PlayScene::CheckCollision(double dt) {
 
 						if (collisionTime == 2)
 							continue;
-						tmpcells_tonext->GetEntity()->OnCollision(staticObjects[k], side, collisionTime);
+
+						if (tmpcells_tonext->GetEntity()->GetTag() != Entity::EntityTag::Runner)
+							tmpcells_tonext->GetEntity()->OnCollision(staticObjects[k], side, collisionTime);
 						if (side == Entity::Bottom)
 							onGround = true;
 					}
-					
-					if(!onGround&&(tmpcells_tonext->GetEntity()->GetTag()==Entity::Cat||tmpcells_tonext->GetEntity()->GetTag()==Entity::Runner)){
+					if (!onGround&&tmpcells_tonext->GetEntity()->GetTag()!=Entity::SoldierBullet&&tmpcells_tonext->GetEntity()->GetType()!=Entity::RyuWeaponType&&tmpcells_tonext->GetEntity()->GetType() != Entity::ItemType&&tmpcells_tonext->GetEntity()->GetTag()!=Entity::CannonerBullet){
 						tmpcells_tonext->GetEntity()->AddVy(-CAT_GRAVITY);
 					}
 				}

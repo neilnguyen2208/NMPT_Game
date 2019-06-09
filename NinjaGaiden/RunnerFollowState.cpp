@@ -39,7 +39,7 @@ void RunnerFollowState::Update(double dt) {
 
 	vector<Entity*> staticObjects = Grid::GetInstance(BoxCollider(224,0,0,2048))->staticObject;
 	auto side = Entity::SideCollision::NotKnow;
-	size_t mark;
+	
 	for (int i = 0; i < staticObjects.size(); i++)
 	{
 		bool onGround = false;
@@ -53,7 +53,7 @@ void RunnerFollowState::Update(double dt) {
 		if (onGround)
 		{
 			if ((enemyData->enemy->GetMoveDirection() == Entity::LeftToRight&&enemyData->enemy->GetRect().right > staticObjects[i]->GetRect().right - 10*ENEMY_OFFSET_BORDER)
-				|| (enemyData->enemy->GetMoveDirection() == Entity::RightToLeft&&enemyData->enemy->GetCollider().left < staticObjects[i]->GetRect().left + 10*ENEMY_OFFSET_BORDER))
+				|| (enemyData->enemy->GetMoveDirection() == Entity::RightToLeft&&enemyData->enemy->GetRect().left < staticObjects[i]->GetRect().left + 10*ENEMY_OFFSET_BORDER))
 			{
 				enemyData->enemy->SetVy(RUNNER_JUMP_SPEED);
 				isJump = true;

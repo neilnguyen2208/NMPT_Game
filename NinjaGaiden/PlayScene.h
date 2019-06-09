@@ -5,7 +5,10 @@
 #include "Entity.h"
 #include "CollisionDetector.h"
 #include "Player.h"
-#include"Unit.h"
+#include "Unit.h"
+#include "Scoreboard.h"
+#include "Graphic.h"
+#include "Score.h"
 
 class PlayScene : public Scene {
 
@@ -17,6 +20,8 @@ class PlayScene : public Scene {
 	Player *player;
 	Unit*unit;
 	Grid*grid;
+	Scoreboard *sb;
+	Score *score;
 public:
 	PlayScene();
 	virtual ~PlayScene();

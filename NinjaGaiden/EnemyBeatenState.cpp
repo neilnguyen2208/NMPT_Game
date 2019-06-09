@@ -1,5 +1,4 @@
 #include "EnemyBeatenState.h"
-#include"Debug.h"
 
 
 EnemyBeatenState::EnemyBeatenState(EnemyData* data)

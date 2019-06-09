@@ -1,6 +1,6 @@
 #include "SoldierAttackState.h"
 #include "Enemy.h"
-#include"Debug.h"
+
 SoldierAttackState::SoldierAttackState(EnemyData *data) : EnemyState(data) {
 	auto textures = Textures::GetInstance();
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_SOLDIER);
@@ -36,7 +36,6 @@ void SoldierAttackState::ResetState() {
 
 void SoldierAttackState::Update(double dt) {
 	m_Animation->Update(dt);
-	DebugOut(L"%f\n", m_Animation->GetPercentTime());
 
 	//First turn
 	if ((m_Animation->GetPercentTime() > 0.2&& m_Animation->GetPercentTime() < 0.3) && turn == FirstTurn)
@@ -44,12 +43,12 @@ void SoldierAttackState::Update(double dt) {
 		soldierBullet_1->SetActive(true);
 		soldierBullet_1->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-			soldierBullet_1->SetPosition(enemyData->enemy->GetPosition().x + 12, enemyData->enemy->GetPosition().y + 0); //	
+			soldierBullet_1->SetPosition(enemyData->enemy->GetPosition().x + 8, enemyData->enemy->GetPosition().y + 6); //	
 			soldierBullet_1->SetVx((SOLDIER_BULLET_VELOCITY_X));
 		}
 		else // 8 6
 		{
-			soldierBullet_1->SetPosition(enemyData->enemy->GetPosition().x - 12, enemyData->enemy->GetPosition().y + 0); //	
+			soldierBullet_1->SetPosition(enemyData->enemy->GetPosition().x - 8, enemyData->enemy->GetPosition().y + 6); //	
 			soldierBullet_1->SetVx((-SOLDIER_BULLET_VELOCITY_X));
 		}
 		soldierBullet_1->SetAliveState(Entity::Alive);
@@ -66,12 +65,12 @@ void SoldierAttackState::Update(double dt) {
 		soldierBullet_2->SetActive(true);
 		soldierBullet_2->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-			soldierBullet_2->SetPosition(enemyData->enemy->GetPosition().x + 6, enemyData->enemy->GetPosition().y + 0); //	
+			soldierBullet_2->SetPosition(enemyData->enemy->GetPosition().x + 8, enemyData->enemy->GetPosition().y + 6); //	
 			soldierBullet_2->SetVx((SOLDIER_BULLET_VELOCITY_X));
 		}
 		else // 8 6
 		{
-			soldierBullet_2->SetPosition(enemyData->enemy->GetPosition().x - 6, enemyData->enemy->GetPosition().y + 0); //	
+			soldierBullet_2->SetPosition(enemyData->enemy->GetPosition().x - 8, enemyData->enemy->GetPosition().y + 6); //	
 			soldierBullet_2->SetVx((-SOLDIER_BULLET_VELOCITY_X));
 		}
 		soldierBullet_2->SetAliveState(Entity::Alive);
@@ -88,12 +87,12 @@ void SoldierAttackState::Update(double dt) {
 			soldierBullet_3->SetActive(true);
 			soldierBullet_3->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 			if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-				soldierBullet_3->SetPosition(enemyData->enemy->GetPosition().x + 0, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_3->SetPosition(enemyData->enemy->GetPosition().x + 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_3->SetVx((SOLDIER_BULLET_VELOCITY_X));
 			}
 			else // 8 6
 			{
-				soldierBullet_3->SetPosition(enemyData->enemy->GetPosition().x - 0, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_3->SetPosition(enemyData->enemy->GetPosition().x - 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_3->SetVx((-SOLDIER_BULLET_VELOCITY_X));
 			}
 	
@@ -112,12 +111,12 @@ void SoldierAttackState::Update(double dt) {
 			soldierBullet_4->SetActive(true);
 			soldierBullet_4->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 			if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-				soldierBullet_4->SetPosition(enemyData->enemy->GetPosition().x + 12, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_4->SetPosition(enemyData->enemy->GetPosition().x + 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_4->SetVx((SOLDIER_BULLET_VELOCITY_X));
 			}
 			else // 8 6
 			{
-				soldierBullet_4->SetPosition(enemyData->enemy->GetPosition().x - 12, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_4->SetPosition(enemyData->enemy->GetPosition().x - 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_4->SetVx((-SOLDIER_BULLET_VELOCITY_X));
 			}
 		
@@ -135,12 +134,12 @@ void SoldierAttackState::Update(double dt) {
 			soldierBullet_5->SetActive(true);
 			soldierBullet_5->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 			if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-				soldierBullet_5->SetPosition(enemyData->enemy->GetPosition().x + 6, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_5->SetPosition(enemyData->enemy->GetPosition().x + 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_5->SetVx((SOLDIER_BULLET_VELOCITY_X));
 			}
 			else // 8 6
 			{
-				soldierBullet_5->SetPosition(enemyData->enemy->GetPosition().x - 6, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_5->SetPosition(enemyData->enemy->GetPosition().x - 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_5->SetVx((-SOLDIER_BULLET_VELOCITY_X));
 			}
 	
@@ -158,12 +157,12 @@ void SoldierAttackState::Update(double dt) {
 			soldierBullet_6->SetActive(true);
 			soldierBullet_6->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 			if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-				soldierBullet_6->SetPosition(enemyData->enemy->GetPosition().x + 0, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_6->SetPosition(enemyData->enemy->GetPosition().x + 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_6->SetVx((SOLDIER_BULLET_VELOCITY_X));
 			}
 			else // 8 6
 			{
-				soldierBullet_6->SetPosition(enemyData->enemy->GetPosition().x - 0, enemyData->enemy->GetPosition().y + 0); //	
+				soldierBullet_6->SetPosition(enemyData->enemy->GetPosition().x - 8, enemyData->enemy->GetPosition().y + 6); //	
 				soldierBullet_6->SetVx((-SOLDIER_BULLET_VELOCITY_X));
 			}
 	

@@ -6,13 +6,12 @@ CannonerAttackState::CannonerAttackState(EnemyData *data) : EnemyState(data) {
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_CANNONER);
 	m_Animation = new Animation();
 	m_AnimationAttack = new Animation();
-	isAttacking = false;
 	m_Animation->AddFramesA(texture, 1, 1, 2, 2, 2, CANNONER_FRAME * (1 / 60.0f));
 	m_AnimationAttack->AddFramesA(texture, 2, 2, 2, 2, 2, CANNONER_ATTACK_FRAME*(1/60.0f));
 	turn = FirstTurn;
 	cannonerBullet_1 = new CannonerBullet();
 	cannonerBullet_2 = new CannonerBullet();
-	timer = 0;
+
 	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
 }
 
@@ -37,11 +36,9 @@ void CannonerAttackState::ResetState() {
 void CannonerAttackState::Update(double dt) {
 	m_Animation->Update(dt);
 	DebugOut(L"%f\n", m_Animation->GetPercentTime());
-
 	//First turn
 	if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == FirstTurn)
 	{
-		isAttacking = true;
 		cannonerBullet_1->SetActive(true);
 		cannonerBullet_1->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
@@ -59,13 +56,11 @@ void CannonerAttackState::Update(double dt) {
 	}
 	else
 	{
-		isAttacking = false;
 		cannonerBullet_1->SetActive(false);
 	}
 
-	if ((m_Animation->GetPercentTime() > 0.13 && m_Animation->GetPercentTime() < 0.14) && turn == SecondTurn)
+	if ((m_Animation->GetPercentTime() > 0.03 && m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
 	{
-		isAttacking = true;
 		cannonerBullet_2->SetActive(true);
 		cannonerBullet_2->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
@@ -83,7 +78,6 @@ void CannonerAttackState::Update(double dt) {
 	}
 	else
 	{
-		isAttacking = false;
 		cannonerBullet_2->SetActive(false);
 	}
 
@@ -105,7 +99,7 @@ EnemyState::State CannonerAttackState::GetState()
 
 void CannonerAttackState::Render()
 {
-	if (m_Animation->GetPercentTime()>0.13&&m_Animation->GetPercentTime()<0.2)
+	if (m_Animation->GetPercentTime()>0.03&&m_Animation->GetPercentTime()<0.2)
 	{
 		m_AnimationAttack->Render(enemyData->enemy->GetPosition(), BoxCollider(), D3DCOLOR_XRGB(255, 255, 255), enemyData->enemy->GetMoveDirection() == Entity::EntityDirection::RightToLeft);
 	}

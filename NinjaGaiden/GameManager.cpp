@@ -4,6 +4,7 @@ GameManager::GameManager(HWND hWnd, HINSTANCE hInstance) {
 	Graphic::GetInstance()->Init(hWnd);
 	KeyBoard::GetInstance()->InitKeyboard(hWnd, hInstance);
 	SceneManager::GetInstance()->CreateScene(new PlayScene());
+	//SceneManager::GetInstance()->CreateScene(new PlayScene2());
 	this->hWnd = hWnd;
 	this->hInstance = hInstance;
 }
@@ -35,6 +36,8 @@ void GameManager::Render() {
 		device->BeginScene();
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
+		/*Graphic::DrawTextTop(1, 2, 3, 4, 5);*/
 
 		scene->Render();
 

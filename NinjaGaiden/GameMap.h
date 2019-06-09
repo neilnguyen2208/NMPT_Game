@@ -10,10 +10,11 @@
 #include "Eagle.h"
 #include "Soldier.h"
 #include "Runner.h"
-#include"Cannoner.h"
+#include "Cannoner.h"
 #include <iostream>
 #include <fstream>
-#include"Unit.h"
+#include "Unit.h"
+
 
 class Tileset {
 	int tileWidth;

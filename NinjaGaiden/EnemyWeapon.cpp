@@ -1,6 +1,5 @@
 #include "EnemyWeapon.h"
 #include"GameConfig.h"
-#include"Debug.h"
 
 EnemyWeapon::EnemyWeapon()
 {

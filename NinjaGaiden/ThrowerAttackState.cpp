@@ -1,7 +1,7 @@
 #include "ThrowerAttackState.h"
 #include "Enemy.h"
 #include"GameConfig.h"
-#include"Debug.h"
+
 
 ThrowerAttackState::ThrowerAttackState(EnemyData *data) : EnemyState(data) {
 	auto textures = Textures::GetInstance();

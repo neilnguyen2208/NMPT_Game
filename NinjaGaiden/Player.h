@@ -37,11 +37,6 @@ public:
 	bool isHurtingAnimation = false;
 	int timeHurtingAnimation = 0;
 
-	int Mana; //Luu qua man nho, khong luu qua man lon
-	int HitPoint; // Luu qua man nho, khong luu qua man lon
-	int Point; // Luu qua man
-	int Life; // Luu qua man
-
 	//Cac item khac xu ky ngay khi nhat duoc
 	enum Skill {
 		BlueShurikenSkill,
@@ -49,9 +44,17 @@ public:
 		FlameWheelSkill,
 		NoneSkill
 	};
-
 	virtual void SetSkill(Skill skill);
 	virtual Skill GetSkill();
+	int skillnumer;
+
+	virtual void AddScore(Entity::EntityTag tag);
+	virtual void AddBlood(Entity::EntityTag tag);
+
+	int power; //Luu qua man nho, khong luu qua man lon
+	int blood; // Luu qua man nho, khong luu qua man lon
+	int score; // Luu qua man
+	int fate; // Luu qua man
 
 	int timeFreeze;
 	bool useitemtimeFreeze;
@@ -76,5 +79,4 @@ protected:
 	float collisionTime;
 	SideCollision side;
 	Skill skill;
-
 };

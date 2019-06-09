@@ -12,7 +12,7 @@ Cannoner::Cannoner() : Enemy() {
 	D3DSURFACE_DESC desc;
 	textures->Get(TEX_CANNONER)->GetLevelDesc(0, &desc);
 	width = desc.Width / 2.0;
-	height = desc.Height / 1.0;
+	height = desc.Height / 2.0;
 }
 
 Cannoner::~Cannoner() {

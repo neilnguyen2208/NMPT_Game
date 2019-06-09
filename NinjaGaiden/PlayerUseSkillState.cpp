@@ -8,8 +8,6 @@ PlayerUseSkillState::PlayerUseSkillState(PlayerData * data) {
 	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 3, 3, 3, 10, 4, 0.15f);
 	turn = FirstTurn;
 	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
-	ryuWeapon_Turn2 = new BlueShuriken();
-	ryuWeapon_Turn3 = new BlueShuriken();
 }
 
 PlayerUseSkillState::~PlayerUseSkillState() {
@@ -18,12 +16,13 @@ PlayerUseSkillState::~PlayerUseSkillState() {
 void PlayerUseSkillState::Update(double dt) {
 
 	m_Animation->Update(dt);
+	//DebugOut(L"%f\n", m_Animation->GetPercentTime());
 	int currentFrame = m_Animation->GetCurrentFrameID();
 	if (playerData->player->GetSkill() == Player::NoneSkill)
 		if (m_Animation->IsLastFrame(dt))
 			playerData->player->SetState(Idle);
 
-	if (playerData->player->GetSkill() == Player::BlueShurikenSkill)
+	if (playerData->player->GetSkill() == Player::BlueShurikenSkill && playerData->player->power >= 3)
 	{
 		//	DebugOut(L"%f\n", m_Animation->GetPercentTime());
 		ryuWeapon_Turn1 = new BlueShuriken();
@@ -46,6 +45,7 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn1->SetAliveState(Entity::Alive);
 			Unit* unit;
 			unit = new Unit(grid, ryuWeapon_Turn1);
+			playerData->player->power -= 3;
 		}
 		else
 		{
@@ -69,6 +69,7 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn2->SetAliveState(Entity::Alive);
 			Unit* unit;
 			unit = new Unit(grid, ryuWeapon_Turn2);
+			playerData->player->power -= 3;
 		}
 		else
 		{
@@ -92,11 +93,13 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn3->SetAliveState(Entity::Alive);
 			Unit* unit;
 			unit = new Unit(grid, ryuWeapon_Turn3);
+			playerData->player->power -= 3;
 		}
 		else
 		{
 			ryuWeapon_Turn3->SetActive(false);
 		}
+
 
 		if (m_Animation->IsLastFrame(dt)) // Cai nay khong biet da dung chua
 		{
@@ -122,9 +125,9 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn1 = new RedShuriken();
 			if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04))
 			{
-				
+
 				ryuWeapon_Turn1->SetActive(true);
-			//	ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
+				//	ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
 				if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
 					ryuWeapon_Turn1->SetPosition(playerData->player->GetPosition().x + 22, playerData->player->GetPosition().y + 6); //	
 					ryuWeapon_Turn1->SetVx((RED_SHURIKEN_VELOCITY_X));
@@ -134,7 +137,7 @@ void PlayerUseSkillState::Update(double dt) {
 					ryuWeapon_Turn1->SetPosition(playerData->player->GetPosition().x - 22, playerData->player->GetPosition().y + 6); //	
 					ryuWeapon_Turn1->SetVx((-RED_SHURIKEN_VELOCITY_X));
 				}
-				
+
 				ryuWeapon_Turn1->SetAliveState(Entity::Alive);
 				Unit* unit;
 				unit = new Unit(grid, ryuWeapon_Turn1);
@@ -155,7 +158,7 @@ void PlayerUseSkillState::Update(double dt) {
 			}
 			return;
 		}
-		else 
+		else
 			if (playerData->player->GetSkill() == Player::Skill::FlameWheelSkill)
 			{
 				ryuWeapon_Turn1 = new FlameWheel();
@@ -223,7 +226,7 @@ void PlayerUseSkillState::Update(double dt) {
 				}
 				return;
 			}
-	
+
 }
 
 void PlayerUseSkillState::Render() {

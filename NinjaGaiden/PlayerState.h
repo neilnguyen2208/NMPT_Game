@@ -35,5 +35,4 @@ protected:
 	PlayerState(PlayerData *data);
 	PlayerState();
 	PlayerData *playerData;
-
 };

@@ -1,6 +1,6 @@
 #include "PlayerSlashState.h"
 #include "Textures.h"
-#include"Debug.h"
+
 PlayerSlashState::PlayerSlashState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
@@ -82,7 +82,6 @@ void PlayerSlashState::OnCollision(Entity * impactor, Entity::SideCollision side
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		OutputDebugString(L"slash to ground");
 	}	
 }
 
