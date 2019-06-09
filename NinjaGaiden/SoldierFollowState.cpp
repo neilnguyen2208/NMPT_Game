@@ -12,7 +12,6 @@ SoldierFollowState::~SoldierFollowState() {
 }
 
 void SoldierFollowState::ResetState() {
-
 	auto enemy = enemyData->enemy;
 
 	//Enemy khac nhau co collide khac nhau, initilize class phai chu y 

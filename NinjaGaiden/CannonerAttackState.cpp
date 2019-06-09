@@ -54,11 +54,7 @@ void CannonerAttackState::Update(double dt) {
 		Unit* unit;
 		unit = new Unit(grid, cannonerBullet_1);
 	}
-	else
-	{
-		cannonerBullet_1->SetActive(false);
-	}
-
+	
 	if ((m_Animation->GetPercentTime() > 0.03 && m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
 	{
 		cannonerBullet_2->SetActive(true);
@@ -76,11 +72,7 @@ void CannonerAttackState::Update(double dt) {
 		Unit* unit;
 		unit = new Unit(grid, cannonerBullet_2);
 	}
-	else
-	{
-		cannonerBullet_2->SetActive(false);
-	}
-
+	
 	if (m_Animation->GetPercentTime() >= CANNONER_ATTACK_PERCENTTIME)
 	{
 		if (turn == FirstTurn)
