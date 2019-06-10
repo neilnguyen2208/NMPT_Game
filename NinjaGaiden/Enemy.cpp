@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "EnemyBeatenState.h"
-#include"PlayScene.h"
-#include"GameConfig.h"
+#include "PlayScene.h"
+#include "GameConfig.h"
 Enemy::Enemy() : Entity() {
 
 	type = Entity::EnemyType;

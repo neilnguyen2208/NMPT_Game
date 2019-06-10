@@ -1,4 +1,4 @@
-#include "Cannoner.h"
+﻿#include "Cannoner.h"
 
 Cannoner::Cannoner() : Enemy() {
 	//Set type
@@ -46,7 +46,10 @@ void Cannoner::SetColliderRight(int right) {
 
 void Cannoner::SetState(EnemyState::State state) {
 	if (state == EnemyState::Attack)
+	{
+		CSoundChoose::GetInstance()->PlaySoundChoose(5); //âm thanh khi cannoner bắn 
 		enemyData->state = cannonerAttackState;
+	}
 	if (state == EnemyState::Beaten)
 	{
 		enemyData->state = enemyBeatenState;

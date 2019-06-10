@@ -26,8 +26,6 @@ public:
 		ThirdTurn
 	};
 
-
-
 private:
 	Grid* grid;
 

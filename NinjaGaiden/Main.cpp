@@ -85,7 +85,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int slFrame = 0;
 
 	while (!done) {
-
 			GameTime::GetInstance()->StartCounter();
 			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 				if (msg.message == WM_QUIT) done = 1;

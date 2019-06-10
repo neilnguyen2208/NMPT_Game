@@ -3,6 +3,7 @@
 GameManager::GameManager(HWND hWnd, HINSTANCE hInstance) {
 	Graphic::GetInstance()->Init(hWnd);
 	KeyBoard::GetInstance()->InitKeyboard(hWnd, hInstance);
+	CSoundChoose::GetInstance()->InitCSoundChoose(hWnd);
 	SceneManager::GetInstance()->CreateScene(new PlayScene());
 	this->hWnd = hWnd;
 	this->hInstance = hInstance;

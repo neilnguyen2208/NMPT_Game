@@ -18,4 +18,5 @@ private:
 	Scene *CurrentScene;
 	Scene *DestScene;
 	bool isTransitioning;
+
 };

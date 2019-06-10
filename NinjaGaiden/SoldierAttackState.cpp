@@ -1,4 +1,4 @@
-#include "SoldierAttackState.h"
+﻿#include "SoldierAttackState.h"
 #include "Enemy.h"
 
 SoldierAttackState::SoldierAttackState(EnemyData *data) : EnemyState(data) {

@@ -145,6 +145,8 @@
     <ClInclude Include="Cat.h" />
     <ClInclude Include="CatFollowState.h" />
     <ClInclude Include="CollisionDetector.h" />
+    <ClInclude Include="dsutil.h" />
+    <ClInclude Include="dxutil.h" />
     <ClInclude Include="Eagle.h" />
     <ClInclude Include="EagleFollowState.h" />
     <ClInclude Include="Enemy.h" />
@@ -158,6 +160,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="GAudio.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Item.h" />
@@ -192,10 +195,10 @@
     <ClInclude Include="SoldierAttackState.h" />
     <ClInclude Include="SoldierBullet.h" />
     <ClInclude Include="SoldierFollowState.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sparta.h" />
     <ClInclude Include="SpartaFollowState.h" />
     <ClInclude Include="Sprites.h" />
-    <ClInclude Include="Stage31.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Thrower.h" />
     <ClInclude Include="ThrowerAttackState.h" />
@@ -213,6 +216,7 @@
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="CatFollowState.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
+    <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="Eagle.cpp" />
     <ClCompile Include="EagleFollowState.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -224,6 +228,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="GAudio.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -251,7 +256,6 @@
     <ClCompile Include="RunnerFollowState.cpp" />
     <ClCompile Include="RyuWeapon.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Scene31.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Scoreboard.cpp" />
@@ -259,6 +263,7 @@
     <ClCompile Include="SoldierAttackState.cpp" />
     <ClCompile Include="SoldierBullet.cpp" />
     <ClCompile Include="SoldierFollowState.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sparta.cpp" />
     <ClCompile Include="SpartaFollowState.cpp" />
     <ClCompile Include="Sprites.cpp" />

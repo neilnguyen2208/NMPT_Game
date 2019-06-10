@@ -28,6 +28,8 @@ PlayScene::PlayScene() {
 
 	sb = new Scoreboard();
 	score = new Score();
+
+	CSoundChoose::GetInstance()->PlayMusicChoose(1);
 }
 
 PlayScene::~PlayScene() {

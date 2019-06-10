@@ -9,6 +9,7 @@
 #include "Scoreboard.h"
 #include "Graphic.h"
 #include "Score.h"
+#include "SoundManager.h"
 
 class PlayScene : public Scene {
 

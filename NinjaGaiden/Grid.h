@@ -9,6 +9,7 @@
 #include "Enemy.h"
 #include "PlayerData.h"
 #include "PlayerState.h"
+#include "SoundManager.h"
 
 class Unit;
 

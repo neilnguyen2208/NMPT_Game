@@ -1,4 +1,4 @@
-#include "Soldier.h"
+﻿#include "Soldier.h"
 
 Soldier::Soldier() : Enemy() {
 	//Set type
@@ -48,7 +48,10 @@ void Soldier::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = soldierFollowState;
 	if (state == EnemyState::Attack)
+	{
+		CSoundChoose::GetInstance()->PlaySoundChoose(4); //âm thanh khi solider bắn 
 		enemyData->state = soldierAttackState;
+	}
 	if (state == EnemyState::Beaten)
 	{
 		enemyData->state = enemyBeatenState;

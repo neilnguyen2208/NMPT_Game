@@ -1,4 +1,4 @@
-#include "PlayerUseSkillState.h"
+﻿#include "PlayerUseSkillState.h"
 #include "Textures.h"
 
 PlayerUseSkillState::PlayerUseSkillState(PlayerData * data) {
@@ -32,6 +32,7 @@ void PlayerUseSkillState::Update(double dt) {
 		//First turn
 		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == FirstTurn)
 		{
+			CSoundChoose::GetInstance()->PlaySoundChoose(12); //âm thanh sử dụng SkillBlue
 			ryuWeapon_Turn1->SetActive(true);
 			ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
 			if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
@@ -55,6 +56,7 @@ void PlayerUseSkillState::Update(double dt) {
 		//Second Turn
 		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
 		{
+			CSoundChoose::GetInstance()->PlaySoundChoose(12); //âm thanh sử dụng SkillBlue
 			ryuWeapon_Turn2->SetActive(true);
 			ryuWeapon_Turn2->SetMoveDirection(playerData->player->GetMoveDirection());
 			if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
@@ -78,6 +80,7 @@ void PlayerUseSkillState::Update(double dt) {
 		//Third Turn
 		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == ThirdTurn)
 		{
+			CSoundChoose::GetInstance()->PlaySoundChoose(12); //âm thanh sử dụng SkillBlue
 			ryuWeapon_Turn3->SetActive(true);
 			ryuWeapon_Turn3->SetMoveDirection(playerData->player->GetMoveDirection());
 			if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
@@ -122,7 +125,7 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn1 = new RedShuriken();
 			if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04))
 			{
-
+				CSoundChoose::GetInstance()->PlaySoundChoose(13); //âm thanh sử dụng SkillRed
 				ryuWeapon_Turn1->SetActive(true);
 				//	ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
 				if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
@@ -165,6 +168,7 @@ void PlayerUseSkillState::Update(double dt) {
 				//First turn
 				if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04))
 				{
+					CSoundChoose::GetInstance()->PlaySoundChoose(14); //âm thanh sử dụng SkillFlame
 					ryuWeapon_Turn1->SetActive(true);
 					ryuWeapon_Turn2->SetActive(true);
 					ryuWeapon_Turn3->SetActive(true);

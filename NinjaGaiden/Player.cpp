@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include "PlayerRunningState.h"
 #include "PlayerIdleState.h"
 #include "PlayerSlashState.h"
@@ -62,6 +62,8 @@ Player::Player() : Entity() {
 	blood = 16;
 	fate = 2;
 	skillnumer = 0;
+
+	enemyAttack = Entity::EntityTag::None;
 }
 
 Player::~Player() {
@@ -104,6 +106,8 @@ void Player::Update(double dt) {
 		HurtingTime = 0;
 		isHurtingAnimation = true;
 		aliveState = Entity::Alive;
+		AddBlood(enemyAttack);
+		enemyAttack = Entity::EntityTag::None;
 	}
 }
 
@@ -141,12 +145,14 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		playerData->state = idleState;
 		break;
 	case PlayerState::Slash:
+		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém
 		playerData->state = slashState;
 		break;
 	case PlayerState::Crouch:
 		playerData->state = crouchState;
 		break;
 	case PlayerState::CrouchSlash:
+		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém
 		playerData->state = crouchSlashState;
 		break;
 	case PlayerState::Climb:
@@ -156,6 +162,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		playerData->state = useSkillState;
 		break;
 	case PlayerState::Jumping:
+		CSoundChoose::GetInstance()->PlaySoundChoose(8); //âm thanh khi ninja nhảy
 		playerData->state = jumpState;
 		break;
 	case PlayerState::Falling:
@@ -163,6 +170,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		falling = true;
 		break;
 	case PlayerState::Beaten:
+		CSoundChoose::GetInstance()->PlaySoundChoose(6); //âm thanh khi ninja bị thương
 		playerData->state = beatenState;
 		break;
 	}
@@ -184,6 +192,8 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 		else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
 			velocity.x *= collisionTime;
 	};
+
+	enemyAttack = impactor->GetTag();
 	this->collisionTime = collisionTime;
 	this->side = side;
 }
@@ -340,11 +350,26 @@ void Player::AddBlood(Entity::EntityTag tag)
 	case Entity::Soldier:
 		blood--;
 		break;
+	case Entity::SoldierBullet:
+		blood--;
+		break;
 	case Entity::Eagle:
 		blood -= 3;
 		break;
 	case Entity::Thrower:
 		blood--;
+		break;
+	case Entity::ThrowerBullet:
+		blood--;
+		break;
+	case Entity::Runner:
+		blood--;
+		break;
+	case Entity::Cannoner:
+		blood--;
+		break;
+	case Entity::CannonerBullet:
+		blood -= 2;
 		break;
 	}
 }
@@ -367,6 +392,8 @@ void Player::checkTimeFreezeSkill()
 	if (timeFreeze < ANIMATION_ITEM_TIMEFREEZE && useitemtimeFreeze == true)
 	{
 		timeFreeze++;
+		if (timeFreeze % 50 == 0)
+		CSoundChoose::GetInstance()->PlaySoundChoose(11); //âm thanh sử dụng SkillTimeFreeze
 	}
 	else TimeFreezeSkill(false);
 }

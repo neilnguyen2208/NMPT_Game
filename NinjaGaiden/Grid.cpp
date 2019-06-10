@@ -265,6 +265,7 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 							continue;
 						}
 						tmpcells_tonext->entity->OnCollision(Katana, side, dt);
+						CSoundChoose::GetInstance()->PlaySoundChoose(3); //âm thanh khi enemy chết
 						player->AddScore(tmpcells_tonext->entity->GetTag()); // cộng điểm cho ninja chi chém enemy
 					}
 					tmpcells_tonext = tmpcells_tonext->p_next;
@@ -291,6 +292,7 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 					player->AddItem(tmpcells_tonext->entity->GetTag());
 					tmpcells_tonext->entity->SetActive(false);
 					tmpcells_tonext->entity->SetAliveState(Entity::Remove);
+					CSoundChoose::GetInstance()->PlaySoundChoose(9); //âm thanh khi ninja ăn item
 				}
 			}
 		}
