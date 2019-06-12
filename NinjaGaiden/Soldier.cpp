@@ -1,11 +1,12 @@
-#include "Soldier.h"
+﻿#include "Soldier.h"
 
 Soldier::Soldier() : Enemy() {
 	//Set type
 	auto textures = Textures::GetInstance();
-		textures->Add(TEX_SOLDIER, "Resources/Sprites/soldierspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(TEX_SOLDIER, "Resources/Sprites/soldierspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
 	soldierFollowState = new SoldierFollowState(enemyData);
 	soldierAttackState = new SoldierAttackState(enemyData);
+	
 	//Set tag
 	tag = Entity::Soldier;
 	type = Entity::EnemyType;
@@ -48,12 +49,13 @@ void Soldier::SetState(EnemyState::State state) {
 	if (state == EnemyState::Follow)
 		enemyData->state = soldierFollowState;
 	if (state == EnemyState::Attack)
+	{
 		enemyData->state = soldierAttackState;
+	}
 	if (state == EnemyState::Beaten)
 	{
 		enemyData->state = enemyBeatenState;
 	}
-
 	enemyData->state->ResetState();
 }
 

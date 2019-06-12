@@ -23,30 +23,15 @@ void Graphic::Init(HWND hWnd) {
 		&d3ddv
 	);
 	if (d3ddv == NULL)
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
+		OutputDebugString("[ERROR] CreateDevice failed\n");
 	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 }
 
-//void Graphic::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha) {
-//	D3DXVECTOR3 position(x, y, 0);
-//	BoxCollider r;
-//	r.top = top;
-//	r.left = left;
-//	r.right = right;
-//	r.bottom = bottom;
-//	spriteHandler->Draw(texture, &r, NULL, &position, D3DCOLOR_ARGB(alpha, 255, 255, 255));
-//}
-//
-//void Graphic::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, BoxCollider r, int alpha) {
-//	D3DXVECTOR3 position(x, y, 0);
-//	spriteHandler->Draw(texture, &r, NULL, &position, D3DCOLOR_ARGB(alpha, 255, 255, 255));
-//}
-//
-//void Graphic::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture) {
-//	D3DXVECTOR3 position(x, y, 0);
-//	spriteHandler->Draw(texture, NULL, NULL, &position, D3DCOLOR_ARGB(255, 255, 255, 255));
-//}
+void Graphic::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture) {
+	D3DXVECTOR3 position(x, y, 0);
+	spriteHandler->Draw(texture, NULL, NULL, &position, D3DCOLOR_ARGB(255, 255, 255, 255));
+}
 
 Graphic * Graphic::GetInstance() {
 	if (instance == NULL)

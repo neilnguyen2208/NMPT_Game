@@ -1,5 +1,4 @@
 #include "Eagle.h"
-#include "Debug.h"
 
 Eagle::Eagle() : Enemy() {
 	//Set type
@@ -25,15 +24,15 @@ void Eagle::Update(double dt) {
 	SetMoveDirection(Player::GetInstance()->GetPosition().x < position.x ? Entity::RightToLeft : Entity::LeftToRight);
 	Enemy::Update(dt);
 	D3DXVECTOR3 target = Player::GetInstance()->GetPosition();
-	target.y -= 15;
+	target.y += 24;
 	D3DXVECTOR2 dir = D3DXVECTOR2(target - position);
-	D3DXVec2Normalize(&dir, &dir);
 
-	dir.x *= 5.0f;
-	dir.y *= 10.0f;
+	dir.x /= 20.0f;
+	dir.y /= 15.0f;
 	AddVelocity(dir);
 	velocity.x = MyHelper::Clamp(velocity.x, -180.0f, 180.0f);
-	velocity.y = MyHelper::Clamp(velocity.y, -90.0f, 90.0f);
+	float MaxVy = spawnBox.GetCenter().y - target.y;
+	velocity.y = MyHelper::Clamp(velocity.y, -MaxVy, MaxVy);
 }
 
 void Eagle::SetColliderTop(int top) {

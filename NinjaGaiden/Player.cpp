@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include "PlayerRunningState.h"
 #include "PlayerIdleState.h"
 #include "PlayerSlashState.h"
@@ -8,19 +8,18 @@
 #include "PlayerClimbState.h"
 #include "PlayerUseSkillState.h"
 #include "PlayerBeatenState.h"
-#include "Debug.h"
 
 
 Player* Player::instance = NULL;
 
 Player * Player::GetInstance() {
+	if (instance == NULL)
+		instance = new Player();
 	return instance;
 }
 
 Player::Player() : Entity() {
-
 	instance = this;
-
 	Textures *textures = Textures::GetInstance();
 	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(254, 163, 176));
 
@@ -51,9 +50,16 @@ Player::Player() : Entity() {
 	isRenderLastFrame = true;
 	isHurting = false;
 
-	skill = Skill::BlueShuriken;
+	skill = Skill::NoneSkill;
 
 	useitemtimeFreeze = false;
+	score = 0;
+	power = 0;
+	blood = 16;
+	fate = 2;
+	skillnumer= 0;
+
+	enemyAttack = Entity::EntityTag::None;
 }
 
 Player::~Player() {
@@ -96,6 +102,10 @@ void Player::Update(double dt) {
 		HurtingTime = 0;
 		isHurtingAnimation = true;
 		aliveState = Entity::Alive;
+		AddBlood(enemyAttack);
+		enemyAttack = Entity::EntityTag::None;
+		/*if (blood <= 0)
+			(ExternalDataCollector::GetInstance()->SetPlayerDead(true));*/
 	}
 }
 
@@ -133,12 +143,14 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		playerData->state = idleState;
 		break;
 	case PlayerState::Slash:
+		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém 
 		playerData->state = slashState;
 		break;
 	case PlayerState::Crouch:
 		playerData->state = crouchState;
 		break;
 	case PlayerState::CrouchSlash:
+		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém 
 		playerData->state = crouchSlashState;
 		break;
 	case PlayerState::Climb:
@@ -148,6 +160,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		playerData->state = useSkillState;
 		break;
 	case PlayerState::Jumping:
+		CSoundChoose::GetInstance()->PlaySoundChoose(8); //âm thanh khi ninja nhảy 
 		playerData->state = jumpState;
 		break;
 	case PlayerState::Falling:
@@ -155,6 +168,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		falling = true;
 		break;
 	case PlayerState::Beaten:
+		CSoundChoose::GetInstance()->PlaySoundChoose(6); //âm thanh khi ninja bị thương 
 		playerData->state = beatenState;
 		break;
 	}
@@ -166,7 +180,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 
 void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
 	if (impactor->GetTag() == CamRect)
-		return;
+		return;	
 	playerData->state->OnCollision(impactor, side);
 	if (!isHurting)
 	{
@@ -175,7 +189,8 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 		}
 		else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
 			velocity.x *= collisionTime;
-	}
+	};
+	enemyAttack = impactor->GetTag();
 	this->collisionTime = collisionTime;
 	this->side = side;
 }
@@ -186,31 +201,34 @@ void Player::AddItem(Entity::EntityTag tag)
 	switch (tag)
 	{
 	case Entity::SpiritPoints5:
-
+		power += 5;
 		break;
 	case Entity::SpiritPoints10:
-
+		power += 10;
 		break;
 	case Entity::Scores500:
-
+		score += 500;
 		break;
 	case Entity::TimeFreeze:
 		TimeFreezeSkill(true);
 		break;
 	case Entity::Scores1000:
-
+		score += 1000;
 		break;
 	case Entity::Health:
-
+		blood += 5;
 		break;
 	case Entity::ThrowingStar:
-		SetSkill(Player::Skill::BlueShuriken);
+		SetSkill(Player::Skill::BlueShurikenSkill);
+		skillnumer = 1;
 		break;
 	case Entity::WindmillStar:
-		SetSkill(Player::Skill::RedShuriken);
+		SetSkill(Player::Skill::RedShurikenSkill);
+		skillnumer = 2;
 		break;
 	case Entity::Flames:
-		SetSkill(Player::Skill::FlameRound);
+		SetSkill(Player::Skill::FlameWheelSkill);
+		skillnumer = 3;
 		break;
 	}
 }
@@ -294,6 +312,70 @@ Player::Skill Player::GetSkill()
 	return skill;
 }
 
+void Player::AddScore(Entity::EntityTag tag)
+{
+	switch (tag)
+	{
+	case Entity::Sparta:
+		score += 100;
+		break;
+	case Entity::Cat:
+		score += 200;
+		break;
+	case Entity::Soldier:
+		score += 200;
+		break;
+	case Entity::Cannoner:
+		score += 200;
+		break;
+	case Entity::Eagle:
+		score += 300;
+		break;
+	case Entity::Thrower:
+		score += 300;
+		break;
+	case Entity::Runner:
+		score += 300;
+		break;
+	}
+}
+
+void Player::AddBlood(Entity::EntityTag tag)
+{
+	switch (tag)
+	{
+	case Entity::Sparta:
+		blood--;
+		break;
+	case Entity::Cat:
+		blood--;
+		break;
+	case Entity::Soldier:
+		blood--;
+		break;
+	case Entity::SoldierBullet:
+		blood--;
+		break;
+	case Entity::Eagle:
+		blood -= 3;
+		break;
+	case Entity::Thrower:
+		blood--;
+		break;
+	case Entity::ThrowerBullet:
+		blood--;
+		break;
+	case Entity::Runner:
+		blood--;
+		break;
+	case Entity::Cannoner:
+		blood--;
+		break;
+	case Entity::CannonerBullet:
+		blood -= 2;
+		break;
+	}
+}
 
 void Player::TimeFreezeSkill(bool skill)
 {
@@ -312,6 +394,14 @@ void Player::checkTimeFreezeSkill()
 	if (timeFreeze < ANIMATION_ITEM_TIMEFREEZE && useitemtimeFreeze == true)
 	{
 		timeFreeze++;
+		if (timeFreeze % 50 == 0)
+			CSoundChoose::GetInstance()->PlaySoundChoose(11); //âm thanh sử dụng SkillTimeFreeze 
 	}
 	else TimeFreezeSkill(false);
+}
+
+void Player::Reset()
+{
+	delete instance;
+	instance = NULL;
 }

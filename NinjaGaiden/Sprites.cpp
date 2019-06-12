@@ -16,12 +16,7 @@ Sprite::Sprite(BoxCollider r, LPDIRECT3DTEXTURE9 tex) {
 		width = desc.Width;
 		rect = BoxCollider(0, 0, height, width);
 	}
-	/*D3DXVECTOR3 m_Position;
-	D3DXVECTOR2 m_Scale;
-	D3DXVECTOR2 m_Translation;
-	float m_Angle;
-	D3DXVECTOR2 m_RotationCenter;
-	D3DXMATRIX m_Maxtrix;*/
+
 	m_Position = D3DXVECTOR3(0, 0, 0);
 	m_Translation = D3DXVECTOR2(0, 0);
 

@@ -1,6 +1,5 @@
 #include "ThrowerBullet.h"
 #include"GameConfig.h"
-#include"Debug.h"
 #include"Unit.h"
 #include"Grid.h"
 ThrowerBullet::ThrowerBullet()

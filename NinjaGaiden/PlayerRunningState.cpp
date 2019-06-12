@@ -1,5 +1,5 @@
 #include "PlayerRunningState.h"
-#include"Debug.h"
+
 PlayerRunningState::PlayerRunningState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();

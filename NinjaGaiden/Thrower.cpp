@@ -1,6 +1,6 @@
 #include "Thrower.h"
 #include"Unit.h"
-#include"Debug.h"
+
 Thrower::Thrower() : Enemy() {
 	//Set type
 	auto textures = Textures::GetInstance();

@@ -7,7 +7,7 @@
 #include "GameConfig.h"
 #include "MyHelper.h"
 #include "Enemy.h"
-#include"Grid.h"
+#include "Grid.h"
 
 
 class Grid;
@@ -34,4 +34,5 @@ public:
 	Entity* GetEntity();
 	Unit*GetNextUnit();
 	Unit*GetPrevUnit();
+	void Reset();
 };

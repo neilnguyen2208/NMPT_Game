@@ -19,7 +19,6 @@ class SoldierAttackState : public EnemyState {
 	EnemyWeapon*soldierBullet_5;
 	EnemyWeapon*soldierBullet_6;
 
-	float timer;
 	Grid*grid;
 	enum Turn
 	{
@@ -35,7 +34,5 @@ public:
 	virtual void ResetState();
 	virtual void Update(double dt);
 	virtual State GetState();
-	void SetTurn(Turn turn);
-	Turn GetTurn();
 
 };

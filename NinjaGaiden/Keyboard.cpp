@@ -1,5 +1,4 @@
 #include "KeyBoard.h"
-#include "Debug.h"
 KeyBoard *KeyBoard::instance = NULL;
 
 KeyBoard * KeyBoard::GetInstance() {

@@ -23,6 +23,7 @@ void PlayerState::HandleInput() {
 }
 
 void PlayerState::OnCollision(Entity * impactor, Entity::SideCollision side) {
+	
 }
 
 PlayerState::State PlayerState::GetState() {

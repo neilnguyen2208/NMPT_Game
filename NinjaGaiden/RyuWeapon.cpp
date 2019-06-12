@@ -1,17 +1,14 @@
 #include "RyuWeapon.h"
 #include"GameConfig.h"
-#include"Debug.h"
 
 RyuWeapon::RyuWeapon()
 {
 	type = Entity::RyuWeaponType;
-	direction = Entity::LeftToRight;
 	isActive = false;
 
 	//Set tag
 	SetAliveState(Entity::Alive);
 	camera = Camera::GetInstance();
-
 }
 
 bool RyuWeapon::IsActive()
@@ -90,9 +87,12 @@ void RyuWeapon::SetMoveDirection(Entity::EntityDirection dir) {
 
 Entity::EntityDirection RyuWeapon::GetMoveDirection()
 {
+	if (velocity.x > 0)
+		return LeftToRight;
+	if (velocity.x < 0)
+		return RightToLeft;
 	return direction;
 }
-
 
 void RyuWeapon::OnCollision(Entity* impactor, SideCollision side, float timeCollision)
 {
@@ -110,7 +110,6 @@ float RyuWeapon::GetWidth() {
 float RyuWeapon::GetBigWidth() {
 	return width;
 }
-
 
 float RyuWeapon::GetHeight() {
 	return collider.top - collider.bottom;

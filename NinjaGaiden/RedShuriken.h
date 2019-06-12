@@ -3,48 +3,26 @@
 #include"Animation.h"
 #include"Textures.h"
 #include"Player.h"
-//#include"RyuWeapon.h"
+#include"RyuWeapon.h"
 
-class RedShuriken :public Entity
+class RedShuriken :public RyuWeapon
 {
 public:
-	virtual void Update(double dt);
-	virtual void Render();
 
-	virtual BoxCollider GetRect();
-	virtual BoxCollider GetSpawnRect();
-	virtual void SetActive(bool active);
-	virtual bool IsActive();
-	virtual void SetRect(BoxCollider box);
-	virtual void SetSpawnBox(BoxCollider box, int direction);
-	virtual void SetColliderTop(int top);
-	virtual void SetColliderLeft(int left);
-	virtual void SetColliderBottom(int bottom);
-	virtual void SetColliderRight(int right);
-	virtual void SetMoveDirection(Entity::EntityDirection dir);
-	EntityDirection GetMoveDirection();
-	//Get collilder width
-	virtual float GetWidth();
-	virtual float GetBigWidth();
-	//Get collider height;
-	virtual float GetHeight();
-	virtual float GetBigHeight();
-	virtual BoxCollider GetCollider();
-//	virtual void OnCollision(Entity *impactor, SideCollision side, float collisionTime);
-	virtual void MakeInactive();
-	virtual void Spawn();
-	virtual Entity::EntityDirection GetSpawnDirection();
 	RedShuriken();
 	~RedShuriken();
-
+	void OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime);
+	virtual void Render();
+	virtual void Update(double dt);
+	void SetAccelerate(float x, float y);
+	void SetAccelerateX(float x);
+	void SetAccelerateY(float y);
+	void SetTarget(D3DXVECTOR3 target); //when RedShuriken's velocity = 0 => target = player->GetPosition();
+	
 private:
 
-	D3DXVECTOR3 spawnPosition;
-	Entity::EntityDirection spawnDirection;
-	BoxCollider spawnBox;
-	BoxCollider collider;
-	float collisionTime;
-	SideCollision side;
-	Animation* m_Animation;
+	D3DXVECTOR3 target; // target to RedShuken follow with
+	float accelerateX, accelerateY;
+
 };
 

@@ -1,6 +1,6 @@
 #include "PlayerIdleState.h"
 #include "Textures.h"
-#include"Debug.h"
+
 PlayerIdleState::PlayerIdleState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
@@ -29,7 +29,6 @@ void PlayerIdleState::HandleInput() {
 	{
 		if (isUseSkill)
 		{
-			DebugOut(L"Use skill!");
 			playerData->player->SetState(UseSkill);
 		}
 		else

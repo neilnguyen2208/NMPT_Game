@@ -18,7 +18,8 @@ public:
 		Falling,
 		Climb,
 		UseSkill,
-		Beaten
+		Beaten,
+		Die
 	};
 	~PlayerState();
 	virtual void Update(double dt);

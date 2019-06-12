@@ -3,6 +3,8 @@
 #include "PlayerData.h"
 #include "KeyBoard.h"
 #include "PlayerState.h"
+#include "SoundManager.h"
+
 
 class Player : public Entity {
 public:
@@ -36,27 +38,34 @@ public:
 	double HurtingTime = 0;
 	bool isHurtingAnimation = false;
 	int timeHurtingAnimation = 0;
+	Entity::EntityTag enemyAttack;
 
-	int Mana; //Luu qua man nho, khong luu qua man lon
-	int HitPoint; // Luu qua man nho, khong luu qua man lon
-	int Point; // Luu qua man
-	int Life; // Luu qua man
 
 	//Cac item khac xu ky ngay khi nhat duoc
 	enum Skill {
-		BlueShuriken,
-		RedShuriken,
-		FlameRound,
+		BlueShurikenSkill,
+		RedShurikenSkill,
+		FlameWheelSkill,
 		NoneSkill
 	};
-
 	virtual void SetSkill(Skill skill);
 	virtual Skill GetSkill();
+	int skillnumer;
+
+	virtual void AddScore(Entity::EntityTag tag);
+	virtual void AddBlood(Entity::EntityTag tag);
+
+	int power; //Luu qua man nho, khong luu qua man lon
+	int blood; // Luu qua man nho, khong luu qua man lon
+	int score; // Luu qua man
+	int fate; // Luu qua man
 
 	int timeFreeze;
 	bool useitemtimeFreeze;
 	void TimeFreezeSkill(bool skill);
 	void checkTimeFreezeSkill();
+
+	void Reset();
 
 protected:
 	static Player *instance;

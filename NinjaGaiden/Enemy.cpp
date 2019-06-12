@@ -2,6 +2,7 @@
 #include "EnemyBeatenState.h"
 #include"PlayScene.h"
 #include"GameConfig.h"
+
 Enemy::Enemy() : Entity() {
 
 	type = Entity::EnemyType;
@@ -13,6 +14,12 @@ Enemy::Enemy() : Entity() {
 }
 
 Enemy::~Enemy() {
+	if (enemyData != NULL)
+		delete enemyData;
+	enemyData = NULL;
+	if (enemyBeatenState != NULL)
+		delete enemyBeatenState;
+	enemyBeatenState = NULL;
 }
 
 void Enemy::Update(double dt) {
@@ -121,13 +128,23 @@ void Enemy::OnCollision(Entity * impactor, SideCollision side, float collisionTi
 	if (impactor->GetType() == Entity::StaticType&&enemyData->enemy->GetTag()!=Entity::Eagle) {
 		if (side == Entity::Bottom) {
 			if ((MyHelper::Distance(myRect.left, impactorRect.left) < ENEMY_OFFSET_BORDER && velocity.x < 0) || (MyHelper::Distance(myRect.right, impactorRect.right) < ENEMY_OFFSET_BORDER && velocity.x > 0) || (impactorRect.left > myRect.left && impactorRect.left < myRect.right && velocity.x < 0) || (impactorRect.right > myRect.left && impactorRect.right < myRect.right && velocity.x > 0))
-				SetVx(-velocity.x);
+				if (enemyData->enemy->GetTag() != Entity::Runner&&enemyData->enemy->GetTag() != Entity::Cat)
+					SetVx(-velocity.x);
 			SetVy(0);
 		}
 	}
 	if (impactor->GetType() == Entity::RyuWeaponType)
 	{
-		enemyData->enemy->SetState(EnemyState::Beaten);
+		if (enemyData->enemy->GetTag() != Entity::Boss)
+			enemyData->enemy->SetState(EnemyState::Beaten);
+		else
+		{
+			if (!ExternalDataCollector::GetInstance()->GetBossHurt())
+			{
+				ExternalDataCollector::GetInstance()->SetBossHitPoint(ExternalDataCollector::GetInstance()->GetBossHitPoint() - 1);
+				ExternalDataCollector::GetInstance()->SetBossHurt(true);
+			}
+		}
 	}
 }
 
