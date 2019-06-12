@@ -1,4 +1,5 @@
 #include "GameMap.h"
+#include"ExternalDataCollector.h"
 #pragma region get, set, add for Tileset
 Tileset::Tileset(int rows, int columns, int tileWidth, int tileHeight) {
 	this->rows = rows;
@@ -34,8 +35,18 @@ LPSPRITE Tileset::GetSprite(int id) {
 #pragma endregion
 
 GameMap::GameMap(char * tilesetPath, char * mapPath, int tileHeight, int tileWidth) {
-	LoadTileset(tilesetPath, tileWidth, tileHeight);
-	SetMapPath(mapPath);
+	if (ExternalDataCollector::GetInstance()->GetScene() == ExternalDataCollector::Scene3_1)
+	{
+		LoadTileset_1(tilesetPath, tileWidth, tileHeight); SetMapPath(mapPath);
+	}
+	if (ExternalDataCollector::GetInstance()->GetScene() == ExternalDataCollector::Scene3_2)
+	{
+		LoadTileset_2(tilesetPath, tileWidth, tileHeight); SetMapPath(mapPath);
+	}
+	if (ExternalDataCollector::GetInstance()->GetScene() == ExternalDataCollector::Scene3_3)
+	{
+		LoadTileset_3(tilesetPath, tileWidth, tileHeight); SetMapPath(mapPath);
+	}	
 }
 
 void GameMap::SetMapPath(char * mapPath) {
@@ -73,8 +84,7 @@ void GameMap::SetMapPath(char * mapPath) {
 		reader >> wid;
 		reader >> hei;
 		reader >> direction;
-		/*if (i == 39)
-			i = i;*/
+	
 		switch (id) {
 		case 0: {
 			Entity *ground = new Entity();
@@ -106,7 +116,6 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.bottom = posy - hei;
 			box.right = posx + wid;
 			cat->SetSpawnBox(box, direction);
-			//enemyGroup->AddObject(cat);
 			unit = new Unit(grid, cat);
 		}
 				break;
@@ -118,7 +127,6 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.bottom = posy - hei;
 			box.right = posx + wid;
 			thrower->SetSpawnBox(box, direction);
-			//enemyGroup->AddObject(thrower);
 			unit = new Unit(grid, thrower);
 		}
 				break;
@@ -130,7 +138,6 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.bottom = posy - hei;
 			box.right = posx + wid;
 			eagle->SetSpawnBox(box, direction);
-			//enemyGroup->AddObject(eagle);
 			unit = new Unit(grid, eagle);
 		}
 				break;
@@ -142,7 +149,6 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.bottom = posy - hei;
 			box.right = posx + wid;
 			soldier->SetSpawnBox(box, direction);
-			//enemyGroup->AddObject(soldier);
 			unit = new Unit(grid, soldier);
 		}
 				break;
@@ -154,7 +160,6 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.bottom = posy - hei;
 			box.right = posx + wid;
 			runner->SetSpawnBox(box, direction);
-			//enemyGroup->AddObject(soldier);
 			unit = new Unit(grid, runner);
 		}
 				break;
@@ -166,8 +171,18 @@ void GameMap::SetMapPath(char * mapPath) {
 			box.bottom = posy - hei;
 			box.right = posx + wid;
 			cannoner->SetSpawnBox(box, direction);
-			//enemyGroup->AddObject(soldier);
 			unit = new Unit(grid, cannoner);
+		}
+				break;
+		case 8: {
+			Boss *boss = new Boss();
+			BoxCollider box;
+			box.top = posy;
+			box.left = posx;
+			box.bottom = posy - hei;
+			box.right = posx + wid;
+			boss->SetSpawnBox(box, direction);
+			unit = new Unit(grid, boss);
 		}
 				break;
 		case 9: { //SpiritPoints5 
@@ -330,10 +345,8 @@ void GameMap::SetMapPath(char * mapPath) {
 		return this->camera;
 	}
 
-
 #pragma endregion
 	void GameMap::Draw() {
-
 		for (size_t i = 0; i < 1; i++) {
 
 			//chieu dai va chieu rong cua tile
@@ -363,36 +376,21 @@ void GameMap::SetMapPath(char * mapPath) {
 		}
 
 	}
-/*
-	void GameMap::CheckActive(D3DXVECTOR2 velocity) {
-		//enemyGroup->CheckActive(camera, velocity);
-	}
-*/
-/*
-	void GameMap::GetActiveObject(std::vector<Entity*> &entities) {
-		//enemyGroup->GetActiveObject(entities);
-	}
 
-	void GameMap::UpdateActive(double dt) {
-		//enemyGroup->Update(dt);
-	}
-
-	void GameMap::RenderActive() {
-		//enemyGroup->Render();
-	}
-*/
 	GameMap::~GameMap() {
 		delete mapIDs;
 	}
 
-	void GameMap::LoadTileset(char * filePath, int tileWidth, int tileHeight) {
+	void GameMap::LoadTileset_1(char * filePath, int tileWidth, int tileHeight) {
 		//Parse map tu file 
 		Textures::GetInstance()->Add(TEX_STAGE31, filePath, D3DCOLOR_XRGB(255, 0, 255));
-		auto texture = Textures::GetInstance()->Get(TEX_STAGE31);
+		auto texture_1 = Textures::GetInstance()->Get(TEX_STAGE31);
+		
 		D3DSURFACE_DESC desc;
-		texture->GetLevelDesc(0, &desc);
+		texture_1->GetLevelDesc(0, &desc);
 		auto width = desc.Width;
 		auto height = desc.Height;
+
 		tileset = new Tileset(height / tileHeight, width / tileWidth, tileWidth, tileHeight);
 
 		for (int i = 0; i < tileset->GetRows(); i++) {
@@ -402,9 +400,56 @@ void GameMap::SetMapPath(char * mapPath) {
 				r.left = j * tileWidth;
 				r.bottom = r.top + tileHeight;
 				r.right = r.left + tileWidth;
-				LPSPRITE sprite = new Sprite(r, texture);
+				LPSPRITE sprite = new Sprite(r, texture_1);
 				tileset->Add(i * tileset->GetColumns() + j, sprite);
 			}
 		}
 	}
 
+	void GameMap::LoadTileset_2(char * filePath, int tileWidth, int tileHeight) {
+		//Parse map tu file 
+		Textures::GetInstance()->Add(TEX_STAGE32, filePath, D3DCOLOR_XRGB(255, 0, 255));
+		auto texture_2 = Textures::GetInstance()->Get(TEX_STAGE32);
+		D3DSURFACE_DESC desc;
+		texture_2->GetLevelDesc(0, &desc);
+		auto width = desc.Width;
+		auto height = desc.Height;
+
+		tileset = new Tileset(height / tileHeight, width / tileWidth, tileWidth, tileHeight);
+
+		for (int i = 0; i < tileset->GetRows(); i++) {
+			for (int j = 0; j < tileset->GetColumns(); j++) {
+				BoxCollider r;
+				r.top = i * tileHeight;
+				r.left = j * tileWidth;
+				r.bottom = r.top + tileHeight;
+				r.right = r.left + tileWidth;
+				LPSPRITE sprite = new Sprite(r, texture_2);
+				tileset->Add(i * tileset->GetColumns() + j, sprite);
+			}
+		}
+	}
+
+	void GameMap::LoadTileset_3(char * filePath, int tileWidth, int tileHeight) {
+		//Parse map tu file 
+		Textures::GetInstance()->Add(TEX_STAGE33, filePath, D3DCOLOR_XRGB(255, 0, 255));
+		auto texture_3 = Textures::GetInstance()->Get(TEX_STAGE33);
+		D3DSURFACE_DESC desc;
+		texture_3->GetLevelDesc(0, &desc);
+		auto width = desc.Width;
+		auto height = desc.Height;
+
+		tileset = new Tileset(height / tileHeight, width / tileWidth, tileWidth, tileHeight);
+
+		for (int i = 0; i < tileset->GetRows(); i++) {
+			for (int j = 0; j < tileset->GetColumns(); j++) {
+				BoxCollider r;
+				r.top = i * tileHeight;
+				r.left = j * tileWidth;
+				r.bottom = r.top + tileHeight;
+				r.right = r.left + tileWidth;
+				LPSPRITE sprite = new Sprite(r, texture_3);
+				tileset->Add(i * tileset->GetColumns() + j, sprite);
+			}
+		}
+	}

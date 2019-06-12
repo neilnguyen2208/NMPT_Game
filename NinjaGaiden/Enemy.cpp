@@ -1,8 +1,9 @@
 #include "Enemy.h"
 #include "EnemyBeatenState.h"
 #include"PlayScene.h"
-#include"PlayScene2.h"
 #include"GameConfig.h"
+#include"ExternalDataCollector.h"
+#include"Debug.h"
 Enemy::Enemy() : Entity() {
 
 	type = Entity::EnemyType;
@@ -14,6 +15,12 @@ Enemy::Enemy() : Entity() {
 }
 
 Enemy::~Enemy() {
+	if (enemyData != NULL)
+		delete enemyData;
+	enemyData = NULL;
+	if (enemyBeatenState != NULL)
+		delete enemyBeatenState;
+	enemyBeatenState = NULL;
 }
 
 void Enemy::Update(double dt) {
@@ -129,7 +136,16 @@ void Enemy::OnCollision(Entity * impactor, SideCollision side, float collisionTi
 	}
 	if (impactor->GetType() == Entity::RyuWeaponType)
 	{
-		enemyData->enemy->SetState(EnemyState::Beaten);
+		if (enemyData->enemy->GetTag() != Entity::Boss)
+			enemyData->enemy->SetState(EnemyState::Beaten);
+		else
+		{
+			if (!ExternalDataCollector::GetInstance()->GetBossHurt())
+			{
+				ExternalDataCollector::GetInstance()->SetBossHitPoint(ExternalDataCollector::GetInstance()->GetBossHitPoint() - 1);
+				ExternalDataCollector::GetInstance()->SetBossHurt(true);
+			}
+		}
 	}
 }
 

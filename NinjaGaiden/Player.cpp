@@ -13,13 +13,13 @@
 Player* Player::instance = NULL;
 
 Player * Player::GetInstance() {
+	if (instance == NULL)
+		instance = new Player();
 	return instance;
 }
 
 Player::Player() : Entity() {
-
 	instance = this;
-
 	Textures *textures = Textures::GetInstance();
 	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(254, 163, 176));
 
@@ -345,7 +345,6 @@ void Player::AddBlood(Entity::EntityTag tag)
 	}
 }
 
-
 void Player::TimeFreezeSkill(bool skill)
 {
 	if (skill)
@@ -365,4 +364,10 @@ void Player::checkTimeFreezeSkill()
 		timeFreeze++;
 	}
 	else TimeFreezeSkill(false);
+}
+
+void Player::Reset()
+{
+	delete instance;
+	instance = NULL;
 }

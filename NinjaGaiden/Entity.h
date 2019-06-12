@@ -10,6 +10,7 @@ public:
 	static int currentID;
 
 	Entity();
+	virtual ~Entity();
 
 	enum SideCollision {
 		Left, //0
@@ -30,9 +31,8 @@ public:
 	enum EntityTag
 	{
 		Ground, //Ground
-
 		Wall, //Wall
-		ClimbWall,
+		ClimbWall, //Climbable wall
 
 		Player, //Player
 
@@ -56,6 +56,7 @@ public:
 		// 3.3
 		Boss,
 		BossWeapon,
+		BossBullet,
 
 		//Directtly Process Item
 		SpiritPoints5, //6

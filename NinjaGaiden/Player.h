@@ -61,6 +61,8 @@ public:
 	void TimeFreezeSkill(bool skill);
 	void checkTimeFreezeSkill();
 
+	void Reset();
+
 protected:
 	static Player *instance;
 	PlayerData *playerData;

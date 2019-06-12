@@ -14,7 +14,7 @@
 #include <iostream>
 #include <fstream>
 #include "Unit.h"
-
+#include"Boss.h"
 
 class Tileset {
 	int tileWidth;
@@ -59,7 +59,9 @@ private:
 	Player*player;
 	Unit*unit;
 	Grid *grid;
-	void LoadTileset(char *filePath, int tileWidth, int tileHeight);
+	void LoadTileset_1(char *filePath, int tileWidth, int tileHeight);
+	void LoadTileset_2(char *filePath, int tileWidth, int tileHeight);
+	void LoadTileset_3(char *filePath, int tileWidth, int tileHeight);
 	Tileset *tileset;
 	LPCSTR mapPath;
 	int rows;

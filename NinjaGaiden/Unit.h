@@ -34,4 +34,5 @@ public:
 	Entity* GetEntity();
 	Unit*GetNextUnit();
 	Unit*GetPrevUnit();
+	void Reset();
 };

@@ -16,7 +16,6 @@ void Unit::Move(double x, double y, double dt)
 	grid->Move(this, x, y, dt);
 }
 
-
 BoxCollider Unit::GetCellRect(int i, int j, int cellHeight,int cellWidth)
 {
 	BoxCollider rect;
@@ -40,4 +39,11 @@ Unit* Unit::GetNextUnit()
 Unit* Unit::GetPrevUnit()
 {
 	return this->p_prev;
+}
+
+void Unit::Reset()
+{
+	if(NULL!=entity)
+		delete entity;
+	entity = NULL;
 }

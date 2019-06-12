@@ -9,8 +9,6 @@ CannonerAttackState::CannonerAttackState(EnemyData *data) : EnemyState(data) {
 	m_Animation->AddFramesA(texture, 1, 1, 2, 2, 2, CANNONER_FRAME * (1 / 60.0f));
 	m_AnimationAttack->AddFramesA(texture, 2, 2, 2, 2, 2, CANNONER_ATTACK_FRAME*(1/60.0f));
 	turn = FirstTurn;
-	cannonerBullet_1 = new CannonerBullet();
-	cannonerBullet_2 = new CannonerBullet();
 
 	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
 }
@@ -35,10 +33,10 @@ void CannonerAttackState::ResetState() {
 
 void CannonerAttackState::Update(double dt) {
 	m_Animation->Update(dt);
-	DebugOut(L"%f\n", m_Animation->GetPercentTime());
 	//First turn
 	if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == FirstTurn)
 	{
+		cannonerBullet_1 = new CannonerBullet();
 		cannonerBullet_1->SetActive(true);
 		cannonerBullet_1->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
@@ -57,6 +55,7 @@ void CannonerAttackState::Update(double dt) {
 	
 	if ((m_Animation->GetPercentTime() > 0.03 && m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
 	{
+		cannonerBullet_2 = new CannonerBullet();
 		cannonerBullet_2->SetActive(true);
 		cannonerBullet_2->SetMoveDirection(enemyData->enemy->GetMoveDirection());
 		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {

@@ -8,9 +8,6 @@ ThrowerAttackState::ThrowerAttackState(EnemyData *data) : EnemyState(data) {
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_THROWER);
 	m_Animation = new Animation();
 	m_Animation->AddFramesA(texture, 2, 2, 2, 2, 2, THROWER_FRAME*(1 / 60.0f));
-
-	throwerBullet = new ThrowerBullet();
-
 	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
 	
 }
@@ -39,37 +36,34 @@ void ThrowerAttackState::ResetState() {
 }
 
 void ThrowerAttackState::Update(double dt) {
-	
+
 	m_Animation->Update(dt);
 	if (m_Animation->GetPercentTime() < 0.04)
 	{
-		if (enemyData->state->GetState() == EnemyState::Attack)
-		{
-	    	throwerBullet->SetActive(true);		
-			throwerBullet->SetVy(THROWER_BULLET_VELOCITY_Y);
-			throwerBullet->SetMoveDirection(enemyData->enemy->GetMoveDirection());
-			srand((int)time(0));
-			if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-				throwerBullet->SetPosition(enemyData->enemy->GetPosition().x - 6.5, enemyData->enemy->GetPosition().y + 11); //
-				throwerBullet->SetColliderLeft(-5);
-				throwerBullet->SetColliderRight(+2);
-				throwerBullet->SetVx((1+rand() % 3) * (THROWER_BULLET_VELOCITY_X));
-			}
-			else
-			{
-				throwerBullet->SetPosition(enemyData->enemy->GetPosition().x + 6.5, enemyData->enemy->GetPosition().y + 11); //
-				throwerBullet->SetColliderLeft(5);
-				throwerBullet->SetColliderRight(-2);
-				throwerBullet->SetVx((1+rand() % 3) * (-THROWER_BULLET_VELOCITY_X));
-			}
-			throwerBullet->SetAliveState(Entity::Alive);
-			unit = new Unit(grid, throwerBullet);
+
+		throwerBullet = new ThrowerBullet();
+		throwerBullet->SetActive(true);
+		throwerBullet->SetVy(THROWER_BULLET_VELOCITY_Y);
+		throwerBullet->SetMoveDirection(enemyData->enemy->GetMoveDirection());
+		srand((int)time(0));
+		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
+			throwerBullet->SetPosition(enemyData->enemy->GetPosition().x - 6.5, enemyData->enemy->GetPosition().y + 11); //
+			throwerBullet->SetColliderLeft(-5);
+			throwerBullet->SetColliderRight(+2);
+			throwerBullet->SetVx((1 + rand() % 3) * (THROWER_BULLET_VELOCITY_X));
 		}
 		else
 		{
-			throwerBullet->SetActive(false);
+			throwerBullet->SetPosition(enemyData->enemy->GetPosition().x + 6.5, enemyData->enemy->GetPosition().y + 11); //
+			throwerBullet->SetColliderLeft(5);
+			throwerBullet->SetColliderRight(-2);
+			throwerBullet->SetVx((1 + rand() % 3) * (-THROWER_BULLET_VELOCITY_X));
 		}
+		throwerBullet->SetAliveState(Entity::Alive);
+		unit = new Unit(grid, throwerBullet);
 	}
+	
+
 	if (m_Animation->GetPercentTime() >= THROWER_ATTACK_PERCENTTIME)
 	{
 		enemyData->enemy->SetState(EnemyState::Follow);

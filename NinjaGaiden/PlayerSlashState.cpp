@@ -69,7 +69,7 @@ void PlayerSlashState::OnCollision(Entity * impactor, Entity::SideCollision side
 	{
 		playerData->player->SetState(Beaten);
 	}
-	if (impactor->GetTag() == Entity::Ground && side == Entity::Bottom) {
+	if (impactor->GetType() == Entity::StaticType && side == Entity::Bottom) {
 		auto keyboard = KeyBoard::GetInstance();
 		if (keyboard->GetKey(DIK_LEFTARROW) && !(keyboard->GetKey(DIK_RIGHTARROW)))
 			playerData->player->SetState(Running);

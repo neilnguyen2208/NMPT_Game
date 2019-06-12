@@ -18,7 +18,7 @@ void RunnerFollowState::ResetState() {
 
 	auto enemy = enemyData->enemy;
 	auto enemyX = enemy->GetPosition().x;
-	auto playerX = Player::GetInstance()->GetPosition().x;
+	auto playerX =Player::GetInstance()->GetPosition().x;
 
 	if (playerX > enemyX)
 		enemy->SetVx(RUNNER_SPEED);

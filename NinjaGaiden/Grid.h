@@ -21,14 +21,9 @@ class Grid {
 	int columns;
 	float cellWidth;
 	float cellHeight;
-
-	Player*player;//lay huong di nhan vat
 	Unit*** gridcells; //Unit* gridCells[rows][columns]
-	
-	Camera*camera;
-
 	static Grid*instance;
-
+	Player*player;
 public:
 	vector<Entity*> staticObject; //array of static entity (ground)
 	vector<Entity*> GetStaticObjects();
@@ -39,14 +34,9 @@ public:
 	float GetCellWidth();
 	float GetCellHeight();
 
-	void SetPlayer(Player*);
-	
 	void CheckActivatedObjects(); 
-
-	Camera*GetCamera();
-	void SetCamera(Camera*camera);
 	
-	Grid(BoxCollider r, int rows = GRID_ROWS, int columns = GRID_COLUMNS);//constructor cua grid dua vao khung cua the gioi, so luong hang, so luong cot
+	Grid(BoxCollider r);//constructor cua grid dua vao khung cua the gioi, so luong hang, so luong cot
 	~Grid();
 	int GetRows() { return rows; }
 	int GetColumns() { return columns; }
@@ -69,4 +59,5 @@ public:
 	void RemoveFromGrid(Unit*);
 
 	void ClearAllWeapon();
+	void Reset();
 };

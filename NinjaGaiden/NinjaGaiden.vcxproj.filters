@@ -70,6 +70,9 @@
     <Filter Include="Header Files\Components\Enemy\Runner">
       <UniqueIdentifier>{8660921b-7f82-453e-8e5f-d321fb464906}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Enemy\Boss">
+      <UniqueIdentifier>{779dd014-8ae3-4372-bc5c-807b9342950c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -252,12 +255,6 @@
     <ClInclude Include="Score.h">
       <Filter>Header Files\Components\Board</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\Components\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Cannoner.h">
       <Filter>Header Files\Components\Enemy\Cannoner</Filter>
     </ClInclude>
@@ -275,6 +272,18 @@
     </ClInclude>
     <ClInclude Include="Debug.h">
       <Filter>Header Files\Components\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="ExternalDataCollector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBullet.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossState.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -446,12 +455,6 @@
     <ClCompile Include="Score.cpp">
       <Filter>Header Files\Components\Board</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene2.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Header Files\Components\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="CannonerAttackState.cpp">
       <Filter>Header Files\Components\Enemy\Cannoner</Filter>
     </ClCompile>
@@ -472,6 +475,18 @@
     </ClCompile>
     <ClCompile Include="Debug.cpp">
       <Filter>Header Files\Components\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalDataCollector.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBullet.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossState.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

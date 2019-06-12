@@ -5,6 +5,7 @@
 #include "GameManager.h"
 #include "GameTime.h"
 #include <d3dx9.h>
+#include"ExternalDataCollector.h"
 #define FPS 60
 #define SPF 1.0f/FPS
 #define WINDOW_CLASS_NAME "BasicdirectX"
@@ -15,8 +16,13 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+	case WM_LBUTTONDOWN: {
+	//	ExternalDataCollector::GetInstance()->SetCrossOverMap(true);
+		break;
+	}
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
+	
 	}
 
 	return 0;
@@ -76,11 +82,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bool done = false;
 	float dt = 0;
 
-	//--use gettickcount
-	//DWORD tick_per_frame = 1000.0f / FPS;
-	//float _DeltaTime = 0;
-	//DWORD tick_start = GetTickCount();
-
 	DWORD startTime = GetTickCount();
 	int slFrame = 0;
 
@@ -92,26 +93,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
-
-			//DWORD now = GetTickCount();
-			//DWORD dt = now - tick_start;
-			//if (dt >= tick_per_frame) {
-
-			//	if (GetTickCount() - startTime >= 1000) {
-			//		DebugOut(L"so luong frame: %d\n", slFrame);
-			//		startTime = GetTickCount();
-			//		slFrame = 0;
-			//	}
-			//	else
-			//		slFrame++;
-			//		
-			//	tick_start = GetTickCount();
-			//	gameManager.ProcessInput();
-			//	gameManager.Update(dt / 1000.0f);
-			//	gameManager.Render();
-			//}
-			//else 
-			//	Sleep(tick_per_frame - dt);
 
 			dt += GameTime::GetInstance()->GetCounter();
 			if (dt >= SPF) {

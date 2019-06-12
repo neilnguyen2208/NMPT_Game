@@ -2,7 +2,6 @@
 
 #include "SceneManager.h"
 #include "PlayScene.h"
-#include "PlayScene2.h"
 #include "Graphic.h"
 #include "KeyBoard.h"
 

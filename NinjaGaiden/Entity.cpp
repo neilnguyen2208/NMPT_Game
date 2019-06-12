@@ -189,3 +189,8 @@ Entity::StatusItem Entity::GetStatusItem()
 {
 	return status;
 }
+
+Entity::~Entity()
+{
+
+}

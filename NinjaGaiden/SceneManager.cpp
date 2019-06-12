@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 SceneManager *SceneManager::instance = NULL;
+bool SceneManager::isTransitioning = false;
 
 SceneManager * SceneManager::GetInstance() {
 	if (instance == NULL)
@@ -8,14 +9,19 @@ SceneManager * SceneManager::GetInstance() {
 	return instance;
 }
 
-void SceneManager::CreateScene(Scene * scene) {
+void SceneManager::CreateScene(PlayScene * scene) {
 	if (scene) {
-		if (CurrentScene)
-			delete CurrentScene;
-		CurrentScene = scene;
+		if (curScene)
+			delete curScene;
+		curScene = scene;
 	}
 }
 
-Scene * SceneManager::GetCurrentScene() {
-	return CurrentScene;
+PlayScene * SceneManager::GetCurrentScene() {
+	return curScene;
+}
+
+PlayScene * SceneManager::GetNextScene()
+{
+	return desScene;
 }

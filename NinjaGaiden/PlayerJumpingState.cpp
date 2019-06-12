@@ -1,6 +1,6 @@
 #include "PlayerJumpingState.h"
 #include "Textures.h"
-
+#include"ExternalDataCollector.h"
 PlayerJumpingState::PlayerJumpingState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
@@ -65,7 +65,8 @@ void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision si
 		playerData->player->SetState(Beaten);
 		return;
 	}
-	if (impactor->GetTag() == Entity::Ground && side == Entity::Bottom) {
+	if (impactor->GetType() == Entity::StaticType && side == Entity::Bottom) {
+		ExternalDataCollector::GetInstance()->SetClimb(false);
 		auto keyboard = KeyBoard::GetInstance();
 		if (keyboard->GetKey(DIK_LEFTARROW) && !(keyboard->GetKey(DIK_RIGHTARROW)))
 			playerData->player->SetState(Running);
@@ -78,8 +79,13 @@ void PlayerJumpingState::OnCollision(Entity * impactor, Entity::SideCollision si
 				else
 					playerData->player->SetState(Idle);
 		playerData->player->onAir = false;
-		//OutputDebugString(L"Jumping to ground\n");
 	}
+	if ((impactor->GetTag() == Entity::Wall || impactor->GetTag() == Entity::ClimbWall)&&(side==Entity::Left||side==Entity::Right)&&!ExternalDataCollector::GetInstance()->GetClimb())
+	{
+		playerData->player->SetVy(0);
+		playerData->player->SetState(Climb);		
+	}
+	
 }
 
 PlayerState::State PlayerJumpingState::GetState() {
@@ -97,6 +103,6 @@ void PlayerJumpingState::ResetState(int dummy) {
 		playerData->player->SetVy(PLAYER_MIN_JUMP_VELOCITY);
 	currentState = 0;
 	player->onAir = true;
-
+	
 	PlayerState::ResetState(dummy);
 }
