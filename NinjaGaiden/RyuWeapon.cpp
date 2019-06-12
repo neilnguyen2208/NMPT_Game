@@ -1,7 +1,6 @@
 #include "RyuWeapon.h"
 #include"GameConfig.h"
 
-
 RyuWeapon::RyuWeapon()
 {
 	type = Entity::RyuWeaponType;
@@ -10,7 +9,6 @@ RyuWeapon::RyuWeapon()
 	//Set tag
 	SetAliveState(Entity::Alive);
 	camera = Camera::GetInstance();
-
 }
 
 bool RyuWeapon::IsActive()
@@ -35,7 +33,7 @@ void RyuWeapon::Update(double dt)
 }
 
 void RyuWeapon::Render() {
-	if (IsActive())
+	if(IsActive())
 	{
 		m_Animation->Render(position, BoxCollider(), D3DCOLOR_XRGB(255, 255, 255), direction == Entity::EntityDirection::RightToLeft);
 	}
@@ -96,7 +94,6 @@ Entity::EntityDirection RyuWeapon::GetMoveDirection()
 	return direction;
 }
 
-
 void RyuWeapon::OnCollision(Entity* impactor, SideCollision side, float timeCollision)
 {
 }
@@ -113,7 +110,6 @@ float RyuWeapon::GetWidth() {
 float RyuWeapon::GetBigWidth() {
 	return width;
 }
-
 
 float RyuWeapon::GetHeight() {
 	return collider.top - collider.bottom;

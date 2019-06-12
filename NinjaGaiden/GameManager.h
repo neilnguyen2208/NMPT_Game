@@ -1,10 +1,10 @@
 #pragma once
 
 #include "SceneManager.h"
-#include "SoundManager.h"
 #include "PlayScene.h"
 #include "Graphic.h"
 #include "KeyBoard.h"
+#include "SoundManager.h"
 
 class GameManager {
 

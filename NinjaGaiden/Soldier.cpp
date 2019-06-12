@@ -3,9 +3,10 @@
 Soldier::Soldier() : Enemy() {
 	//Set type
 	auto textures = Textures::GetInstance();
-		textures->Add(TEX_SOLDIER, "Resources/Sprites/soldierspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(TEX_SOLDIER, "Resources/Sprites/soldierspritesheet.png", D3DCOLOR_XRGB(255, 163, 177));
 	soldierFollowState = new SoldierFollowState(enemyData);
 	soldierAttackState = new SoldierAttackState(enemyData);
+	
 	//Set tag
 	tag = Entity::Soldier;
 	type = Entity::EnemyType;
@@ -49,14 +50,12 @@ void Soldier::SetState(EnemyState::State state) {
 		enemyData->state = soldierFollowState;
 	if (state == EnemyState::Attack)
 	{
-		CSoundChoose::GetInstance()->PlaySoundChoose(4); //âm thanh khi solider bắn 
 		enemyData->state = soldierAttackState;
 	}
 	if (state == EnemyState::Beaten)
 	{
 		enemyData->state = enemyBeatenState;
 	}
-
 	enemyData->state->ResetState();
 }
 

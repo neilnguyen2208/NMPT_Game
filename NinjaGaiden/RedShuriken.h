@@ -18,7 +18,7 @@ public:
 	void SetAccelerateX(float x);
 	void SetAccelerateY(float y);
 	void SetTarget(D3DXVECTOR3 target); //when RedShuriken's velocity = 0 => target = player->GetPosition();
-
+	
 private:
 
 	D3DXVECTOR3 target; // target to RedShuken follow with

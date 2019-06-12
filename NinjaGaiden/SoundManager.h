@@ -41,6 +41,7 @@ public:
 	void PlaySoundChoose(int number);
 	void PlayMusicChoose(int number);
 	void StopSound();
+	void StopSoundDie();
 	void InitCSoundChoose(HWND hWnd);
 	~CSoundChoose();
 };

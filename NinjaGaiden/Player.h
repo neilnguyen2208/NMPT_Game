@@ -5,6 +5,7 @@
 #include "PlayerState.h"
 #include "SoundManager.h"
 
+
 class Player : public Entity {
 public:
 	static Player *GetInstance();
@@ -39,6 +40,7 @@ public:
 	int timeHurtingAnimation = 0;
 	Entity::EntityTag enemyAttack;
 
+
 	//Cac item khac xu ky ngay khi nhat duoc
 	enum Skill {
 		BlueShurikenSkill,
@@ -58,12 +60,12 @@ public:
 	int score; // Luu qua man
 	int fate; // Luu qua man
 
-
-
 	int timeFreeze;
 	bool useitemtimeFreeze;
 	void TimeFreezeSkill(bool skill);
 	void checkTimeFreezeSkill();
+
+	void Reset();
 
 protected:
 	static Player *instance;

@@ -14,7 +14,7 @@ public:
 	float offsetScaleX;
 
 	Enemy();
-	~Enemy();
+	virtual ~Enemy();
 
 	virtual void Update(double dt);
 	virtual void Render();

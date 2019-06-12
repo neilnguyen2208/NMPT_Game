@@ -4,7 +4,6 @@
 EnemyWeapon::EnemyWeapon()
 {
 	type = Entity::EnemyWeaponType;
-	direction = Entity::LeftToRight;
 	isActive = false;
 	auto textures = Textures::GetInstance();
 	textures->Add(TEX_EXPLODE_WEAPON, "Resources/Sprites/ExplodeWeapon.png", D3DCOLOR_XRGB(254, 163, 176));

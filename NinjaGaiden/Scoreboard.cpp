@@ -28,6 +28,13 @@ Scoreboard::Scoreboard()
 	auto texture7 = Textures::GetInstance();
 	texture7->Add(TEX_SKILL_3, "Resources/Sprites/skill3.png", D3DCOLOR_XRGB(255, 163, 177));
 	texskill3 = texture7->Get(TEX_SKILL_3);
+
+	auto textureWin = Textures::GetInstance();
+	textureWin->Add(TEX_YOU_WIN, "Resources/Sprites/youwin.png", 0);
+	texWin = textureWin->Get(TEX_YOU_WIN);
+
+	timeAnimationBoss = 0;
+	win = false;
 }
 
 Scoreboard::~Scoreboard()
@@ -35,8 +42,24 @@ Scoreboard::~Scoreboard()
 
 }
 
-void Scoreboard::DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int fate, int time, int stage, int blood, int bloodEnemy, int power, int skill)
+void Scoreboard::DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int fate, int time, int stage, int blood, int bloodEnemy, int power, int skill, bool pause)
 {
+	
+	//WIN
+	if (bloodEnemy <= 0)
+	{ 
+		if (timeAnimationBoss < ANIMATION_BOSS_DIE)
+		{
+			timeAnimationBoss++;
+		}
+		else
+		{
+			CSoundChoose::GetInstance()->StopSoundDie();
+			Graphic::GetInstance()->Draw(0, 0, texWin);
+			win = true;
+			return;
+		}
+	}
 
 	{
 	//PLAYER + ENEMY + POWER PLAYER + SKILL BORDER  + SKILL
@@ -94,7 +117,7 @@ void Scoreboard::DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int fate, int
 				s1 = "0" + s1;
 		t = to_string(time);
 		int t_length = t.length();
-		if (s1_length < 3)
+		if (t_length < 3)
 			for (int i = 0; i < 3 - t_length; i++)
 				t = "0" + t;
 		st = to_string(stage);
@@ -115,6 +138,12 @@ void Scoreboard::DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int fate, int
 				" \n TIMER- " + t + "           " + "PLAYER-" + "                                         " +
 				" \n P- " + f + "     - " + p + "           " + "ENEMY-" + "                                         ";
 			hr = font->DrawText(fSprite, s.c_str(), -1, &fRec, DT_NOCLIP | DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
+
+			if (pause)
+			{ 
+				s = " \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n                                                               PAUSE.";
+				hr = font->DrawText(fSprite, s.c_str(), -1, &fRec, DT_NOCLIP | DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
+			}
 			if FAILED(hr)
 				hr = hr;
 		}

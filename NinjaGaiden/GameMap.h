@@ -10,10 +10,11 @@
 #include "Eagle.h"
 #include "Soldier.h"
 #include "Runner.h"
-#include"Cannoner.h"
+#include "Cannoner.h"
 #include <iostream>
 #include <fstream>
-#include"Unit.h"
+#include "Unit.h"
+#include"Boss.h"
 
 class Tileset {
 	int tileWidth;
@@ -51,14 +52,16 @@ public:
 	//void GetActiveObject(std::vector<Entity*> &entities);
 	//void UpdateActive(double dt);
 	//void RenderActive();
-
+	
 	~GameMap();
 private:
-
+	
 	Player*player;
 	Unit*unit;
 	Grid *grid;
-	void LoadTileset(char *filePath, int tileWidth, int tileHeight);
+	void LoadTileset_1(char *filePath, int tileWidth, int tileHeight);
+	void LoadTileset_2(char *filePath, int tileWidth, int tileHeight);
+	void LoadTileset_3(char *filePath, int tileWidth, int tileHeight);
 	Tileset *tileset;
 	LPCSTR mapPath;
 	int rows;

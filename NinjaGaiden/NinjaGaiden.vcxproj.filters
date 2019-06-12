@@ -64,14 +64,17 @@
     <Filter Include="Header Files\Components\Board">
       <UniqueIdentifier>{d3b5b7d5-1212-43b0-9c7a-87813aad9996}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\Enemy\Runner">
-      <UniqueIdentifier>{c6aa7fd1-7b1f-48e4-840b-08de433c5e3f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Components\Enemy\Cannoner">
-      <UniqueIdentifier>{c9eb82d3-3210-4b76-b63c-896b17c60933}</UniqueIdentifier>
+      <UniqueIdentifier>{a2d585df-0df1-4039-956f-5809a3d1164c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Runner">
+      <UniqueIdentifier>{8660921b-7f82-453e-8e5f-d321fb464906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Boss">
+      <UniqueIdentifier>{779dd014-8ae3-4372-bc5c-807b9342950c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Components\Framework\Sound">
-      <UniqueIdentifier>{1066e44c-e9cf-4388-a69e-fabca7fe47db}</UniqueIdentifier>
+      <UniqueIdentifier>{97b3378c-c988-4396-acb8-55a72b5ad4d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,34 +258,43 @@
     <ClInclude Include="Score.h">
       <Filter>Header Files\Components\Board</Filter>
     </ClInclude>
-    <ClInclude Include="Runner.h">
-      <Filter>Header Files\Components\Enemy\Runner</Filter>
-    </ClInclude>
-    <ClInclude Include="RunnerFollowState.h">
-      <Filter>Header Files\Components\Enemy\Runner</Filter>
-    </ClInclude>
     <ClInclude Include="Cannoner.h">
       <Filter>Header Files\Components\Enemy\Cannoner</Filter>
     </ClInclude>
     <ClInclude Include="CannonerAttackState.h">
       <Filter>Header Files\Components\Enemy\Cannoner</Filter>
     </ClInclude>
-    <ClInclude Include="CannonerBullet.h">
-      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    <ClInclude Include="Runner.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="RunnerFollowState.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonerBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBullet.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossState.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="ExternalDataCollector.h">
       <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Header Files\Components\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="GAudio.h">
+    <ClInclude Include="dsutil.h">
       <Filter>Header Files\Components\Framework\Sound</Filter>
     </ClInclude>
     <ClInclude Include="dxutil.h">
       <Filter>Header Files\Components\Framework\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="dsutil.h">
+    <ClInclude Include="GAudio.h">
       <Filter>Header Files\Components\Framework\Sound</Filter>
     </ClInclude>
   </ItemGroup>
@@ -306,6 +318,9 @@
       <Filter>Header Files\Components\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
+      <Filter>Header Files\Components\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
       <Filter>Header Files\Components\Object</Filter>
     </ClCompile>
     <ClCompile Include="GameMap.cpp">
@@ -392,6 +407,9 @@
     <ClCompile Include="RedShuriken.cpp">
       <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerBeatenState.cpp">
       <Filter>Header Files\Components\Player</Filter>
     </ClCompile>
@@ -449,40 +467,43 @@
     <ClCompile Include="Score.cpp">
       <Filter>Header Files\Components\Board</Filter>
     </ClCompile>
+    <ClCompile Include="CannonerAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannoner.cpp">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClCompile>
     <ClCompile Include="Runner.cpp">
       <Filter>Header Files\Components\Enemy\Runner</Filter>
     </ClCompile>
     <ClCompile Include="RunnerFollowState.cpp">
       <Filter>Header Files\Components\Enemy\Runner</Filter>
     </ClCompile>
-    <ClCompile Include="Cannoner.cpp">
-      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
-    </ClCompile>
-    <ClCompile Include="CannonerAttackState.cpp">
-      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
-    </ClCompile>
-    <ClCompile Include="CannonerBullet.cpp">
-      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Header Files\Components\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Header Files\Components\Object</Filter>
+    <ClCompile Include="CannonerBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="Boss.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBullet.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossState.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalDataCollector.cpp">
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Header Files\Components\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="GAudio.cpp">
+    <ClCompile Include="dsutil.cpp">
       <Filter>Header Files\Components\Framework\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="dsutil.cpp">
+    <ClCompile Include="GAudio.cpp">
       <Filter>Header Files\Components\Framework\Sound</Filter>
     </ClCompile>
   </ItemGroup>

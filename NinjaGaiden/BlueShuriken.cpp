@@ -1,4 +1,4 @@
-﻿#include "BlueShuriken.h"
+#include "BlueShuriken.h"
 
 BlueShuriken::BlueShuriken()
 {

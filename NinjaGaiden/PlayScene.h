@@ -1,5 +1,4 @@
 #pragma once
-#include "Scene.h"
 #include "Textures.h"
 #include "GameMap.h"
 #include "Entity.h"
@@ -11,28 +10,24 @@
 #include "Score.h"
 #include "SoundManager.h"
 
-class PlayScene : public Scene {
-
-	DWORD showTime;
-	DWORD showTimeRate;
-
+class PlayScene {
+private:
 	GameMap *map;
-	Camera *camera;
-	Player *player;
-	Unit*unit;
 	Grid*grid;
+	Unit*unit;
+	Player*player;
 	Scoreboard *sb;
 	Score *score;
+	bool pause;
+	int gameTime;
+	double dtTime;
 public:
 	PlayScene();
 	virtual ~PlayScene();
 	virtual void Render();
 	virtual void ProcessInput();
 	virtual void Update(double dt);
-	void CheckCollision(double dt = 0.0167f);
-	//void CheckActive();
-	void CheckCamera();
-	//Player*GetPlayer();//hien tai, dung de truyen cho map roi truyen cho grid de xac dinh chiue di cua ninja va active cac unit theo chieu di
-	void Reset();
-	
+	virtual void CheckCollision(double dt = 0.0167f);
+	virtual void CheckCamera();
+	virtual void Reset();
 };

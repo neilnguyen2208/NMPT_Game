@@ -1,22 +1,23 @@
 #pragma once
-#include "Scene.h"
+#include "PlayScene.h"
 
 
 class SceneManager {
 public:
 	static SceneManager *GetInstance();
-	void CreateScene(Scene *scene);
-	//void CreateSceneWithTransition();
-	//void CreateSceneWithRandomTransition();
-	//void UpdateWithEffect();
-	/*bool isSceneTransitioning() {
+	void CreateScene(PlayScene *scene);
+//	void CreateSceneWithTransition(Scene *scenedest, TransitionEffect *effect);
+//	void UpdateWithEffect(double dt);
+	bool isSceneTransitioning() {
 		return isTransitioning;
-	}*/
-	Scene* GetCurrentScene();
+	}
+//	void OnFinishTransition();
+
+	PlayScene* GetCurrentScene();
+	PlayScene* GetNextScene();
 private:
 	static SceneManager *instance;
-	Scene *CurrentScene;
-	Scene *DestScene;
-	bool isTransitioning;
-
+	PlayScene *curScene;
+	PlayScene *desScene;
+	static bool isTransitioning;
 };

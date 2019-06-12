@@ -6,12 +6,14 @@
 #include "Camera.h"
 #include "Textures.h"
 #include "GameConfig.h"
+#include "SoundManager.h"
 
 using namespace std;
 
 class Scoreboard
 {
 private:
+	int timeAnimationBoss;
 	LPD3DXFONT font;
 	LPD3DXSPRITE fSprite;
 	RECT fRec;
@@ -21,9 +23,11 @@ private:
 	string f;
 	string p;
 	HRESULT	hr;
-	LPDIRECT3DTEXTURE9 texblood1, texblood2, texpower, texborder, texskill1, texskill2, texskill3;
+	bool win;
+	LPDIRECT3DTEXTURE9 texblood1, texblood2, texpower, texborder, texskill1, texskill2, texskill3, texWin;
 public:
 	Scoreboard();
 	~Scoreboard();
-	void DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int fate, int time, int stage, int blood, int bloodEnemy, int power, int skill);
+	void DrawTextTop(LPDIRECT3DDEVICE9 gDevice, int score, int fate, int time, int stage, int blood, int bloodEnemy, int power, int skill, bool pause);
+	bool GetWin() { return win; }
 };

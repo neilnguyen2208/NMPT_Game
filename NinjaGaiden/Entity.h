@@ -2,6 +2,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "BoxCollider.h"
+#include "ExternalDataCollector.h"
 
 class Entity {
 
@@ -10,6 +11,7 @@ public:
 	static int currentID;
 
 	Entity();
+	virtual ~Entity();
 
 	enum SideCollision {
 		Left, //0
@@ -31,6 +33,7 @@ public:
 	{
 		Ground, //Ground
 		Wall, //Wall
+		ClimbWall, //Climbable wall
 
 		Player, //Player
 
@@ -40,6 +43,7 @@ public:
 		Thrower,
 		Eagle,
 		Soldier,
+
 		// 3.1 Enemy weapon
 		ThrowerBullet,
 		SoldierBullet,
@@ -53,6 +57,7 @@ public:
 		// 3.3
 		Boss,
 		BossWeapon,
+		BossBullet,
 
 		//Directtly Process Item
 		SpiritPoints5, //6
@@ -65,7 +70,6 @@ public:
 		WindmillStar, //13
 		Flames, //14
 
-
 		//Skill and Katana Entity (RyuWeaponType) use for Collide
 		FlameWheel,
 		RedShuriken,
@@ -74,7 +78,7 @@ public:
 
 		//CamRect
 		CamRect,
-		
+
 		//None
 		None
 	};

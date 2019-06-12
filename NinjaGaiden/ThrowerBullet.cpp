@@ -41,11 +41,11 @@ ThrowerBullet::~ThrowerBullet()
 
 void ThrowerBullet::Update(double dt)
 {
-	this->AddVy(-GRAVITY - 12);
+	this->AddVy(-GRAVITY);
 	if (this->GetVelocity().y < 0)
 		int x = 0;
 	if (this->GetVelocity().y <= THROWER_BULLET_MAX_FALLING_VELOCITY)
 		this->SetVy(THROWER_BULLET_MAX_FALLING_VELOCITY);
-	EnemyWeapon::Update(dt);
+	EnemyWeapon::Update(dt);		
 }
 

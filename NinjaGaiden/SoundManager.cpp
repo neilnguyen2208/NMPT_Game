@@ -132,3 +132,8 @@ void CSoundChoose::StopSound()
 	audio->StopSound(Stage32);
 	audio->StopSound(Stage33);
 }
+void CSoundChoose::StopSoundDie()
+{
+	audio->StopSound(BossDie);
+	audio->StopSound(NinjaDie);
+}

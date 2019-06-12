@@ -48,7 +48,7 @@ RedShuriken::~RedShuriken()
 
 void RedShuriken::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime)
 {
-	if (impactor->GetType() == Entity::PlayerType)
+	if (impactor->GetType()==Entity::PlayerType)
 	{
 		SetAliveState(Entity::Remove);
 		SetActive(false);

@@ -14,16 +14,12 @@ Player* Player::instance = NULL;
 
 Player * Player::GetInstance() {
 	if (instance == NULL)
-	{
 		instance = new Player();
-	}
 	return instance;
 }
 
 Player::Player() : Entity() {
-
-	//instance = this;
-
+	instance = this;
 	Textures *textures = Textures::GetInstance();
 	textures->Add(TEX_PLAYER, "Resources/Sprites/SpriteNinja.png", D3DCOLOR_XRGB(254, 163, 176));
 
@@ -61,7 +57,7 @@ Player::Player() : Entity() {
 	power = 0;
 	blood = 16;
 	fate = 2;
-	skillnumer = 0;
+	skillnumer= 0;
 
 	enemyAttack = Entity::EntityTag::None;
 }
@@ -145,14 +141,14 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		playerData->state = idleState;
 		break;
 	case PlayerState::Slash:
-		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém
+		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém 
 		playerData->state = slashState;
 		break;
 	case PlayerState::Crouch:
 		playerData->state = crouchState;
 		break;
 	case PlayerState::CrouchSlash:
-		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém
+		CSoundChoose::GetInstance()->PlaySoundChoose(7); //âm thanh khi ninja chém 
 		playerData->state = crouchSlashState;
 		break;
 	case PlayerState::Climb:
@@ -162,7 +158,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		playerData->state = useSkillState;
 		break;
 	case PlayerState::Jumping:
-		CSoundChoose::GetInstance()->PlaySoundChoose(8); //âm thanh khi ninja nhảy
+		CSoundChoose::GetInstance()->PlaySoundChoose(8); //âm thanh khi ninja nhảy 
 		playerData->state = jumpState;
 		break;
 	case PlayerState::Falling:
@@ -170,7 +166,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 		falling = true;
 		break;
 	case PlayerState::Beaten:
-		CSoundChoose::GetInstance()->PlaySoundChoose(6); //âm thanh khi ninja bị thương
+		CSoundChoose::GetInstance()->PlaySoundChoose(6); //âm thanh khi ninja bị thương 
 		playerData->state = beatenState;
 		break;
 	}
@@ -182,7 +178,7 @@ void Player::SetState(PlayerState::State name, int dummy) {
 
 void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float collisionTime) {
 	if (impactor->GetTag() == CamRect)
-		return;
+		return;	
 	playerData->state->OnCollision(impactor, side);
 	if (!isHurting)
 	{
@@ -192,7 +188,6 @@ void Player::OnCollision(Entity * impactor, Entity::SideCollision side, float co
 		else if ((side == Right && velocity.x > 0) || (side == Left && velocity.x < 0))
 			velocity.x *= collisionTime;
 	};
-
 	enemyAttack = impactor->GetTag();
 	this->collisionTime = collisionTime;
 	this->side = side;
@@ -322,16 +317,25 @@ void Player::AddScore(Entity::EntityTag tag)
 	case Entity::Sparta:
 		score += 100;
 		break;
+	case Entity::BossBullet:
+		score += 100;
+		break;
 	case Entity::Cat:
 		score += 200;
 		break;
 	case Entity::Soldier:
 		score += 200;
 		break;
+	case Entity::Cannoner:
+		score += 200;
+		break;
 	case Entity::Eagle:
 		score += 300;
 		break;
 	case Entity::Thrower:
+		score += 300;
+		break;
+	case Entity::Runner:
 		score += 300;
 		break;
 	}
@@ -353,8 +357,11 @@ void Player::AddBlood(Entity::EntityTag tag)
 	case Entity::SoldierBullet:
 		blood--;
 		break;
-	case Entity::Eagle:
-		blood -= 3;
+	case Entity::BossBullet:
+		blood--;
+		break;
+	case Entity::Boss:
+		blood--;
 		break;
 	case Entity::Thrower:
 		blood--;
@@ -371,9 +378,11 @@ void Player::AddBlood(Entity::EntityTag tag)
 	case Entity::CannonerBullet:
 		blood -= 2;
 		break;
+	case Entity::Eagle:
+		blood -= 3;
+		break;
 	}
 }
-
 
 void Player::TimeFreezeSkill(bool skill)
 {
@@ -393,7 +402,13 @@ void Player::checkTimeFreezeSkill()
 	{
 		timeFreeze++;
 		if (timeFreeze % 50 == 0)
-		CSoundChoose::GetInstance()->PlaySoundChoose(11); //âm thanh sử dụng SkillTimeFreeze
+			CSoundChoose::GetInstance()->PlaySoundChoose(11); //âm thanh sử dụng SkillTimeFreeze 
 	}
 	else TimeFreezeSkill(false);
+}
+
+void Player::Reset()
+{
+	delete instance;
+	instance = NULL;
 }

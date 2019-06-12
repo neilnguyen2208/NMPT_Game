@@ -1,5 +1,6 @@
 #include "CannonerBullet.h"
 #include"GameConfig.h"
+
 CannonerBullet::CannonerBullet()
 {
 	//Set type
