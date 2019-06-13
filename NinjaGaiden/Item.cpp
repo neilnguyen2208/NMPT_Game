@@ -122,10 +122,6 @@ void Item::OnCollision(Entity * impactor, Entity::SideCollision side, float coll
 void Item::MakeInactive() {
 	isActive = false;
 	position = spawnPosition;
-	direction = spawnDirection;
-	SetColliderTop((spawnBox.top - spawnBox.bottom) / 2.0f);
-	SetColliderBottom(-collider.top);
-	SetColliderLeft((spawnBox.left - spawnBox.right) / 2.0f);
 }
 
 void Item::SetColliderTop(int top)
@@ -153,6 +149,4 @@ void Item::Spawn() {
 	isActive = true;
 	aliveState = Entity::Alive;
 	SetState(ItemState::Unavailable);
-	position.x = spawnBox.left + width / 2.0f;
-	position.y = spawnBox.bottom + height / 2.0f;
 }

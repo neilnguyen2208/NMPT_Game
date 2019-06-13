@@ -538,36 +538,47 @@ void Grid::HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j, Entity*ryu
 
 void Grid::Reset() // delete absolutely
 {
-	if (!staticObject.empty())
+	if (!staticObject.empty()) // clear static object
 		staticObject.clear();
-	for (int i = 0; i < rows; i++)
-	{
+
+	//clear grid
+	for (int i = 0; i <= rows - 1; i++)
 		for (int j = 0; j <= columns; j++)
 		{
-			if (gridcells[i][j] == NULL)
-				continue;
+			if (gridcells[i][j] == NULL) continue;
 			Unit*tmpcells_tonext = gridcells[i][j];
 			while (tmpcells_tonext != NULL)
 			{
-				if (tmpcells_tonext->p_prev != NULL)
+				if (tmpcells_tonext->entity->GetTag() == Entity::Player)
 				{
-					tmpcells_tonext->p_prev->p_next = tmpcells_tonext->p_next;
+					tmpcells_tonext = tmpcells_tonext->p_next;
+					continue;
 				}
+				Unit* tmpUnit = NULL;
+				bool isHaveNext = false;			
+				// Unlink it from the list of its old cell.
+				if (tmpcells_tonext->p_prev != NULL)
+					tmpcells_tonext->p_prev->p_next = tmpcells_tonext->p_next;
 				if (tmpcells_tonext->p_next != NULL)
 				{
+					isHaveNext = true; // have next pointer => continue
 					tmpcells_tonext->p_next->p_prev = tmpcells_tonext->p_prev;
 				}
 				// If it's the head of a list, remove it.
 				if (gridcells[i][j] == tmpcells_tonext)
-				{
-					gridcells[i][j] = tmpcells_tonext->p_next;
-				}
-				if (tmpcells_tonext->entity->GetTag() != Entity::Player)
-					tmpcells_tonext->Reset();
-				tmpcells_tonext = NULL;
+					gridcells[i][j] = tmpcells_tonext->p_next;				
+				tmpUnit = tmpcells_tonext;
+				tmpcells_tonext = tmpcells_tonext->p_next;
+				tmpUnit->Reset();
+				if (tmpUnit != NULL)
+					delete tmpUnit; tmpUnit = NULL;
+				if (isHaveNext)
+					continue;
+				else
+					break;
+				tmpcells_tonext = tmpcells_tonext->p_next;
 			}
 		}
-	}
 	delete instance;
 	instance = NULL;
 }
