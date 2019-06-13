@@ -22,8 +22,8 @@ public:
 
 	virtual void SetActive(bool active);
 
-
 	virtual void SetSpawnBox(BoxCollider box, int direction);
+	virtual void Spawn();
 	virtual float GetWidth();
 	virtual float GetHeight();
 	virtual void MakeInactive();

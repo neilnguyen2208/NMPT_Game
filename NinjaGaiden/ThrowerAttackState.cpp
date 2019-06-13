@@ -8,7 +8,7 @@ ThrowerAttackState::ThrowerAttackState(EnemyData *data) : EnemyState(data) {
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_THROWER);
 	m_Animation = new Animation();
 	m_Animation->AddFramesA(texture, 2, 2, 2, 2, 2, THROWER_FRAME*(1 / 60.0f));
-	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
+	grid = Grid::GetInstance();
 	
 }
 

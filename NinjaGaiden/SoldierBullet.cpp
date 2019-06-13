@@ -23,7 +23,6 @@ SoldierBullet::SoldierBullet()
 	SetColliderRight(+4);
 	SetColliderTop(+2);
 	SetColliderBottom(-2);
-
 }
 
 void SoldierBullet::OnCollision(Entity *impactor, Entity::SideCollision side, float collisionTime)

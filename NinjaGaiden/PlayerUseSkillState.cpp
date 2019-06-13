@@ -1,13 +1,12 @@
-#include "PlayerUseSkillState.h"
+﻿#include "PlayerUseSkillState.h"
 #include "Textures.h"
-#include"Debug.h"
+
 PlayerUseSkillState::PlayerUseSkillState(PlayerData * data) {
 	this->playerData = data;
 	auto texs = Textures::GetInstance();
 	m_Animation = new Animation();
 	m_Animation->AddFramesA(texs->Get(TEX_PLAYER), 3, 3, 3, 10, 4, 0.15f);
-	turn = FirstTurn;
-	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
+	grid = Grid::GetInstance();
 }
 
 PlayerUseSkillState::~PlayerUseSkillState() {
@@ -26,11 +25,12 @@ void PlayerUseSkillState::Update(double dt) {
 	{
 		//	DebugOut(L"%f\n", m_Animation->GetPercentTime());
 		ryuWeapon_Turn1 = new BlueShuriken();
-		ryuWeapon_Turn2 = new BlueShuriken();
-		ryuWeapon_Turn3 = new BlueShuriken();
+	
 		//First turn
-		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == FirstTurn)
+		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) /*&& turn == FirstTurn*/)
 		{
+			CSoundChoose::GetInstance()->PlaySoundChoose(12); //âm thanh sử dụng SkillBlue
+			playerData->player->power -= 3;
 			ryuWeapon_Turn1->SetActive(true);
 			ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
 			if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
@@ -45,70 +45,14 @@ void PlayerUseSkillState::Update(double dt) {
 			ryuWeapon_Turn1->SetAliveState(Entity::Alive);
 			Unit* unit;
 			unit = new Unit(grid, ryuWeapon_Turn1);
-			playerData->player->power -= 3;
 		}
 		else
 		{
 			ryuWeapon_Turn1->SetActive(false);
 		}
 
-		//Second Turn
-		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
+		if (m_Animation->IsLastFrame(dt)) 
 		{
-			ryuWeapon_Turn2->SetActive(true);
-			ryuWeapon_Turn2->SetMoveDirection(playerData->player->GetMoveDirection());
-			if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
-				ryuWeapon_Turn2->SetPosition(playerData->player->GetPosition().x + 22, playerData->player->GetPosition().y + 6); //	
-				ryuWeapon_Turn2->SetVx((BLUE_SHURIKEN_VELOCITY_X));
-			}
-			else // 8 6
-			{
-				ryuWeapon_Turn2->SetPosition(playerData->player->GetPosition().x - 22, playerData->player->GetPosition().y + 6); //	
-				ryuWeapon_Turn2->SetVx((-BLUE_SHURIKEN_VELOCITY_X));
-			}
-			ryuWeapon_Turn2->SetAliveState(Entity::Alive);
-			Unit* unit;
-			unit = new Unit(grid, ryuWeapon_Turn2);
-			playerData->player->power -= 3;
-		}
-		else
-		{
-			ryuWeapon_Turn2->SetActive(false);
-		}
-
-		//Third Turn
-		if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == ThirdTurn)
-		{
-			ryuWeapon_Turn3->SetActive(true);
-			ryuWeapon_Turn3->SetMoveDirection(playerData->player->GetMoveDirection());
-			if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
-				ryuWeapon_Turn3->SetPosition(playerData->player->GetPosition().x + 22, playerData->player->GetPosition().y + 6); //	
-				ryuWeapon_Turn3->SetVx((BLUE_SHURIKEN_VELOCITY_X));
-			}
-			else // 8 6
-			{
-				ryuWeapon_Turn3->SetPosition(playerData->player->GetPosition().x - 22, playerData->player->GetPosition().y + 6); //	
-				ryuWeapon_Turn3->SetVx((-BLUE_SHURIKEN_VELOCITY_X));
-			}
-			ryuWeapon_Turn3->SetAliveState(Entity::Alive);
-			Unit* unit;
-			unit = new Unit(grid, ryuWeapon_Turn3);
-			playerData->player->power -= 3;
-		}
-		else
-		{
-			ryuWeapon_Turn3->SetActive(false);
-		}
-
-
-		if (m_Animation->IsLastFrame(dt)) // Cai nay khong biet da dung chua
-		{
-			if (turn == FirstTurn)
-				turn = SecondTurn;
-			else if (turn == SecondTurn)
-				turn = ThirdTurn;
-			else if (turn == ThirdTurn)
-				turn = FirstTurn;
 			if (playerData->player->onAir)
 				playerData->player->SetState(Falling);
 			else
@@ -120,14 +64,15 @@ void PlayerUseSkillState::Update(double dt) {
 		return;
 	}
 	else
-		if (playerData->player->GetSkill() == Player::RedShurikenSkill)
+		if (playerData->player->GetSkill() == Player::RedShurikenSkill && playerData->player->power >= 5)
 		{
 			ryuWeapon_Turn1 = new RedShuriken();
+
 			if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04))
 			{
-
+				CSoundChoose::GetInstance()->PlaySoundChoose(13); //âm thanh sử dụng SkillRed
+				playerData->player->power -= 5;
 				ryuWeapon_Turn1->SetActive(true);
-				//	ryuWeapon_Turn1->SetMoveDirection(playerData->player->GetMoveDirection());
 				if (playerData->player->GetMoveDirection() == Entity::LeftToRight) {
 					ryuWeapon_Turn1->SetPosition(playerData->player->GetPosition().x + 22, playerData->player->GetPosition().y + 6); //	
 					ryuWeapon_Turn1->SetVx((RED_SHURIKEN_VELOCITY_X));
@@ -159,7 +104,7 @@ void PlayerUseSkillState::Update(double dt) {
 			return;
 		}
 		else
-			if (playerData->player->GetSkill() == Player::Skill::FlameWheelSkill)
+			if (playerData->player->GetSkill() == Player::Skill::FlameWheelSkill && playerData->player->power >= 5)
 			{
 				ryuWeapon_Turn1 = new FlameWheel();
 				ryuWeapon_Turn2 = new FlameWheel();
@@ -168,6 +113,8 @@ void PlayerUseSkillState::Update(double dt) {
 				//First turn
 				if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04))
 				{
+					CSoundChoose::GetInstance()->PlaySoundChoose(14); //âm thanh sử dụng SkillFlame
+					playerData->player->power -= 5;
 					ryuWeapon_Turn1->SetActive(true);
 					ryuWeapon_Turn2->SetActive(true);
 					ryuWeapon_Turn3->SetActive(true);
@@ -226,7 +173,16 @@ void PlayerUseSkillState::Update(double dt) {
 				}
 				return;
 			}
-
+			if (m_Animation->IsLastFrame(dt)) // Cai nay khong biet da dung chua
+			{
+				if (playerData->player->onAir)
+					playerData->player->SetState(Falling);
+				else
+					if (KeyBoard::GetInstance()->GetKey(DIK_DOWNARROW))
+						playerData->player->SetState(Crouch);
+					else
+						playerData->player->SetState(Idle);
+			}
 }
 
 void PlayerUseSkillState::Render() {

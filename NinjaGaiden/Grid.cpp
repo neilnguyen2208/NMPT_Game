@@ -1,5 +1,8 @@
 ﻿#include "Grid.h"
 #include"Unit.h"
+#include"Debug.h"
+#include"Camera.h"
+#include"ExternalDataCollector.h"
 
 #pragma region Kocare
 Grid* Grid::instance = NULL;
@@ -7,7 +10,7 @@ Grid* Grid::instance = NULL;
 Grid::Grid(BoxCollider r) {
 	//--Debug
 	this->rows = 4;
-	this->columns = r.GetWidth() / 50;
+	this->columns = r.GetWidth() / 32;
 	//
 	mapWidth = r.GetWidth();
 	mapHeight = r.GetHeight();
@@ -47,10 +50,10 @@ Unit* Grid::GetGridCells(int i, int j)
 	return this->gridcells[i][j];
 }
 
-Grid * Grid::GetInstance(BoxCollider box)
+Grid * Grid::GetInstance()
 {
 	if (instance == NULL)
-		instance = new Grid(box);
+		instance = new Grid(BoxCollider(224, 0,0, ExternalDataCollector::GetInstance()->GetMapWidth()));
 	return instance;
 }
 
@@ -97,7 +100,7 @@ void Grid::AddToCell(Unit * other)
 	int j = (int)(other->entity->GetPosition().x / Grid::cellWidth);
 	int i = (int)(other->entity->GetPosition().y / Grid::cellHeight);
 
-	if( (i < 0 || j < 0 || i>rows - 1 || j>columns - 1)&& !(other->entity->GetTag()==Entity::EnemyWeaponType|| other->entity->GetTag() == Entity::RyuWeaponType))//
+	if( (other->entity->GetPosition().y<0 || other->entity->GetPosition().x<0 || other->entity->GetPosition().x>mapWidth || other->entity->GetPosition().y>mapHeight)&& (other->entity->GetTag()!=Entity::EnemyWeaponType&&other->entity->GetTag() != Entity::RyuWeaponType))//
 	{
 		other->entity->MakeInactive();
 		return;
@@ -203,6 +206,7 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 							continue;
 						}
 						tmpcells_tonext->entity->OnCollision(Katana, side, dt); 
+						CSoundChoose::GetInstance()->PlaySoundChoose(3); //âm thanh khi enemy chết 
 						Player::GetInstance()->AddScore(tmpcells_tonext->entity->GetTag()); // cộng điểm cho ninja chi chém enemy						
 					}					
 					tmpcells_tonext = tmpcells_tonext->p_next;
@@ -214,21 +218,24 @@ void Grid::HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt)
 				}
 			}
 
-			//collision ryu beaten
-			if (tmpcells_tonext->entity->IsActive() && ((tmpcells_tonext->entity->GetAliveState() != Entity::Die && tmpcells_tonext->entity->GetType() != Entity::ItemType) || (tmpcells_tonext->entity->GetType() == Entity::ItemType && tmpcells_tonext->entity->GetStatusItem() != Entity::UnavailableItem))) {
+			//collision ryu beaten, item
+			if (tmpcells_tonext->entity->IsActive() && ((tmpcells_tonext->entity->GetAliveState() != Entity::Die && tmpcells_tonext->entity->GetType() != Entity::ItemType) || (tmpcells_tonext->entity->GetType() == Entity::ItemType && tmpcells_tonext->entity->GetStatusItem() != Entity::UnavailableItem))) 
+			{
 				float collisionTime = CollisionDetector::SweptAABB(tmpcells_tonext->entity, Player::GetInstance(), side, dt);
 				if (collisionTime == 2)
 				{
 					tmpcells_tonext = tmpcells_tonext->p_next;
 					continue;
 				}
-				Player::GetInstance()->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime);
 
-				if (tmpcells_tonext->entity->GetType() == Entity::ItemType)
+				Player::GetInstance()->OnCollision(tmpcells_tonext->GetEntity(), side, collisionTime); // collision with enemy => beaten
+
+				if (tmpcells_tonext->entity->GetType() == Entity::ItemType) // collision with item
 				{
 					Player::GetInstance()->AddItem(tmpcells_tonext->entity->GetTag());
 					tmpcells_tonext->entity->SetActive(false);
 					tmpcells_tonext->entity->SetAliveState(Entity::Remove);
+					CSoundChoose::GetInstance()->PlaySoundChoose(9); //âm thanh khi ninja ăn item
 				}
 			}
 		}
@@ -257,17 +264,18 @@ void Grid::CheckActivatedObjects()
 			if (j < jMin)
 			{
 				while (tmpcells_tonext != NULL) {
-					if (tmpcells_tonext->entity != NULL)
-						tmpcells_tonext->entity->SetActive(false);
+					{
+						tmpcells_tonext->entity->MakeInactive();
+					}
 					tmpcells_tonext = tmpcells_tonext->p_next;
-				}			
+				}
 			}
 			else
 				if (j > jMax)
 				{
 					while (tmpcells_tonext != NULL) {
 						if (tmpcells_tonext->entity != NULL)
-							tmpcells_tonext->entity->SetActive(false);
+							tmpcells_tonext->entity->MakeInactive();
 						tmpcells_tonext = tmpcells_tonext->p_next;
 					}
 				}
@@ -278,16 +286,17 @@ void Grid::CheckActivatedObjects()
 						{							
 							while (tmpcells_tonext != NULL)
 							{
-								if (tmpcells_tonext->entity != NULL)
-								if (tmpcells_tonext->entity->IsActive() == false && tmpcells_tonext->entity->GetMoveDirection() == Entity::LeftToRight)
-								{
-									if (Player::GetInstance()->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+									if (tmpcells_tonext->entity->IsActive() == false && // active = false
+										((tmpcells_tonext->entity->GetMoveDirection() == Entity::LeftToRight && (tmpcells_tonext->entity->GetTag() != Entity::Thrower && tmpcells_tonext->entity->GetTag() != Entity::Soldier) //cat or eagle left to right
+											|| (tmpcells_tonext->entity->GetTag() == Entity::Thrower || tmpcells_tonext->entity->GetTag() == Entity::Soldier||tmpcells_tonext->entity->GetType()==Entity::ItemType)))) //not cat and eagle
 									{
-										tmpcells_tonext = tmpcells_tonext->p_next;
-										continue;
+										if (Player::GetInstance()->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
+										{
+											tmpcells_tonext = tmpcells_tonext->p_next;
+											continue;
+										}
+										tmpcells_tonext->entity->SetActive(true);
 									}
-									tmpcells_tonext->entity->SetActive(true);
-								}
 								tmpcells_tonext = tmpcells_tonext->p_next;
 							}
 						}
@@ -295,8 +304,9 @@ void Grid::CheckActivatedObjects()
 						{							
 								while (tmpcells_tonext != NULL)
 								{
-									if(tmpcells_tonext->entity!=NULL)
-									if (tmpcells_tonext->entity->IsActive() == false && (tmpcells_tonext->entity->GetMoveDirection() == Entity::RightToLeft))
+										if (tmpcells_tonext->entity->IsActive() == false && // active = false
+											((tmpcells_tonext->entity->GetMoveDirection() == Entity::RightToLeft && (tmpcells_tonext->entity->GetTag() != Entity::Thrower && tmpcells_tonext->entity->GetTag() != Entity::Soldier) //cat or eagle left to right
+												|| (tmpcells_tonext->entity->GetTag() == Entity::Thrower || tmpcells_tonext->entity->GetTag() == Entity::Soldier || tmpcells_tonext->entity->GetType() == Entity::ItemType)))) //not cat and eagle
 									{
 										if (Player::GetInstance()->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
 										{
@@ -309,12 +319,10 @@ void Grid::CheckActivatedObjects()
 								}								
 						}
 						else
-							if (tmpcells_tonext->entity != NULL)
 							if (tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType||tmpcells_tonext->entity->GetTag()==Entity::Boss)
 							{							
 								while (tmpcells_tonext != NULL)
 								{
-									if(tmpcells_tonext->entity!=NULL)
 									if (tmpcells_tonext->entity->IsActive() == false&& tmpcells_tonext->entity->GetAliveState() != Entity::Die)
 									{
 										if (Player::GetInstance()->useitemtimeFreeze == true)
@@ -345,7 +353,6 @@ void Grid::RenderActive()
  			Unit*tmpcells_tonext = gridcells[i][j];
 			while (tmpcells_tonext != NULL)
 			{
-				if(tmpcells_tonext->entity!=NULL)
 				if (tmpcells_tonext->entity->IsActive())
 					tmpcells_tonext->entity->Render();
 				tmpcells_tonext = tmpcells_tonext->p_next;
@@ -367,7 +374,6 @@ void Grid::UpdateActivatingCells(double dt)
 				Unit*tmpcells_tonext = gridcells[i][j];	
 				while (tmpcells_tonext != NULL)
 				{
-					if(tmpcells_tonext->entity!=NULL)
 					if (tmpcells_tonext->entity->IsActive())
 						tmpcells_tonext->Move(tmpcells_tonext->entity->GetPosition().x, tmpcells_tonext->entity->GetPosition().y, dt);
 					tmpcells_tonext = tmpcells_tonext->p_next;
@@ -389,7 +395,6 @@ void Grid::UpdateActive(double dt)
 			Unit*tmpcells_tonext = gridcells[i][j];
 			while (tmpcells_tonext != NULL)
 			{
-				if(tmpcells_tonext->entity!=NULL)
 				if (tmpcells_tonext->entity->IsActive())
 				{
 					if (Player::GetInstance()->useitemtimeFreeze == true && tmpcells_tonext->entity->GetType() == Entity::EnemyType)
@@ -407,55 +412,43 @@ void Grid::UpdateActive(double dt)
 	Player::GetInstance()->checkTimeFreezeSkill();
 }
 
-void Grid::RemoveFromGrid(Unit *unit)
-{
-	int i = unit->entity->GetPosition().y/cellHeight;
-	int j = unit->entity->GetPosition().x/cellWidth;
-	// Unlink it from the list of its old cell.
-	if (unit->p_prev != NULL)
-	{
-		unit->p_prev->p_next = unit->p_next;
-	}
-
-	if (unit->p_next != NULL)
-	{
-		unit->p_next->p_prev = unit->p_prev;
-	}
-
-	// If it's the head of a list, remove it.
-	if (gridcells[i][j] == unit)
-	{
-		gridcells[i][j] = unit->p_next;
-	}
-
-	unit->Reset();
-	//delete unit;
-}
-
-void Grid::ClearAllWeapon()
+void Grid::ClearAllWeapon() // clear weapon and item
 {
 	for (int i = 0; i <= rows-1; i++)
 		for (int j = 0; j <= columns; j++)		
 		{
 			if (gridcells[i][j] == NULL) continue;		
-				Unit*tmpcells_toprev = gridcells[i][j]->p_prev;
-				Unit*tmpcells_tonext = gridcells[i][j];
-				while (tmpcells_tonext != NULL)
+			Unit*tmpcells_tonext = gridcells[i][j];
+			while (tmpcells_tonext != NULL)
+			{
+				if (((tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::RyuWeaponType || tmpcells_tonext->entity->GetType() == Entity::ItemType) && tmpcells_tonext->entity->GetAliveState() == Entity::Remove)
+				||( tmpcells_tonext->entity->GetType() == Entity::ItemType&&!IsOverlap(Camera::GetInstance()->GetRect(),tmpcells_tonext->entity->GetRect())&&tmpcells_tonext->entity->GetAliveState()==Entity::Die))
 				{
-					if(tmpcells_tonext->entity!=NULL)
-					if ((tmpcells_tonext->entity->GetType() == Entity::EnemyWeaponType || tmpcells_tonext->entity->GetType() == Entity::RyuWeaponType /*|| tmpcells_tonext->entity->GetType() == Entity::ItemType*/)&& tmpcells_tonext->entity->GetAliveState() == Entity::Remove)
+					Unit* tmpUnit = NULL;
+					bool isHaveNext = false;
+					// Unlink it from the list of its old cell.
+					if (tmpcells_tonext->p_prev != NULL)					
+						tmpcells_tonext->p_prev->p_next = tmpcells_tonext->p_next;					
+					if (tmpcells_tonext->p_next != NULL)
 					{
-						RemoveFromGrid(tmpcells_tonext);
+						isHaveNext = true; // have next pointer => continue
+						tmpcells_tonext->p_next->p_prev = tmpcells_tonext->p_prev;
 					}
-					tmpcells_tonext = tmpcells_tonext->p_next;					
+					// If it's the head of a list, remove it.
+					if (gridcells[i][j] == tmpcells_tonext)
+						gridcells[i][j] = tmpcells_tonext->p_next;
+					tmpUnit = tmpcells_tonext;
+					tmpcells_tonext = tmpcells_tonext->p_next;
+					tmpUnit->Reset();
+					if (tmpUnit != NULL)					
+						delete tmpUnit; tmpUnit = NULL;
+					if (isHaveNext)
+						continue;
+					else
+						break;
 				}
-				while (tmpcells_toprev != NULL)
-				{
-					if ((tmpcells_toprev->entity->GetType() == Entity::EnemyWeaponType || tmpcells_toprev->entity->GetType() == Entity::RyuWeaponType || tmpcells_toprev->entity->GetType() == Entity::ItemType) && tmpcells_toprev->entity->GetAliveState() == Entity::Remove)
-						RemoveFromGrid(tmpcells_toprev);
-					tmpcells_toprev = tmpcells_toprev->p_prev;
-					
-				}	
+				tmpcells_tonext = tmpcells_tonext->p_next;
+			}
 		}
 }
 
@@ -473,7 +466,6 @@ void Grid::HandleGridCollisionRyuWeaponEnemy(double dt)
 			Unit*tmpcells_tonext = gridcells[i][j];
 			while (tmpcells_tonext != NULL)
 			{
-				if(tmpcells_tonext->entity!=NULL)
 				if (tmpcells_tonext->entity->IsActive() && tmpcells_tonext->entity->GetType() == Entity::RyuWeaponType)
 				{
 					Entity*ryuWeapon = tmpcells_tonext->entity;
@@ -500,7 +492,7 @@ void Grid::HandleGridCollisionRyuWeaponEnemy(double dt)
 		}
 }
 
-void Grid::HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j, Entity*ryuWeapon, double dt)
+void Grid::HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j, Entity*ryuWeapon, double dt) // Done!
 {
 	auto side = Entity::NotKnow;
 
@@ -509,7 +501,6 @@ void Grid::HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j, Entity*ryu
 	//Process collide to next
 	while (tmpcells_tonext != NULL)
 	{
-		if(tmpcells_tonext->entity!=NULL)
 		if (tmpcells_tonext->entity->IsActive() == true && tmpcells_tonext->entity->GetType() != Entity::RyuWeaponType)
 		{
 			if (ryuWeapon->GetTag() == Entity::EntityTag::RedShuriken&&tmpcells_tonext->entity->GetType() == Entity::EntityType::PlayerType) //collsion ryu and red shuriken
@@ -545,7 +536,7 @@ void Grid::HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j, Entity*ryu
 	}
 }
 
-void Grid::Reset()
+void Grid::Reset() // delete absolutely
 {
 	if (!staticObject.empty())
 		staticObject.clear();
@@ -571,7 +562,6 @@ void Grid::Reset()
 				{
 					gridcells[i][j] = tmpcells_tonext->p_next;
 				}
-				if(tmpcells_tonext->entity!=NULL)
 				if (tmpcells_tonext->entity->GetTag() != Entity::Player)
 					tmpcells_tonext->Reset();
 				tmpcells_tonext = NULL;

@@ -4,19 +4,25 @@
 
 PlayScene::PlayScene() {
 	//LoadResources	
-	ExternalDataCollector::GetInstance()->SetScene(ExternalDataCollector::Scene3_3);
-	map = new GameMap((char*)"Resources/Scene/Scene3_3 TileSet.png", (char*)"Resources/Scene/Scene3_3 Output.txt", 32, 32);
+	ExternalDataCollector::GetInstance()->SetScene(ExternalDataCollector::Scene3_1);
+	map = new GameMap((char*)"Resources/Scene/Scene3_1 TileSet.png", (char*)"Resources/Scene/Scene3_1 Output.txt", 32, 32);
 	int width = Graphic::GetInstance()->GetBackBufferWidth();
 	int height = Graphic::GetInstance()->GetBackBufferHeight();
-	/*map = new GameMap((char*)"Resources/TilesDebug.png", (char*)"Resources/OutputDebug.txt", 32, 32);
-	ExternalDataCollector::GetInstance()->SetScene(ExternalDataCollector::Scene3_1);*/
+	
 	//map is not a Singleton
 	map->SetCamera(Camera::GetInstance());
 	Camera::GetInstance()->SetPosition(D3DXVECTOR3(width / 2, height / 2, 0));
 	Player::GetInstance()->SetPosition(32, 40 + Player::GetInstance()->GetBigHeight() / 2.0f);
-	unit = new Unit(Grid::GetInstance(BoxCollider(map->GetHeight(),0,0, map->GetWidth())), Player::GetInstance());
+	unit = new Unit(Grid::GetInstance(), Player::GetInstance());
 	sb = new Scoreboard();
 	score = new Score();
+
+	CSoundChoose::GetInstance()->PlayMusicChoose(ExternalDataCollector::GetInstance()->GetScene());
+	
+	pause = false;
+	gameTime = 150;
+	dtTime = 0;
+
 }
 PlayScene::~PlayScene() {
 
@@ -24,8 +30,8 @@ PlayScene::~PlayScene() {
 
 void PlayScene::Render() {
 	map->Draw();
-	Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->RenderActive(); 	
-	sb->DrawTextTop(Graphic::GetInstance()->Getdirect3DDevice(), score->GetScore(), score->GetFate(), score->GetTime(), score->GetScene(), score->GetNinjaBlood(), score->GetBossBlood(), score->GetPower(), score->GetSkill());
+	Grid::GetInstance()->RenderActive(); 	
+	sb->DrawTextTop(Graphic::GetInstance()->Getdirect3DDevice(), score->GetScore(), score->GetFate(), score->GetTime(), score->GetScene(), score->GetNinjaBlood(), score->GetBossBlood(), score->GetPower(), score->GetSkill(), pause);
 }                                                                           
 
 void PlayScene::ProcessInput() {
@@ -34,35 +40,78 @@ void PlayScene::ProcessInput() {
 }
 
 void PlayScene::Update(double dt) {
+
+	if (sb->GetWin())
+		return;
+
+	//PAUSE KEY
+	if (KeyBoard::GetInstance()->GetKeyDown(DIK_P))
+	{
+	
+		if (pause == false)
+		{
+			pause = true;
+			CSoundChoose::GetInstance()->StopSound();
+		}
+		else
+		{
+			pause = false;
+			CSoundChoose::GetInstance()->PlayMusicChoose(ExternalDataCollector::GetInstance()->GetScene());
+		}
+	} else
+
+	if (pause == true)
+	{
+		return;
+	}
+
+	if (dtTime < 1)
+	{
+		dtTime += dt;
+	}
+	else
+	{
+		gameTime--;
+		dtTime = 0;
+	}
+
+
 	ProcessInput();
 	CheckCollision(dt);
 
-	Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->UpdateActive(dt); //Update nhung unit nao dang active
-	Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->UpdateActivatingCells(dt); //ham nay them vao de cap nhat cac cell duoc activated, chua kiem tra duoc do chua co va cham voi ground	
-	Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->CheckActivatedObjects();
-	Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->ClearAllWeapon();
+	Grid::GetInstance()->UpdateActive(dt); //Update nhung unit nao dang active
+	Grid::GetInstance()->UpdateActivatingCells(dt); //ham nay them vao de cap nhat cac cell duoc activated, chua kiem tra duoc do chua co va cham voi ground	
+	Grid::GetInstance()->CheckActivatedObjects();
+	Grid::GetInstance()->ClearAllWeapon();
 
 	D3DXVECTOR3 playerPos = Player::GetInstance()->GetPosition();
 	Camera::GetInstance()->FollowPlayer(playerPos.x, playerPos.y);
 	CheckCamera();
 
 	//Update for Scorebar
+	score->SetScene(ExternalDataCollector::GetInstance()->GetScene());
 	score->SetSkill(Player::GetInstance()->skillnumer);
 	score->SetPower(Player::GetInstance()->power);
 	score->SetScore(Player::GetInstance()->score);
 	score->SetNinjaBlood(Player::GetInstance()->blood);
 	score->SetFate(Player::GetInstance()->fate);
+	score->SetBossBlood(ExternalDataCollector::GetInstance()->GetBossHitPoint());
+	score->SetTime(gameTime);
 
 	//Update for ExternalDataCollector
+	ExternalDataCollector::GetInstance()->SetHitPoint(Player::GetInstance()->blood); //update player blood
 	ExternalDataCollector::GetInstance()->SetLife(Player::GetInstance()->fate);
+	ExternalDataCollector::GetInstance()->SetMana(Player::GetInstance()->power);
 
-	if (ExternalDataCollector::GetInstance()->GetHitPoint()==0||Player::GetInstance()->GetPosition().y<0)
+
+	if (ExternalDataCollector::GetInstance()->GetHitPoint() <= 0 || Player::GetInstance()->GetPosition().y<0 || gameTime==0)
 	{
 		ExternalDataCollector::GetInstance()->SetLife(ExternalDataCollector::GetInstance()->GetLife() - 1);
 		if (ExternalDataCollector::GetInstance()->GetLife() == -1)
 		{
 			ExternalDataCollector::GetInstance()->SetLost(true);
 		}
+		CSoundChoose::GetInstance()->PlaySoundChoose(10);
 		ExternalDataCollector::GetInstance()->SetPlayerDead(true);
 		Reset();
 	}
@@ -88,7 +137,7 @@ void PlayScene::Update(double dt) {
 }
 
 void PlayScene::CheckCollision(double dt) {
-	vector<Entity*> staticObjects = Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->GetStaticObjects(); //stacic object from 
+	vector<Entity*> staticObjects = Grid::GetInstance()->GetStaticObjects(); //stacic object from 
 	auto side = Entity::NotKnow;
 	BoxCollider exPlayer = BoxCollider(Player::GetInstance()->GetPosition(), Player::GetInstance()->GetWidth(), Player::GetInstance()->GetBigHeight());
 	bool isOnGround = false;
@@ -126,9 +175,9 @@ void PlayScene::CheckCollision(double dt) {
 		Player::GetInstance()->OnFalling();
 	}
 
-	float cellWidth = Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->GetCellWidth();
-	float cellHeight = Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->GetCellHeight();
-	int iMax = Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->GetRows() - 1;
+	float cellWidth = Grid::GetInstance()->GetCellWidth();
+	float cellHeight = Grid::GetInstance()->GetCellHeight();
+	int iMax = Grid::GetInstance()->GetRows() - 1;
 	int jMax = Camera::GetInstance()->GetRect().right / cellWidth;
 	int jMin = Camera::GetInstance()->GetRect().left / cellWidth;
 
@@ -136,9 +185,9 @@ void PlayScene::CheckCollision(double dt) {
 	for (size_t i = 0; i <= iMax; i++)
 	{
 		for (size_t j = jMin; j <= jMax; j++) {
-			if (Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->GetGridCells(i, j) == NULL)
+			if (Grid::GetInstance()->GetGridCells(i, j) == NULL)
 				continue;			
-			Unit*tmpcells_tonext = Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->GetGridCells(i, j);
+			Unit*tmpcells_tonext = Grid::GetInstance()->GetGridCells(i, j);
 			while (tmpcells_tonext != NULL)
 			{
 				if(tmpcells_tonext->GetEntity()!=NULL)
@@ -167,9 +216,9 @@ void PlayScene::CheckCollision(double dt) {
 
 	if (Player::GetInstance()->GetSkill() != Player::NoneSkill)
 	{
-		Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->HandleGridCollisionRyuWeaponEnemy(dt);
+		Grid::GetInstance()->HandleGridCollisionRyuWeaponEnemy(dt);
 	}
-	Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->HandleGridCollisionPlayerEnemy(dt);
+	Grid::GetInstance()->HandleGridCollisionPlayerEnemy(dt);
 }
 
 void PlayScene::CheckCamera() {
@@ -186,9 +235,11 @@ void PlayScene::CheckCamera() {
 }
 
 void PlayScene::Reset() {	
-	Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight()))->Reset();
+	Grid::GetInstance()->Reset();
 	delete map;
 	map = NULL;
+	gameTime = 150;
+	dtTime = 0;
 	
 	if (ExternalDataCollector::GetInstance()->GetLost())
 	{
@@ -260,7 +311,11 @@ void PlayScene::Reset() {
 	else
 		Player::GetInstance()->SetPosition(50, 80 + Player::GetInstance()->GetBigHeight() / 2.0f);
 
-	unit = new Unit(Grid::GetInstance(BoxCollider(map->GetWidth(),0,0,map->GetHeight())), Player::GetInstance());
+	unit = new Unit(Grid::GetInstance(), Player::GetInstance());
+
+	//Reset Scene Music
+	CSoundChoose::GetInstance()->StopSound();
+	CSoundChoose::GetInstance()->PlayMusicChoose(ExternalDataCollector::GetInstance()->GetScene());
 }
 
 

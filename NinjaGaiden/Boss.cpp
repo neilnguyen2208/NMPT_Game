@@ -1,6 +1,6 @@
 #include "Boss.h"
-#include"Debug.h"
 #include"ExternalDataCollector.h"
+
 Boss::Boss() : Enemy() {
 	//Set type
 	auto textures = Textures::GetInstance();
@@ -34,9 +34,7 @@ void Boss::Update(double dt) {
 		{
 			ExternalDataCollector::GetInstance()->SetBossHurt(false);
 			ExternalDataCollector::GetInstance()->SetBossHurtTime(0);
-			DebugOut(L"%d", ExternalDataCollector::GetInstance()->GetBossHitPoint());
 		}
-		
 	}
 
 	SetMoveDirection(Player::GetInstance()->GetPosition().x < position.x ? Entity::RightToLeft : Entity::LeftToRight);

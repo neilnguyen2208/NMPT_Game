@@ -19,11 +19,16 @@ class ExternalDataCollector
 	int BossHitPoint;
 	bool isBossHaveHurt;
 	double BossHurtTime;
+
+//map
+	int mapWidth;
+	
 public:
 
 //player
 	enum SceneList
 	{
+		None,
 		Scene3_1,
 		Scene3_2,
 		Scene3_3
@@ -57,7 +62,11 @@ public:
 	bool GetBossHurt();
 	double GetBossHurtTime();
 	void SetBossHurtTime(double);
+//map
+	void SetMapWidth(int);
+	int GetMapWidth();
 
+//singleton
 	static ExternalDataCollector*GetInstance();	
 	~ExternalDataCollector();
 };

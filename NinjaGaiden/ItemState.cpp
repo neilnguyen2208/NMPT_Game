@@ -21,7 +21,6 @@ void ItemState::Render() {
 }
 
 void ItemState::OnCollision(Entity * impactor, Entity::SideCollision side) {
-
 }
 
 int ItemState::GetAnimationHeight() {

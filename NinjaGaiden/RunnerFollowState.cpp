@@ -37,7 +37,7 @@ void RunnerFollowState::ResetState() {
 
 void RunnerFollowState::Update(double dt) {
 
-	vector<Entity*> staticObjects = Grid::GetInstance(BoxCollider(224,0,0,2048))->staticObject;
+	vector<Entity*> staticObjects = Grid::GetInstance()->staticObject;
 	auto side = Entity::SideCollision::NotKnow;
 	
 	for (int i = 0; i < staticObjects.size(); i++)

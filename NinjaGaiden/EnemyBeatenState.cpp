@@ -40,19 +40,12 @@ void EnemyBeatenState::Update(double dt)
 
 void EnemyBeatenState::ResetState()
 {
-	if (enemyData->enemy->GetType() == Entity::EnemyType&&enemyData->enemy->GetTag() != Entity::Boss)
-	{
-		enemyData->enemy->SetAliveState(Entity::Die);
-		enemyData->enemy->SetVx(0);
-		enemyData->enemy->SetVy(0);
-		enemyData->enemy->SetColliderTop(0);
-		enemyData->enemy->SetColliderLeft(0);
-		enemyData->enemy->SetColliderLeft(0);
-		enemyData->enemy->SetColliderRight(0);
-	}
-	if (enemyData->enemy->GetType() == Entity::EnemyType&&enemyData->enemy->GetTag() == Entity::Boss)
-	{
-		enemyData->enemy->SetAliveState(Entity::Beaten);
-	}
+	enemyData->enemy->SetAliveState(Entity::Die);
+	enemyData->enemy->SetVx(0);
+	enemyData->enemy->SetVy(0);
+	enemyData->enemy->SetColliderTop(0);
+	enemyData->enemy->SetColliderLeft(0);
+	enemyData->enemy->SetColliderLeft(0);
+	enemyData->enemy->SetColliderRight(0);
 	EnemyState::ResetState();
 }

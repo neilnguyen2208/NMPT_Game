@@ -9,12 +9,12 @@
 #include "Enemy.h"
 #include "PlayerData.h"
 #include "PlayerState.h"
+#include "SoundManager.h"
 
 class Unit;
 
 //Tao ra grid tu map
 class Grid {
-
 	int mapWidth;
 	int mapHeight;
 	int rows;
@@ -48,16 +48,10 @@ public:
 	void HandleGridCollisionPlayerEnemy(double dt); //unit = gridcells[i][j]
 	void HandleGridCollisionPlayerEnemySubFunction(int i, int j, double dt);
 	bool IsOverlap(BoxCollider r1, BoxCollider r2);
-
 	void HandleGridCollisionRyuWeaponEnemy(double dt);
 	void HandleGridCollisionRyuWeaponEnemySubFunction(int i, int j,Entity*weapon, double dt);
-
 	Unit* GetGridCells(int, int);
-	
-	static Grid* GetInstance(BoxCollider box);
-
-	void RemoveFromGrid(Unit*);
-
+	static Grid* GetInstance();
 	void ClearAllWeapon();
 	void Reset();
 };

@@ -1,6 +1,6 @@
-#include "CannonerAttackState.h"
+﻿#include "CannonerAttackState.h"
 #include "Enemy.h"
-#include"Debug.h"
+
 CannonerAttackState::CannonerAttackState(EnemyData *data) : EnemyState(data) {
 	auto textures = Textures::GetInstance();
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_CANNONER);
@@ -10,7 +10,7 @@ CannonerAttackState::CannonerAttackState(EnemyData *data) : EnemyState(data) {
 	m_AnimationAttack->AddFramesA(texture, 2, 2, 2, 2, 2, CANNONER_ATTACK_FRAME*(1/60.0f));
 	turn = FirstTurn;
 
-	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
+	grid = Grid::GetInstance();
 }
 
 CannonerAttackState::~CannonerAttackState() {
@@ -36,6 +36,7 @@ void CannonerAttackState::Update(double dt) {
 	//First turn
 	if ((m_Animation->GetPercentTime() > 0.03&& m_Animation->GetPercentTime() < 0.04) && turn == FirstTurn)
 	{
+		CSoundChoose::GetInstance()->PlaySoundChoose(5); //âm thanh khi cannoner bắn 
 		cannonerBullet_1 = new CannonerBullet();
 		cannonerBullet_1->SetActive(true);
 		cannonerBullet_1->SetMoveDirection(enemyData->enemy->GetMoveDirection());
@@ -55,6 +56,7 @@ void CannonerAttackState::Update(double dt) {
 	
 	if ((m_Animation->GetPercentTime() > 0.03 && m_Animation->GetPercentTime() < 0.04) && turn == SecondTurn)
 	{
+		CSoundChoose::GetInstance()->PlaySoundChoose(5); //âm thanh khi cannoner bắn 
 		cannonerBullet_2 = new CannonerBullet();
 		cannonerBullet_2->SetActive(true);
 		cannonerBullet_2->SetMoveDirection(enemyData->enemy->GetMoveDirection());

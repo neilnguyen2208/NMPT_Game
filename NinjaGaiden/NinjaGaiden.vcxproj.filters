@@ -73,6 +73,9 @@
     <Filter Include="Header Files\Components\Enemy\Boss">
       <UniqueIdentifier>{779dd014-8ae3-4372-bc5c-807b9342950c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Framework\Sound">
+      <UniqueIdentifier>{97b3378c-c988-4396-acb8-55a72b5ad4d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -270,20 +273,32 @@
     <ClInclude Include="CannonerBullet.h">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Header Files\Components\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="ExternalDataCollector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Boss.h">
-      <Filter>Header Files\Components\Enemy\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="BossBullet.h">
       <Filter>Header Files\Components\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="BossState.h">
       <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="ExternalDataCollector.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="dxutil.h">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GAudio.h">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\Components\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -473,20 +488,29 @@
     <ClCompile Include="CannonerBullet.cpp">
       <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="Debug.cpp">
-      <Filter>Header Files\Components\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="ExternalDataCollector.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Boss.cpp">
-      <Filter>Header Files\Components\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="BossBullet.cpp">
       <Filter>Header Files\Components\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="BossState.cpp">
       <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalDataCollector.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="dsutil.cpp">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="GAudio.cpp">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Header Files\Components\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

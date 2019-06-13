@@ -2,8 +2,7 @@
 #include "EnemyBeatenState.h"
 #include"PlayScene.h"
 #include"GameConfig.h"
-#include"ExternalDataCollector.h"
-#include"Debug.h"
+
 Enemy::Enemy() : Entity() {
 
 	type = Entity::EnemyType;

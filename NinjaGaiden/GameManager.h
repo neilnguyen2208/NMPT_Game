@@ -4,6 +4,7 @@
 #include "PlayScene.h"
 #include "Graphic.h"
 #include "KeyBoard.h"
+#include "SoundManager.h"
 
 class GameManager {
 

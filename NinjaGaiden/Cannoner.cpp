@@ -1,4 +1,4 @@
-#include "Cannoner.h"
+﻿#include "Cannoner.h"
 
 Cannoner::Cannoner() : Enemy() {
 	//Set type

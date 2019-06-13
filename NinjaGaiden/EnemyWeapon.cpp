@@ -35,7 +35,6 @@ void EnemyWeapon::Update(double dt)
 	if ((this->GetRect().bottom > r2.top ||this->GetRect().top < r2.bottom || this->GetRect().left > r2.right || this->GetRect().right < r2.left))//ko overlap
 	{
 		SetAliveState(Entity::Remove);
-		MakeInactive();
 	}
 	if (GetAliveState() == Entity::Die)
 	{
@@ -48,7 +47,6 @@ void EnemyWeapon::Update(double dt)
 		if (m_AnimationExplode->IsLastFrame(dt)){			
 			SetAliveState(Entity::Remove);
 			m_AnimationExplode->ResetAnimation();
-			MakeInactive();
 		}
 	}
 	else

@@ -6,14 +6,8 @@ SoldierAttackState::SoldierAttackState(EnemyData *data) : EnemyState(data) {
 	LPDIRECT3DTEXTURE9 texture = textures->Get(TEX_SOLDIER);
 	m_Animation = new Animation();
 	m_Animation->AddFramesA(texture, 2, 2, 2, 2, 2, SOLDIER_ATTACK_FRAME * (1 / 60.0f));
-	turn = FirstTurn;
 	
-	
-	
-	
-	
-	
-	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
+	grid = Grid::GetInstance();
 }
 
 SoldierAttackState::~SoldierAttackState() {
@@ -37,8 +31,9 @@ void SoldierAttackState::Update(double dt) {
 	m_Animation->Update(dt);
 
 	//First turn
-	if ((m_Animation->GetPercentTime() > 0.2&& m_Animation->GetPercentTime() < 0.3) && turn == FirstTurn)
+	if ((m_Animation->GetPercentTime() > 0.2&& m_Animation->GetPercentTime() < 0.3) )
 	{
+		CSoundChoose::GetInstance()->PlaySoundChoose(4); //âm thanh khi solider b?n 
 		soldierBullet_1 = new SoldierBullet();
 		soldierBullet_1->SetActive(true);
 		soldierBullet_1->SetMoveDirection(enemyData->enemy->GetMoveDirection());
@@ -56,8 +51,9 @@ void SoldierAttackState::Update(double dt) {
 		unit = new Unit(grid, soldierBullet_1);
 	}
 
-	if ((m_Animation->GetPercentTime() > 1.2 && m_Animation->GetPercentTime() < 1.3) && turn == FirstTurn)
+	if ((m_Animation->GetPercentTime() > 1.2 && m_Animation->GetPercentTime() < 1.3))
 	{
+		CSoundChoose::GetInstance()->PlaySoundChoose(4); //âm thanh khi solider b?n 
 		soldierBullet_2 = new SoldierBullet();
 		soldierBullet_2->SetActive(true);
 		soldierBullet_2->SetMoveDirection(enemyData->enemy->GetMoveDirection());
@@ -75,8 +71,9 @@ void SoldierAttackState::Update(double dt) {
 		unit = new Unit(grid, soldierBullet_2);
 	}
 
-	if ((m_Animation->GetPercentTime() > 2.2 && m_Animation->GetPercentTime() < 2.3) && turn == FirstTurn)
+	if ((m_Animation->GetPercentTime() > 2.2 && m_Animation->GetPercentTime() < 2.3))
 	{
+		CSoundChoose::GetInstance()->PlaySoundChoose(4); //âm thanh khi solider b?n 
 		soldierBullet_3 = new SoldierBullet();
 		soldierBullet_3->SetActive(true);
 		soldierBullet_3->SetMoveDirection(enemyData->enemy->GetMoveDirection());
@@ -95,75 +92,9 @@ void SoldierAttackState::Update(double dt) {
 		unit = new Unit(grid, soldierBullet_3);
 	}
 
-	//Second turn
-	if ((m_Animation->GetPercentTime() > 0.2&& m_Animation->GetPercentTime() < 0.3) && turn == SecondTurn)
-	{
-		soldierBullet_4 = new SoldierBullet();
-		soldierBullet_4->SetActive(true);
-		soldierBullet_4->SetMoveDirection(enemyData->enemy->GetMoveDirection());
-		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-			soldierBullet_4->SetPosition(enemyData->enemy->GetPosition().x + 16, enemyData->enemy->GetPosition().y + 0); //	
-			soldierBullet_4->SetVx((SOLDIER_BULLET_VELOCITY_X));
-		}
-		else // 8 6
-		{
-			soldierBullet_4->SetPosition(enemyData->enemy->GetPosition().x - 16, enemyData->enemy->GetPosition().y + 0); //	
-			soldierBullet_4->SetVx((-SOLDIER_BULLET_VELOCITY_X));
-		}
-
-		soldierBullet_4->SetAliveState(Entity::Alive);
-		Unit* unit;
-		unit = new Unit(grid, soldierBullet_4);
-	}
-
-
-	if ((m_Animation->GetPercentTime() > 1.2 && m_Animation->GetPercentTime() < 1.3) && turn == SecondTurn)
-	{
-		soldierBullet_5 = new SoldierBullet();
-		soldierBullet_5->SetActive(true);
-		soldierBullet_5->SetMoveDirection(enemyData->enemy->GetMoveDirection());
-		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-			soldierBullet_5->SetPosition(enemyData->enemy->GetPosition().x + 12, enemyData->enemy->GetPosition().y + 0); //	
-			soldierBullet_5->SetVx((SOLDIER_BULLET_VELOCITY_X));
-		}
-		else // 8 6
-		{
-			soldierBullet_5->SetPosition(enemyData->enemy->GetPosition().x - 12, enemyData->enemy->GetPosition().y + 0); //	
-			soldierBullet_5->SetVx((-SOLDIER_BULLET_VELOCITY_X));
-		}
-
-		soldierBullet_5->SetAliveState(Entity::Alive);
-		Unit* unit;
-		unit = new Unit(grid, soldierBullet_5);
-	}
-
-	if ((m_Animation->GetPercentTime() > 2.2 && m_Animation->GetPercentTime() < 2.3) && turn == SecondTurn)
-	{
-		soldierBullet_6 = new SoldierBullet();
-		soldierBullet_6->SetActive(true);
-		soldierBullet_6->SetMoveDirection(enemyData->enemy->GetMoveDirection());
-		if (enemyData->enemy->GetMoveDirection() == Entity::LeftToRight) {
-			soldierBullet_6->SetPosition(enemyData->enemy->GetPosition().x + 8, enemyData->enemy->GetPosition().y + 0); //	
-			soldierBullet_6->SetVx((SOLDIER_BULLET_VELOCITY_X));
-		}
-		else // 8 6
-		{
-			soldierBullet_6->SetPosition(enemyData->enemy->GetPosition().x - 8, enemyData->enemy->GetPosition().y + 0); //	
-			soldierBullet_6->SetVx((-SOLDIER_BULLET_VELOCITY_X));
-		}
-
-		soldierBullet_6->SetAliveState(Entity::Alive);
-		Unit*unit;
-		unit = new Unit(grid, soldierBullet_6);
-	}
-
 	if (m_Animation->GetPercentTime() >= SOLDIER_ATTACK_PERCENTTIME)
 	{
-		if (turn == FirstTurn)
-			turn = SecondTurn;
-		else
-			if (turn == SecondTurn)
-				turn = FirstTurn;
+		
 		enemyData->enemy->SetState(EnemyState::Follow);
 	}
 }

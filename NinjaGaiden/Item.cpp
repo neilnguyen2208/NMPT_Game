@@ -30,13 +30,17 @@ void Item::Update(double dt) {
 	if (isActive)
 		itemData->state->Update(dt);
 	if (itemData->item->GetStatusItem() == Entity::AvailableItem)
+	{
 		if (timelimit < ITEM_TIME_LIMIT)
-		{
-			Entity::Update(dt);
-			timelimit += dt * 100;
+		{		
+				Entity::Update(dt);
+				timelimit += dt * 100;			
 		}
-		else MakeInactive();
-
+		else
+		{
+			SetAliveState(Entity::Remove);
+		}
+	}
 }
 
 void Item::Render() {
@@ -53,7 +57,6 @@ void Item::SetState(ItemState::State name)
 		itemData->state = itemAvailableState;
 		break;
 	}
-
 	itemData->state->ResetState();
 }
 
@@ -76,7 +79,9 @@ void Item::SetMoveDirection(Entity::EntityDirection dir)
 
 void Item::SetActive(bool active) {
 	if (active)
-		isActive = true;
+	{
+		Spawn();
+	}
 	else
 		MakeInactive();
 }
@@ -104,6 +109,7 @@ void Item::OnCollision(Entity * impactor, Entity::SideCollision side, float coll
 	if (impactor->GetType() == Entity::RyuWeaponType && itemData->item->GetStatusItem() == Entity::UnavailableItem)
 	{
 		itemData->item->SetState(ItemState::Available);
+		SetAliveState(Entity::Die);
 		SetStatusItem(Entity::AvailableItem);
 		SetVy(-ITEM_VY);
 	}
@@ -113,12 +119,14 @@ void Item::OnCollision(Entity * impactor, Entity::SideCollision side, float coll
 	}
 }
 
-
 void Item::MakeInactive() {
 	isActive = false;
 	position = spawnPosition;
+	direction = spawnDirection;
+	SetColliderTop((spawnBox.top - spawnBox.bottom) / 2.0f);
+	SetColliderBottom(-collider.top);
+	SetColliderLeft((spawnBox.left - spawnBox.right) / 2.0f);
 }
-
 
 void Item::SetColliderTop(int top)
 {
@@ -141,3 +149,10 @@ void Item::SetColliderRight(int right)
 	collider.right = right;
 }
 
+void Item::Spawn() {
+	isActive = true;
+	aliveState = Entity::Alive;
+	SetState(ItemState::Unavailable);
+	position.x = spawnBox.left + width / 2.0f;
+	position.y = spawnBox.bottom + height / 2.0f;
+}

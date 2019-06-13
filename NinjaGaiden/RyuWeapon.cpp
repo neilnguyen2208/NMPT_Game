@@ -22,7 +22,6 @@ void RyuWeapon::Update(double dt)
 	if ((this->GetRect().bottom > r2.top || this->GetRect().top < r2.bottom || this->GetRect().left > r2.right || this->GetRect().right < r2.left))//ko overlap
 	{
 		SetAliveState(Entity::Remove);
-		MakeInactive();
 		return;
 	}
 	else
@@ -128,5 +127,5 @@ void RyuWeapon::SetActive(bool active) {
 }
 
 void RyuWeapon::MakeInactive() {
-	isActive = false;
+	//isActive = false;
 }

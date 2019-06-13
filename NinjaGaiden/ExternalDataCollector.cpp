@@ -16,6 +16,8 @@ ExternalDataCollector::ExternalDataCollector()
 	BossHitPoint = 16;
 	isBossHaveHurt = false;
 	BossHurtTime = 0.0f;
+	mapWidth = 2048;
+
 }
 
 void ExternalDataCollector::SetScene(SceneList scene)
@@ -146,6 +148,16 @@ double ExternalDataCollector::GetBossHurtTime()
 void ExternalDataCollector::SetBossHurtTime(double hurttime)
 {
 	BossHurtTime = hurttime;
+}
+
+void ExternalDataCollector::SetMapWidth(int width)
+{
+	mapWidth = width;
+}
+
+int ExternalDataCollector::GetMapWidth()
+{
+	return mapWidth;
 }
 
 ExternalDataCollector * ExternalDataCollector::GetInstance()

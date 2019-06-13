@@ -19,21 +19,10 @@ public:
 	virtual State GetState();
 	virtual void ResetState(int dummy);
 
-	enum Turn
-	{
-		FirstTurn,
-		SecondTurn,
-		ThirdTurn
-	};
-
-
-
 private:
 	Grid* grid;
 
 	RyuWeapon*ryuWeapon_Turn1;
 	RyuWeapon*ryuWeapon_Turn2;
 	RyuWeapon*ryuWeapon_Turn3;
-
-	Turn turn;
 };

@@ -3,6 +3,8 @@
 #include "PlayerData.h"
 #include "KeyBoard.h"
 #include "PlayerState.h"
+#include "SoundManager.h"
+
 
 class Player : public Entity {
 public:
@@ -36,6 +38,8 @@ public:
 	double HurtingTime = 0;
 	bool isHurtingAnimation = false;
 	int timeHurtingAnimation = 0;
+	Entity::EntityTag enemyAttack;
+
 
 	//Cac item khac xu ky ngay khi nhat duoc
 	enum Skill {

@@ -2,6 +2,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "BoxCollider.h"
+#include "ExternalDataCollector.h"
 
 class Entity {
 

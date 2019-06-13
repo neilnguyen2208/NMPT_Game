@@ -65,9 +65,8 @@ void GameMap::SetMapPath(char * mapPath) {
 			reader >> mapIDs[i][j];
 		}
 	}
-
-	BoxCollider gridRect = BoxCollider(GetHeight(), 0, 0, GetWidth());
-	grid = Grid::GetInstance(gridRect);
+	ExternalDataCollector::GetInstance()->SetMapWidth(GetWidth());
+	grid = Grid::GetInstance();
 
 	reader >> mapObject;
 	int id = 0;

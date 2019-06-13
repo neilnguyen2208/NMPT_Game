@@ -1,7 +1,7 @@
 #include "BossState.h"
 #include "Enemy.h"
 #include"ExternalDataCollector.h"
-#include"Debug.h"
+
 BossState::BossState(EnemyData *data) : EnemyState(data) {
 	auto textures = Textures::GetInstance();
 	LPDIRECT3DTEXTURE9 texture_1 = textures->Get(TEX_BOSS);
@@ -18,7 +18,7 @@ BossState::BossState(EnemyData *data) : EnemyState(data) {
 	turnMove = 0;
 	sidePosition = 0;
 	
-	grid = Grid::GetInstance(BoxCollider(224, 0, 0, 2048));
+	grid = Grid::GetInstance();
 }
 
 BossState::~BossState() {
@@ -31,7 +31,7 @@ void BossState::ResetState() {
 	enemy->SetColliderBottom(-27);
 	enemy->SetColliderLeft(-19);
 	enemy->SetColliderRight(19);
-	//met moi vai c
+	//
 	enemy->offsetScaleX = enemy->GetBigWidth() - enemy->GetWidth();
 	enemy->SetVx(0);
 	EnemyState::ResetState();
@@ -43,7 +43,9 @@ void BossState::Update(double dt) {
 	{
 		explode_Animation->Update(dt);
 		enemyData->enemy->SetVelocity(D3DXVECTOR2(0, 0));
-		return;
+		CSoundChoose::GetInstance()->StopSound();
+		CSoundChoose::GetInstance()->PlaySoundChoose(1);
+		return; //return WIN!
 	}
 	EnemyState::Update(dt);
 
@@ -101,10 +103,11 @@ void BossState::Update(double dt) {
 	}
 
 	//On Collision boss // 184 96
-	vector<Entity*> staticObjects = Grid::GetInstance(BoxCollider(224, 0, 0, 2048))->staticObject;
+	vector<Entity*> staticObjects = Grid::GetInstance()->staticObject;
 	auto side = Entity::SideCollision::NotKnow;
 	for (int i = 0; i < staticObjects.size(); i++)
 	{
+	
 		if (staticObjects[i]->GetTag() != Entity::Ground) continue;
 		
 			float collisionTime = CollisionDetector::SweptAABB(enemyData->enemy, staticObjects[i], side, dt);
@@ -123,7 +126,9 @@ void BossState::Update(double dt) {
 void BossState::OnCollision(Entity * impactor, Entity::SideCollision side)
 {
 	enemyData->enemy->SetVelocity(D3DXVECTOR2(0,0));
-	if (impactor->GetType() == Entity::StaticType&&side == Entity::Bottom)
+
+	if (impactor->GetType() == Entity::StaticType && side == Entity::Bottom)
+		CSoundChoose::GetInstance()->PlaySoundChoose(2);
 
 	if (isJump == false)
 	{
@@ -169,6 +174,7 @@ void BossState::OnCollision(Entity * impactor, Entity::SideCollision side)
 				}
 		isJump = false;
 	}
+
 }
 
 EnemyState::State BossState::GetState()
