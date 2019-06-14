@@ -1,0 +1,516 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{b80b22b3-d1fd-401c-8a4d-1bb40de2cf24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Manager">
+      <UniqueIdentifier>{02253408-7af3-46c6-b82c-5d6079ad2147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Framework">
+      <UniqueIdentifier>{a2847d82-2406-42d6-9ff9-ea9ea78dc2af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Object">
+      <UniqueIdentifier>{eb188bff-14fb-47e3-a8e4-c53f45b2f571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Misc">
+      <UniqueIdentifier>{80c835db-e168-4d26-aebb-84a9d6230ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Player">
+      <UniqueIdentifier>{5c846848-81ee-4693-8277-a426017dff9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy">
+      <UniqueIdentifier>{5bf5defd-646c-4da5-9f16-ba0e9997d9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Item">
+      <UniqueIdentifier>{b272d84f-48eb-47c9-b31e-6110fa9ee0a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Cat">
+      <UniqueIdentifier>{8638e63c-fef2-4fb5-bdba-9f7f156ef4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Eagle">
+      <UniqueIdentifier>{865470ef-12d3-48e9-ae3f-92d38c27b0d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Soldier">
+      <UniqueIdentifier>{137feeaa-877d-44a5-911e-ab6c74dcdd24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Sparta">
+      <UniqueIdentifier>{161e07b4-e6fc-40c2-a2ee-77ed30bdc55f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Thrower">
+      <UniqueIdentifier>{6b210260-2421-4b2c-af8f-4db25ac9f920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon">
+      <UniqueIdentifier>{18593ede-c1fc-4786-8bfb-3075cc958824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon\RyuWeapon">
+      <UniqueIdentifier>{61789a5c-5ba0-427c-95da-f5691fe8f1b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Weapon\EnemyWeapon">
+      <UniqueIdentifier>{cdadbe43-bcf0-4323-b3d9-ba3a222fd820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Board">
+      <UniqueIdentifier>{d3b5b7d5-1212-43b0-9c7a-87813aad9996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Cannoner">
+      <UniqueIdentifier>{a2d585df-0df1-4039-956f-5809a3d1164c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Runner">
+      <UniqueIdentifier>{8660921b-7f82-453e-8e5f-d321fb464906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemy\Boss">
+      <UniqueIdentifier>{779dd014-8ae3-4372-bc5c-807b9342950c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Framework\Sound">
+      <UniqueIdentifier>{97b3378c-c988-4396-acb8-55a72b5ad4d1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyHelper.h">
+      <Filter>Header Files\Components\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetector.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Components\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Components\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameConfig.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMap.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files\Components\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cat.h">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClInclude>
+    <ClInclude Include="CatFollowState.h">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClInclude>
+    <ClInclude Include="Eagle.h">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClInclude>
+    <ClInclude Include="EagleFollowState.h">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="SoldierAttackState.h">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="SoldierFollowState.h">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="SpartaFollowState.h">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClInclude>
+    <ClInclude Include="Sparta.h">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowerFollowState.h">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowerAttackState.h">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClInclude>
+    <ClInclude Include="Thrower.h">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemState.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemData.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemAvailableState.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemHolderState.h">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBeatenState.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyData.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BlueShuriken.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="FlameWheel.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="RedShuriken.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBeatenState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerClimbState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCrouchSlashState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCrouchState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerData.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpingState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRunningState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSlashState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUseSkillState.h">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowerBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyWeapon.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SoldierBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="RyuWeapon.h">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scoreboard.h">
+      <Filter>Header Files\Components\Board</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Header Files\Components\Board</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannoner.h">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonerAttackState.h">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClInclude>
+    <ClInclude Include="Runner.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="RunnerFollowState.h">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonerBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossState.h">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="ExternalDataCollector.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="dxutil.h">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GAudio.h">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\Components\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBullet.h">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetector.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Header Files\Components\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Header Files\Components\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Header Files\Components\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyHelper.cpp">
+      <Filter>Header Files\Components\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Cat.cpp">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClCompile>
+    <ClCompile Include="CatFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Cat</Filter>
+    </ClCompile>
+    <ClCompile Include="Eagle.cpp">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClCompile>
+    <ClCompile Include="EagleFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Eagle</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="SoldierAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="SoldierFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="Sparta.cpp">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClCompile>
+    <ClCompile Include="SpartaFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Sparta</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowerFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowerAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClCompile>
+    <ClCompile Include="Thrower.cpp">
+      <Filter>Header Files\Components\Enemy\Thrower</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemState.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemHolderState.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemAvailableState.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Header Files\Components\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBeatenState.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Header Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BlueShuriken.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="FlameWheel.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="RedShuriken.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBeatenState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerClimbState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCrouchSlashState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCrouchState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerData.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpingState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRunningState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSlashState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUseSkillState.cpp">
+      <Filter>Header Files\Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowerBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyWeapon.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SoldierBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="RyuWeapon.cpp">
+      <Filter>Header Files\Components\Weapon\RyuWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Scoreboard.cpp">
+      <Filter>Header Files\Components\Board</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Header Files\Components\Board</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonerAttackState.cpp">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannoner.cpp">
+      <Filter>Header Files\Components\Enemy\Cannoner</Filter>
+    </ClCompile>
+    <ClCompile Include="Runner.cpp">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="RunnerFollowState.cpp">
+      <Filter>Header Files\Components\Enemy\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonerBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossState.cpp">
+      <Filter>Header Files\Components\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalDataCollector.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Header Files\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="dsutil.cpp">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="GAudio.cpp">
+      <Filter>Header Files\Components\Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Header Files\Components\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBullet.cpp">
+      <Filter>Header Files\Components\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
