@@ -102,6 +102,7 @@ void PlayScene::Update(double dt) {
 	ExternalDataCollector::GetInstance()->SetHitPoint(Player::GetInstance()->blood); //update player blood
 	ExternalDataCollector::GetInstance()->SetLife(Player::GetInstance()->fate);
 	ExternalDataCollector::GetInstance()->SetMana(Player::GetInstance()->power);
+	ExternalDataCollector::GetInstance()->SetScore(Player::GetInstance()->score);
 
 
 	if (ExternalDataCollector::GetInstance()->GetHitPoint() <= 0 || Player::GetInstance()->GetPosition().y<0 || gameTime==0)
@@ -294,6 +295,8 @@ void PlayScene::Reset() {
 			ExternalDataCollector::GetInstance()->SetLife(2);
 		}
 		Player::GetInstance()->fate = ExternalDataCollector::GetInstance()->GetLife();
+		Player::GetInstance()->power = ExternalDataCollector::GetInstance()->GetMana() / 2;
+		Player::GetInstance()->score = ExternalDataCollector::GetInstance()->GetScore();
 		ExternalDataCollector::GetInstance()->SetPlayerDead(false);
 		ExternalDataCollector::GetInstance()->SetLost(false);
 	}
